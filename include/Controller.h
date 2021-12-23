@@ -1,12 +1,14 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 
 class Controller{
 
 public:
-
-protected:
+	Controller();
+	void run();
 
 private:
-
+	sf::RenderWindow m_window;
+	const sf::Color m_bgColor;
 };
