@@ -2,6 +2,9 @@
 #include <memory>
 
 #include "Controller.h"
+
+#include <iostream>
+
 #include "BoardItem.h"
 #include "Characters.h"
 
@@ -77,5 +80,12 @@ void Controller::run()
 		moveDirectionr *= deltaTime * speedPerSecond;
 
 		shape.move(moveDirectionr);
+
+		if (boardBorder.getGlobalBounds().contains(shape.getPosition()))
+		{
+			std::cout << "shape in board" << std::endl;
+		}
+		else
+			std::cout << "shape out of board" << std::endl;
 	}
 }
