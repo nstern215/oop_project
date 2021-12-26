@@ -1,7 +1,12 @@
 #include "King.h"
 
-
-King::King(ItemInfo* itemInfo, Location location, float positionOffsetX, float positionOffsetY)
-	:Item(itemInfo, location, positionOffsetX, positionOffsetY)
+King::King(Location location)
+	:Item(location)
 {
+	m_throne = false;
+}
+
+bool King::gotToThrone(Location& location)
+{
+	return m_throne;
 }

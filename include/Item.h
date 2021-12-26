@@ -16,18 +16,11 @@ class Throne;
 class Ork;
 class Key;
 
-struct ItemInfo
-{
-    int m_type;
-    sf::Texture* m_texture;
-    std::string m_itemData;
-};
-
 class Item {
 
 public:
 
-    Item(ItemInfo* itemInfo = nullptr, Location location (0,0), float positionOffsetX = 0, float positionOffsetY = 0);
+    Item(Location location (0,0));
     ~Item();
 
     bool checkCollision(const GameObject& /*other*/) const
@@ -69,8 +62,6 @@ public:
 protected:
 
     sf::RectangleShape m_rectangle;
-
-    ItemInfo* m_itemInfo;
 
     Location m_location;
 

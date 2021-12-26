@@ -1,7 +1,22 @@
 #include "BoardItems.h"
-#include "..\include\BoardItem.h"
 
-BoardItem::BoardItem(ItemInfo* itemInfo, Location location, float positionOffsetX, float positionOffsetY)
-	:Item(itemInfo, location, positionOffsetX, positionOffsetY)
+
+BoardItem::BoardItem(Location location)
+	:Item(location)
 {
+}
+
+void BoardItem::handleCollision(Item& item)
+{
+	item.handleCollision(*this);
+}
+
+void BoardItem::handleCollision(Characters& item)
+{
+	item.handleCollision(*this);
+}
+
+void BoardItem::handleCollision(Dwarf& item)
+{
+	item.handleCollision(*this);
 }
