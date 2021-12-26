@@ -10,4 +10,6 @@ protected:
 
 private:
 
+	void move(sf::Vector2f destination);
+
 };

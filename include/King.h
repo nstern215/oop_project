@@ -10,4 +10,8 @@ protected:
 
 private:
 
+	bool gotToThrone(Location& location);
+
+	bool m_throne;
+
 };
