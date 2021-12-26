@@ -1,6 +1,8 @@
 #pragma once
 
-class Item {
+#include <SFML/Graphics.hpp>
+
+class Item : public sf::RectangleShape {
 
 public:
 
