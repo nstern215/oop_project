@@ -27,7 +27,7 @@ class Item {
 
 public:
 
-    Item(ItemInfo* itemInfo = nullptr, int row = 0, int col = 0, float positionOffsetX = 0, float positionOffsetY = 0);
+    Item(ItemInfo* itemInfo = nullptr, Location location (0,0), float positionOffsetX = 0, float positionOffsetY = 0);
     ~Item();
 
     bool checkCollision(const GameObject& /*other*/) const
@@ -44,7 +44,7 @@ public:
     virtual void handleCollision(Fire& item) = 0;
     virtual void handleCollision(Teleport& item) = 0;
 
-    virtual void draw(sf::RenderWindow& window);
+    /*virtual void draw(sf::RenderWindow& window);
 
     void setPosition(const sf::Vector2f& position);
     
@@ -64,7 +64,7 @@ public:
 	
 	bool isActive() const;
 	
-	Location getLocation() const;
+	Location getLocation() const;*/
 
 protected:
 
