@@ -10,4 +10,6 @@ protected:
 
 private:
 
+	void killOrk(Location& location);
+
 };

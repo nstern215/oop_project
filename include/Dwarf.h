@@ -6,8 +6,10 @@ class Dwarf : public Characters {
 
 public:
 
-protected:
+	Dwarf(Location location = {0,0});
 
 private:
+
+
 
 };
