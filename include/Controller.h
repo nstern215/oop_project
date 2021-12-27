@@ -5,11 +5,11 @@
 class Characters;
 class BoardItem;
 class Dwarfs;
+#include <SFML/Graphics.hpp>
 
 class Controller{
 
 public:
-
 	Controller();
 	~Controller();
 
@@ -44,4 +44,10 @@ private:
 
 	Menu m_menu;
 	Board m_board;
+  
+	sf::RenderWindow m_window;
+	const sf::Color m_bgColor;
+
+	unsigned int m_windowWidth;
+	unsigned int m_windowHeight;
 };
