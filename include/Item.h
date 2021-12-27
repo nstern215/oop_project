@@ -24,7 +24,7 @@ public:
     Item(Location location = {0,0});
     ~Item();
 
-    bool checkCollision(const Item& /*other*/) const;
+    bool checkCollision(const Item& other) const;
 
     virtual void handleCollision(Item& item) = 0;
     virtual void handleCollision(Characters& item) = 0;
@@ -37,6 +37,10 @@ public:
     virtual void handleCollision(Gate& item) = 0;
     virtual void handleCollision(Fire& item) = 0;
     virtual void handleCollision(Teleport& item) = 0;
+
+    Location getLocation() const;
+    void setPosition(sf::Vector2f position);
+    sf::Vector2f getPosition() const;
 
     /*virtual void draw(sf::RenderWindow& window);
 
@@ -63,9 +67,7 @@ public:
 protected:
 
     sf::RectangleShape m_rectangle;
-
     Location m_location;
-
 	bool m_active;
 
 private:
