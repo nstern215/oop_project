@@ -2,7 +2,7 @@
 
 #include "ClockMode.h"
 #include <ctime>
-#include <SFML.hpp>
+#include <SFML/Graphics.hpp>
 
 class Clock {
 public:

@@ -21,10 +21,10 @@ class Item {
 
 public:
 
-    Item(Location location (0,0));
+    Item(Location location = {0,0});
     ~Item();
 
-    bool checkCollision(const GameObject& /*other*/) const
+    bool checkCollision(const Item& /*other*/) const;
 
     virtual void handleCollision(Item& item) = 0;
     virtual void handleCollision(Characters& item) = 0;

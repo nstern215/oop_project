@@ -13,6 +13,8 @@ Controller::Controller() :
 	m_bgColor(39, 72, 245, 0.8)
 {}
 
+
+
 void Controller::run()
 {
 	const int row = 10;

@@ -1,4 +1,4 @@
-#include "BoardItems.h"
+#include "BoardItem.h"
 
 
 BoardItem::BoardItem(Location location)

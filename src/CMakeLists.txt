@@ -6,7 +6,6 @@
                                                 "RestartLevel.cpp"
                                                 "Tutorial.cpp"
                                                 "Exit.cpp"
-                                                "Square.cpp"
                                                 "Controller.cpp"
                                                 "Item.cpp"
                                                 "King.cpp"
@@ -28,6 +27,5 @@
                                                 "Key.cpp"
                                                 "Wall.cpp"
                                                 "GameOverGift.cpp"
-                                                "EmptyGift.cpp"
-                                                "RandomLocation.cpp")
+                                                "EmptyGift.cpp")
 

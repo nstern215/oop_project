@@ -6,7 +6,7 @@ class Characters : public Item {
 
 public:
 
-	Characters(Location location(0, 0));
+	Characters(Location location = {0,0});
 
     virtual void handleCollision(Item& item) = 0;
     virtual void handleCollision(Key& item) = 0;

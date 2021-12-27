@@ -1,7 +1,7 @@
 #include "King.h"
 
 King::King(Location location)
-	:Item(location)
+	:Characters(location)
 {
 	m_throne = false;
 }

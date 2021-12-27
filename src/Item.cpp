@@ -7,6 +7,6 @@ Item::Item(Location location)
 
 Item::~Item()
 {
-	delete m_itemInfo;
+	
 }
 

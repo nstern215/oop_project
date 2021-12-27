@@ -2,16 +2,19 @@
 
 #include <vector>
 
-class Characters;
-class BoardItem;
-class Dwarfs;
+//class Characters;
+//class BoardItem;
+//class Dwarf;
 #include <SFML/Graphics.hpp>
+
+#include "Characters.h"
+#include "Dwarf.h"
 
 class Controller{
 
 public:
 	Controller();
-	~Controller();
+	~Controller() = default;
 
 	void run();
 	void takeAction(const std::string& command);
@@ -19,7 +22,6 @@ public:
 	void addCharacters(const std::string& character);
 	void removeTeleport(const int& col, const int& row);
 
-	ItemInfo* getItemInfo();
 	int getMode();
 	sf::Texture* getTexture(std::string textureName);
 
@@ -38,12 +40,12 @@ private:
 
 	std::vector<sf::Vector2i> m_teleports;
 	std::vector<Characters> m_characters;
-	std::vector<Dwarfs> m_dwarfs;
+	std::vector<Dwarf> m_dwarfs;
 	std::vector<sf::Texture*> m_textures;
 
 
-	Menu m_menu;
-	Board m_board;
+	//Menu m_menu;
+	//Board m_board;
   
 	sf::RenderWindow m_window;
 	const sf::Color m_bgColor;

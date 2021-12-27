@@ -8,7 +8,7 @@ class BoardItem : public Item {
 
 public:
 
-	BoardItem(Location location(0, 0));
+	BoardItem(Location location = {0, 0});
 
 protected:
 

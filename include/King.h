@@ -6,7 +6,7 @@ class King : public Characters {
 
 public:
 
-	King(Location location(0, 0));
+	King(Location location = {0,0});
 
 private:
 
