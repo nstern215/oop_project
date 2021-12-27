@@ -10,4 +10,8 @@ protected:
 
 private:
 
+	void collectKey(Location& location);
+
+	bool m_key;
+
 };
