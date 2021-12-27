@@ -21,8 +21,8 @@ class Item {
 
 public:
 
-    Item(Location location = {0,0});
-    ~Item();
+    Item(Location location = {0,0}, float speedPerSecond = 200.f);
+    virtual ~Item();
 
     bool checkCollision(const Item& other) const;
 
@@ -42,9 +42,9 @@ public:
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition() const;
 
-    /*virtual void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderWindow& window);
 
-    void setPosition(const sf::Vector2f& position);
+    /*void setPosition(const sf::Vector2f& position);
     
     void setPosition(float positionOffsetX, float positionOffsetY);
     
@@ -65,6 +65,8 @@ public:
 	Location getLocation() const;*/
 
 protected:
+
+    float m_speedPerSecond;
 
     sf::RectangleShape m_rectangle;
     Location m_location;

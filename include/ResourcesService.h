@@ -1,20 +1,25 @@
 #pragma once
-#include <mutex>
 #include <SFML/Graphics.hpp>
-
-std::mutex m_mutex;
 
 class ResourcesService
 {
 public:
-	static ResourcesService& instance();
-
-private:
-	ResourcesService();
 	~ResourcesService();
+	static ResourcesService* instance();
+
+	sf::Texture* getTexture(std::string textureName);
+	
+private:
+	ResourcesService(const ResourcesService&) = default;
+	ResourcesService();
+	
+
+	ResourcesService& operator=(const ResourcesService&) = default;
 	
 	static ResourcesService* m_instance;
-
+	
 	std::vector<sf::Texture*> m_textures;
 	std::vector<std::string> m_textureNames;
+
+	void loadTexture();
 };

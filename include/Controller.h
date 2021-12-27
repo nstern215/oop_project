@@ -30,6 +30,8 @@ public:
 	std::string convertChatToItem(char c) const;
 
 private:
+	sf::Vector2f getMovingDirection();
+	sf::RectangleShape buildBoard(int col, int row);
 	
 	void loadBoardFile();
 	void getBoardInfo(const std::string line);

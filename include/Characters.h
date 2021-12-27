@@ -7,7 +7,8 @@ class Characters : public Item {
 public:
 
 	Characters(Location location = {0,0});
-
+    virtual ~Characters();
+	
     virtual void handleCollision(Item& item) = 0;
     virtual void handleCollision(Key& item) = 0;
     virtual void handleCollision(Ork& item) = 0;
@@ -20,12 +21,12 @@ public:
     void handleCollision(Dwarf& item);
     void handleCollision(Wall& item);
     void handleCollision(Gift& item);
+	
+	virtual void move(sf::Vector2f destination, float deltaTime);
+	void setActive(bool active);
+    bool isActive() const;
 
-	//virtual void move(sf::Vector2f destination);
-
-	//virtual draw(sf::RenderWindow& window);
-	//
-	//void setIsActive();
+    Location calcNewLocation(sf::Vector2f direction);
 
 protected:
 
