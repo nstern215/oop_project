@@ -23,14 +23,11 @@ void Controller::run()
 	
 	const int row = 10;
 	const int col = 10;
-	
-	std::vector<BoardItem*> boardItems;
-	std::vector<Characters*> characters;
 
 	characters.push_back(new King({5, 5}));
 	characters.push_back(new Mage({ 2, 7 }));
 
-	auto board = buildBoard(col, row);
+	buildBoard(col, row);
 
 	m_window.setFramerateLimit(120);
 
@@ -44,7 +41,7 @@ void Controller::run()
 	while(m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
-		m_window.draw(board);
+		m_window.draw(m_boardBorder);
 		//m_window.draw(shape);
 
 		for (auto& item : characters)
@@ -70,6 +67,12 @@ void Controller::run()
 					characters[activeCharacter]->setActive(true);
 				}
 				break;
+			/*case sf::Event::Resized:
+				m_windowWidth = event.size.width;
+				m_windowHeight = event.size.height;
+
+				buildBoard(row, col);
+				break;*/
 			}
 		}
 
@@ -77,7 +80,7 @@ void Controller::run()
 		auto deltaTime = clock.restart().asSeconds();
 		
 		for (auto& c : characters)
-			c->move(moveDirection, deltaTime);		
+			c->move(moveDirection, deltaTime, *this);		
 	}
 }
 
@@ -94,24 +97,42 @@ sf::Vector2f Controller::getMovingDirection()
 	return { 0,0 };
 }
 
-sf::RectangleShape Controller::buildBoard(int col, int row)
+//todo: change method name
+Item* Controller::getItem(Location l)
+{
+	/*for (auto*& item : characters)
+		if (item->getLocation() == l)
+			return item;
+
+	for (auto*& item : boardItems)
+		if (item->getLocation() == l)
+			return item;*/
+
+	return nullptr;
+}
+
+
+void Controller::buildBoard(int col, int row)
 {
 	const auto windowSize = m_window.getSize();
 
-	sf::Vector2f boardSize(windowSize.x * 0.9f, windowSize.y * 0.9f);
+	const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
-	const auto itemWidth = boardSize.x / col;
-	const auto itemHeight = boardSize.y / row;
+	/*const auto itemWidth = boardSize.x / col;
+	const auto itemHeight = boardSize.y / row;*/
 
-	sf::Vector2f boardOrigin(windowSize.x * 0.05f, windowSize.y * 0.05f);
+	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
 
-	auto boardBorder = sf::RectangleShape(boardSize);
-	boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
-	boardBorder.setOutlineThickness(3);
-	boardBorder.setOutlineColor(sf::Color::Black);
-	boardBorder.setFillColor(sf::Color::White);
-	boardBorder.setOrigin(boardSize / 2.f);
-	boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
+	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
+	m_boardBorder.setOutlineThickness(3);
+	m_boardBorder.setOutlineColor(sf::Color::Black);
+	m_boardBorder.setFillColor(sf::Color::White);
+	//m_boardBorder.setOrigin(boardSize / 2.f);
+	//m_boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
+	m_boardBorder.setPosition(boardOrigin);
+}
 
-	return boardBorder;
+bool operator==(const Location& a, const Location& b)
+{
+	return a.m_row == b.m_row && a.m_col == b.m_col;
 }

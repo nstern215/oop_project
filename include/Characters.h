@@ -2,6 +2,8 @@
 
 #include "Item.h"
 
+class Controller;
+
 class Characters : public Item {
 
 public:
@@ -22,7 +24,7 @@ public:
     void handleCollision(Wall& item);
     void handleCollision(Gift& item);
 	
-	virtual void move(sf::Vector2f destination, float deltaTime);
+	virtual void move(sf::Vector2f destination, float deltaTime, Controller& controller);
 	void setActive(bool active);
     bool isActive() const;
 
@@ -30,5 +32,7 @@ public:
 
 protected:
 
+    bool validateMove(sf::Vector2f destination);
+	
 	bool m_isActive;
 };
