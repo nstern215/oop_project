@@ -31,7 +31,7 @@ public:
 	
 	std::string convertChatToItem(char c) const;
 
-	Item* getItem(Location l);
+	Item* getItem(const Location l);
 
 private:
 	sf::Vector2f getMovingDirection();
@@ -64,3 +64,6 @@ private:
 	std::vector<BoardItem*> boardItems;
 	std::vector<Characters*> characters;
 };
+
+bool operator==(const Location& a, const Location& b);
+bool operator!=(const Location& a, const Location& b);

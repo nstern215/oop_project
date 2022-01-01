@@ -10,7 +10,7 @@ Mage::Mage(Location location)
 	//sf::Texture* t = new sf::Texture();
 	//t->loadFromFile("crown.png");
 
-	m_rectangle.setTexture(t, true);
+	//m_rectangle.setTexture(t, true);
 }
 
 Mage::~Mage()

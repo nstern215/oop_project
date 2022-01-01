@@ -98,15 +98,15 @@ sf::Vector2f Controller::getMovingDirection()
 }
 
 //todo: change method name
-Item* Controller::getItem(Location l)
+Item* Controller::getItem(const Location l)
 {
-	/*for (auto*& item : characters)
+	for (auto*& item : characters)
 		if (item->getLocation() == l)
 			return item;
 
 	for (auto*& item : boardItems)
 		if (item->getLocation() == l)
-			return item;*/
+			return item;
 
 	return nullptr;
 }
@@ -135,4 +135,9 @@ void Controller::buildBoard(int col, int row)
 bool operator==(const Location& a, const Location& b)
 {
 	return a.m_row == b.m_row && a.m_col == b.m_col;
+}
+
+bool operator!=(const Location& a, const Location& b)
+{
+	return !(a == b);
 }

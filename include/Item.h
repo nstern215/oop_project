@@ -21,7 +21,7 @@ class Item {
 
 public:
 
-    Item(Location location = {0,0}, float speedPerSecond = 200.f);
+    Item(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 }, float speedPerSecond = 200.f);
     virtual ~Item();
 
     bool checkCollision(const Item& other) const;
@@ -68,6 +68,7 @@ protected:
 
     float m_speedPerSecond;
 
+    sf::Vector2f m_boardLocation;
     sf::RectangleShape m_rectangle;
     Location m_location;
 	bool m_active;

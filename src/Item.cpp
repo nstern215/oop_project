@@ -1,7 +1,8 @@
 #include "Item.h"
 
-Item::Item(Location location, float speedPerSecond)
-	:m_location(location),
+Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
+	m_location(location),
+	m_boardLocation(boardLocation),
 	m_speedPerSecond(speedPerSecond)
 {
 	m_rectangle.setSize({80.f, 80.f});
@@ -24,4 +25,9 @@ void Item::setPosition(sf::Vector2f position)
 sf::Vector2f Item::getPosition() const
 {
 	return m_rectangle.getPosition();
+}
+
+Location Item::getLocation() const
+{
+	return m_location;
 }
