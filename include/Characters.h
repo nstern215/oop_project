@@ -18,11 +18,10 @@ public:
     virtual void handleCollision(Gate& item) = 0;
     virtual void handleCollision(Fire& item) = 0;
     virtual void handleCollision(Teleport& item) = 0;
-
-    void handleCollision(Characters& item);
-    void handleCollision(Dwarf& item);
-    void handleCollision(Wall& item);
-    void handleCollision(Gift& item);
+    virtual void handleCollision(Characters& item) = 0;
+    virtual void handleCollision(Dwarf& item) = 0;
+    virtual void handleCollision(Wall& item) = 0;
+    virtual void handleCollision(Gift& item) = 0;
 	
 	virtual void move(sf::Vector2f destination, float deltaTime, Controller& controller);
 	void setActive(bool active);

@@ -9,6 +9,7 @@
 #include "Characters.h"
 #include "King.h"
 #include "Mage.h"
+#include "Dwarf.h"
 
 Controller::Controller() :
 	m_window(sf::VideoMode(800, 800), "Save the King", sf::Style::Default),
@@ -25,7 +26,9 @@ void Controller::run()
 	const int col = 10;
 
 	characters.push_back(new King({5, 5}));
-	characters.push_back(new Mage({ 2, 7 }));
+	characters.push_back(new Mage({2, 7}));
+
+	dwarfs.push_back(new Dwarf(1, {1, 1}));
 
 	buildBoard(col, row);
 
@@ -50,6 +53,9 @@ void Controller::run()
 
 		characters[activeCharacter]->draw(m_window);
 		
+		for (auto& item : dwarfs)
+			item->draw(m_window);
+
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -80,7 +86,11 @@ void Controller::run()
 		auto deltaTime = clock.restart().asSeconds();
 		
 		for (auto& c : characters)
-			c->move(moveDirection, deltaTime, *this);		
+			c->move(moveDirection, deltaTime, *this);
+		
+		for (auto& d : dwarfs)
+			d->move(d->getDirection(), deltaTime, *this);
+		
 	}
 }
 
@@ -124,7 +134,7 @@ void Controller::buildBoard(int col, int row)
 	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
-	m_boardBorder.setOutlineThickness(3);
+	m_boardBorder.setOutlineThickness(8);
 	m_boardBorder.setOutlineColor(sf::Color::Black);
 	m_boardBorder.setFillColor(sf::Color::White);
 	//m_boardBorder.setOrigin(boardSize / 2.f);

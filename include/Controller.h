@@ -4,13 +4,11 @@
 
 //class Characters;
 //class BoardItem;
-//class Dwarf;
 #include <SFML/Graphics.hpp>
 
 
 #include "BoardItem.h"
 #include "Characters.h"
-#include "Dwarf.h"
 
 class Controller{
 
@@ -63,4 +61,5 @@ private:
 	//------------------------------------------
 	std::vector<BoardItem*> boardItems;
 	std::vector<Characters*> characters;
+	std::vector<Dwarf*> dwarfs;
 };

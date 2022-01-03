@@ -55,6 +55,22 @@ void King::handleCollision(Teleport& item)
 	
 }
 
+void King::handleCollision(Characters& item)
+{
+}
+
+void King::handleCollision(Dwarf& item)
+{
+}
+
+void King::handleCollision(Wall& item)
+{
+}
+
+void King::handleCollision(Gift& item)
+{
+}
+
 void King::handleCollision(Throne& item)
 {
 	
