@@ -6,7 +6,7 @@ class King : public Characters {
 
 public:
 
-	King(Location location = {0,0});
+	King(Location location = {0,0}, sf::Vector2f boardLocation = {0,0});
     ~King();
 	
     virtual void handleCollision(Item& item);

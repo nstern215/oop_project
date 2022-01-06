@@ -1,8 +1,8 @@
 #include "Mage.h"
 #include "ResourcesService.h"
 
-Mage::Mage(Location location)
-	:Characters(location)
+Mage::Mage(Location location, sf::Vector2f boardLocation)
+	:Characters(location, boardLocation)
 {
 
 	sf::Texture* t = ResourcesService::instance()->getTexture("mage.png");

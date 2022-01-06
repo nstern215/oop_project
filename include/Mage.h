@@ -5,7 +5,7 @@
 class Mage : public Characters {
 
 public:
-    Mage(Location location = { 0,0 });
+    Mage(Location location = { 0,0 }, sf::Vector2f boardLocation = {0,0});
     ~Mage();
 
     virtual void handleCollision(Item& item);

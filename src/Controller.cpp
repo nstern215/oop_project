@@ -20,14 +20,17 @@ Controller::Controller() :
 void Controller::run()
 {
 	int activeCharacter = 0;
-	
+
 	const int row = 10;
 	const int col = 10;
 
-	characters.push_back(new King({5, 5}));
-	characters.push_back(new Mage({ 2, 7 }));
-
 	buildBoard(col, row);
+
+	/*sf::Vector2f boardPosition = m_boardBorder.getPosition();*/
+	sf::Vector2f boardPosition(0,0);
+	
+	characters.push_back(new King({ 1, 1 }, boardPosition));
+	characters.push_back(new Mage({ 3, 1 }, boardPosition));
 
 	m_window.setFramerateLimit(120);
 
@@ -36,9 +39,9 @@ void Controller::run()
 	shape.setFillColor(sf::Color(100, 100, 200));*/
 
 	sf::Clock clock;
-	
-	
-	while(m_window.isOpen())
+
+
+	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
 		m_window.draw(m_boardBorder);
@@ -49,7 +52,7 @@ void Controller::run()
 				item->draw(m_window);
 
 		characters[activeCharacter]->draw(m_window);
-		
+
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -67,20 +70,21 @@ void Controller::run()
 					characters[activeCharacter]->setActive(true);
 				}
 				break;
-			/*case sf::Event::Resized:
-				m_windowWidth = event.size.width;
-				m_windowHeight = event.size.height;
+				/*case sf::Event::Resized:
+					m_windowWidth = event.size.width;
+					m_windowHeight = event.size.height;
 
-				buildBoard(row, col);
-				break;*/
+					buildBoard(row, col);
+					break;*/
 			}
 		}
 
 		auto moveDirection = getMovingDirection();
 		auto deltaTime = clock.restart().asSeconds();
-		
-		for (auto& c : characters)
-			c->move(moveDirection, deltaTime, *this);		
+
+		if (moveDirection.x != 0 || moveDirection.y != 0)
+			for (auto& c : characters)
+				c->move(moveDirection, deltaTime, *this);
 	}
 }
 
@@ -129,7 +133,7 @@ void Controller::buildBoard(int col, int row)
 	m_boardBorder.setFillColor(sf::Color::White);
 	//m_boardBorder.setOrigin(boardSize / 2.f);
 	//m_boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
-	m_boardBorder.setPosition(boardOrigin);
+	//m_boardBorder.setPosition(boardOrigin);
 }
 
 bool operator==(const Location& a, const Location& b)

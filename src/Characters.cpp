@@ -14,8 +14,8 @@ Characters::Characters(Location location, sf::Vector2f boardLocation) :
 
 Characters::~Characters()
 {
-	m_rectangle.setOutlineThickness(5);
-	m_rectangle.setOutlineColor(sf::Color::Black);
+	/*m_rectangle.setOutlineThickness(5);
+	m_rectangle.setOutlineColor(sf::Color::Black);*/
 
 	m_rectangle.setFillColor(sf::Color(100, 100, 100));
 }
@@ -25,32 +25,34 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 	if (!m_isActive)
 		return;
 
-	const auto destLocation = calcNewLocation(destination);
+	/*const auto destLocation = calcNewLocation(destination);*/
+	const sf::Vector2f step = destination * deltaTime * m_speedPerSecond;
+	const auto destLocation = calcNewLocation(step);
 
+	//todo: if m_location != destLocation - collision!
 	//if (destLocation != m_location)
-	if (!validateMove(destination, controller))
+	if (m_location != destLocation && !validateMove(destination, controller))
 		return;
 
 	m_location = destLocation;
 
-	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << std::endl;
+	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << " Position: " << m_rectangle.getPosition().x << ":" << m_rectangle.getPosition().y << std::endl;
 
-	const sf::Vector2f dest = destination * deltaTime * m_speedPerSecond;
-	m_rectangle.move(dest);
+	m_rectangle.move(step);
 }
 
-Location Characters::calcNewLocation(sf::Vector2f direction)
+Location Characters::calcNewLocation(sf::Vector2f step)
 {
 	sf::Vector2f size = m_rectangle.getSize();
 	size /= 2.f;
 	sf::Vector2f center = m_rectangle.getPosition();
 	center += size;
 
-	center += direction;
+	center += step;
 
 	Location destination = m_location;
 
-	sf::RectangleShape origin(m_rectangle);
+	sf::RectangleShape origin(m_rectangle.getSize());
 	sf::Vector2f originPosition = m_boardLocation;
 	originPosition.x += m_location.m_col * size.x * 2.f;
 	originPosition.y += m_location.m_row * size.y * 2.f;

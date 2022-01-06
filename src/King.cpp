@@ -1,8 +1,8 @@
 #include "King.h"
 #include "ResourcesService.h"
 
-King::King(Location location)
-	:Characters(location)
+King::King(Location location, sf::Vector2f boardLocation)
+	:Characters(location, boardLocation)
 {
 	m_throne = false;
 

@@ -6,7 +6,11 @@ Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 	m_speedPerSecond(speedPerSecond)
 {
 	m_rectangle.setSize({80.f, 80.f});
-	m_rectangle.setPosition({m_location.m_col * 80.f, m_location.m_row * 80.f });
+
+	sf::Vector2f position(m_location.m_col * 80.f, m_location.m_row * 80.f);
+	position += boardLocation;
+	
+	m_rectangle.setPosition(position);
 }
 
 Item::~Item()
