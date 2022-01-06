@@ -120,6 +120,8 @@ bool Characters::validateMove(sf::Vector2f destination, Controller& controller)
 	if (!destItem)
 		return true;
 
+	//todo: handle collision
+
 	if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
 		return false;
 

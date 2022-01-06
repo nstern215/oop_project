@@ -29,7 +29,7 @@ void Controller::run()
 	sf::Vector2f boardPosition = m_boardBorder.getPosition();
 	//sf::Vector2f boardPosition(0,0);
 	
-	characters.push_back(new King({ 1, 1 }, boardPosition));
+	characters.push_back(new King({ 1, 5 }, boardPosition));
 	characters.push_back(new Mage({ 3, 1 }, boardPosition));
 
 	m_window.setFramerateLimit(120);

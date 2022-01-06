@@ -11,7 +11,7 @@ King::King(Location location, sf::Vector2f boardLocation)
 	//sf::Texture* t = new sf::Texture();
 	//t->loadFromFile("crown.png");
 	
-	//m_rectangle.setTexture(t, true);
+	m_rectangle.setTexture(t, true);
 }
 
 King::~King()
