@@ -7,6 +7,8 @@
 
 #include "BoardItem.h"
 #include "Characters.h"
+#include "King.h"
+#include "Mage.h"
 
 Controller::Controller() :
 	m_window(sf::VideoMode(800, 800), "Save the King", sf::Style::Default),
@@ -17,44 +19,40 @@ Controller::Controller() :
 
 void Controller::run()
 {
+	int activeCharacter = 0;
+
 	const int row = 10;
 	const int col = 10;
+
+	buildBoard(col, row);
+
+	sf::Vector2f boardPosition = m_boardBorder.getPosition();
+	//sf::Vector2f boardPosition(0,0);
 	
-	std::vector<BoardItem*> boardItems;
-	std::vector<Characters*> characters;
-
-
-	const auto windowSize = m_window.getSize();
-
-	sf::Vector2f boardSize(windowSize.x * 0.9f, windowSize.y * 0.9f);
-
-	const auto itemWidth = boardSize.x / col;
-	const auto itemHeight = boardSize.y / row;
-
-	sf::Vector2f boardOrigin(windowSize.x * 0.05f, windowSize.y * 0.05f);
-
-	auto boardBorder = sf::RectangleShape(boardSize);
-	boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
-	boardBorder.setOutlineThickness(3);
-	boardBorder.setOutlineColor(sf::Color::Black);
-	boardBorder.setFillColor(sf::Color::White);
-	boardBorder.setOrigin(boardSize / 2.f);
-	boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
+	characters.push_back(new King({ 1, 1 }, boardPosition));
+	characters.push_back(new Mage({ 3, 1 }, boardPosition));
 
 	m_window.setFramerateLimit(120);
 
-	auto shape = sf::RectangleShape({ 50, 50 });
+	/*auto shape = sf::RectangleShape({ 50, 50 });
 	shape.setPosition(0, 0);
-	shape.setFillColor(sf::Color(100, 100, 200));
+	shape.setFillColor(sf::Color(100, 100, 200));*/
 
 	sf::Clock clock;
-	float speedPerSecond = 200.f;
-	
-	while(m_window.isOpen())
+
+
+	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
-		m_window.draw(boardBorder);
-		m_window.draw(shape);
+		m_window.draw(m_boardBorder);
+		//m_window.draw(shape);
+
+		for (auto& item : characters)
+			if (!item->isActive())
+				item->draw(m_window);
+
+		characters[activeCharacter]->draw(m_window);
+
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -64,30 +62,86 @@ void Controller::run()
 			case sf::Event::Closed:
 				m_window.close();
 				break;
+			case sf::Event::KeyPressed:
+				if (event.key.code == sf::Keyboard::Key::P)
+				{
+					characters[activeCharacter]->setActive(false);
+					activeCharacter = (activeCharacter + 1) % characters.size();
+					characters[activeCharacter]->setActive(true);
+				}
+				break;
+				/*case sf::Event::Resized:
+					m_windowWidth = event.size.width;
+					m_windowHeight = event.size.height;
+
+					buildBoard(row, col);
+					break;*/
 			}
 		}
 
-		sf::Vector2f moveDirectionr(0, 0);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			moveDirectionr.y = -1;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			moveDirectionr.y = 1;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			moveDirectionr.x = 1;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			moveDirectionr.x = -1;
-
+		auto moveDirection = getMovingDirection();
 		auto deltaTime = clock.restart().asSeconds();
-		moveDirectionr *= deltaTime * speedPerSecond;
 
-		shape.move(moveDirectionr);
-
-		if (boardBorder.getGlobalBounds().contains(shape.getPosition()))
-		{
-			std::cout << "shape in board" << std::endl;
-		}
-		else
-			std::cout << "shape out of board" << std::endl;
+		if (moveDirection.x != 0 || moveDirection.y != 0)
+			for (auto& c : characters)
+				c->move(moveDirection, deltaTime, *this);
 	}
+}
+
+sf::Vector2f Controller::getMovingDirection()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		return { 0, -1 };
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		return { 0, 1 };
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		return { 1, 0 };
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		return { -1, 0 };
+	return { 0,0 };
+}
+
+//todo: change method name
+Item* Controller::getItem(const Location l)
+{
+	for (auto*& item : characters)
+		if (item->getLocation() == l)
+			return item;
+
+	for (auto*& item : boardItems)
+		if (item->getLocation() == l)
+			return item;
+
+	return nullptr;
+}
+
+
+void Controller::buildBoard(int col, int row)
+{
+	const auto windowSize = m_window.getSize();
+
+	const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
+
+	/*const auto itemWidth = boardSize.x / col;
+	const auto itemHeight = boardSize.y / row;*/
+
+	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
+
+	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
+	m_boardBorder.setOutlineThickness(3);
+	m_boardBorder.setOutlineColor(sf::Color::Black);
+	m_boardBorder.setFillColor(sf::Color::White);
+	//m_boardBorder.setOrigin(boardSize / 2.f);
+	//m_boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
+	m_boardBorder.setPosition(boardOrigin);
+}
+
+bool operator==(const Location& a, const Location& b)
+{
+	return a.m_row == b.m_row && a.m_col == b.m_col;
+}
+
+bool operator!=(const Location& a, const Location& b)
+{
+	return !(a == b);
 }

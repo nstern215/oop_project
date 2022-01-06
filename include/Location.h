@@ -2,6 +2,6 @@
 
 struct Location {
 
-	unsigned int m_row;
-	unsigned int m_col;
+	int m_row;
+	int m_col;
 };

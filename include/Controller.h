@@ -7,6 +7,8 @@
 //class Dwarf;
 #include <SFML/Graphics.hpp>
 
+
+#include "BoardItem.h"
 #include "Characters.h"
 #include "Dwarf.h"
 
@@ -29,7 +31,11 @@ public:
 	
 	std::string convertChatToItem(char c) const;
 
+	Item* getItem(const Location l);
+
 private:
+	sf::Vector2f getMovingDirection();
+	void buildBoard(int col, int row);
 	
 	void loadBoardFile();
 	void getBoardInfo(const std::string line);
@@ -48,8 +54,16 @@ private:
 	//Board m_board;
   
 	sf::RenderWindow m_window;
-	const sf::Color m_bgColor;
+	sf::RectangleShape m_boardBorder;
+	sf::Color m_bgColor;
 
 	unsigned int m_windowWidth;
 	unsigned int m_windowHeight;
+
+	//------------------------------------------
+	std::vector<BoardItem*> boardItems;
+	std::vector<Characters*> characters;
 };
+
+bool operator==(const Location& a, const Location& b);
+bool operator!=(const Location& a, const Location& b);

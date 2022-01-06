@@ -27,5 +27,6 @@
                                                 "Key.cpp"
                                                 "Wall.cpp"
                                                 "GameOverGift.cpp"
-                                                "EmptyGift.cpp")
+                                                "EmptyGift.cpp"
+                                                "ResourcesService.cpp")
 
