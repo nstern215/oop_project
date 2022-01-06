@@ -8,6 +8,6 @@ struct GiftData {
 
 	double m_giftValue;
 
-	GiftType m_type;
+	//GiftType m_type;
 
 };

@@ -18,6 +18,7 @@ add_executable (${CMAKE_PROJECT_NAME})
 add_subdirectory (include)
 add_subdirectory (src)
 add_subdirectory(resources)
+add_subdirectory(levels)
 
 set (SFML_STATIC_LIBRARIES TRUE)
 set (SFML_DIR "C:/SFML/SFML-2.5.1/lib/cmake/SFML")
