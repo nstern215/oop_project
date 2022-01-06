@@ -6,11 +6,16 @@ class Teleport : public BoardItem {
 
 public:
 
-	Teleport(Location pairLocation);
+	/*Teleport(Location pairLocation);
 
-	Location launch();
+	Location launch();*/
 
-protected:
+	Teleport(Location location = { 0, 0 });
+	~Teleport();
+
+	void handleCollision(Item& item);
+	void handleCollision(Characters& item);
+	void handleCollision(Dwarf& item);
 
 private:
 

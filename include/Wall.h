@@ -5,8 +5,13 @@
 class Wall : public BoardItem {
 
 public:
+	
+	Wall(Location location = { 0, 0 });
+	~Wall();
 
-protected:
+	void handleCollision(Item& item);
+	void handleCollision(Characters& item);
+	void handleCollision(Dwarf& item);
 
 private:
 

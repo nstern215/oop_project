@@ -35,7 +35,6 @@ public:
 	void chengeDirection();
 	sf::Vector2f getDirection();
 
-
 private:
 
 	sf::Vector2f m_direction;
