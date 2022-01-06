@@ -26,8 +26,8 @@ void Controller::run()
 
 	buildBoard(col, row);
 
-	/*sf::Vector2f boardPosition = m_boardBorder.getPosition();*/
-	sf::Vector2f boardPosition(0,0);
+	sf::Vector2f boardPosition = m_boardBorder.getPosition();
+	//sf::Vector2f boardPosition(0,0);
 	
 	characters.push_back(new King({ 1, 1 }, boardPosition));
 	characters.push_back(new Mage({ 3, 1 }, boardPosition));
@@ -133,7 +133,7 @@ void Controller::buildBoard(int col, int row)
 	m_boardBorder.setFillColor(sf::Color::White);
 	//m_boardBorder.setOrigin(boardSize / 2.f);
 	//m_boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
-	//m_boardBorder.setPosition(boardOrigin);
+	m_boardBorder.setPosition(boardOrigin);
 }
 
 bool operator==(const Location& a, const Location& b)
