@@ -10,16 +10,16 @@ public:
 
 	Characters(Location location = {0,0});
     virtual ~Characters();
+
+    /*virtual void handleCollision(Characters& item) = 0;*/
+    //virtual void handleCollision(Dwarf& item) = 0;
 	
-    virtual void handleCollision(Item& item) = 0;
     virtual void handleCollision(Key& item) = 0;
     virtual void handleCollision(Ork& item) = 0;
     virtual void handleCollision(Throne& item) = 0;
     virtual void handleCollision(Gate& item) = 0;
     virtual void handleCollision(Fire& item) = 0;
     virtual void handleCollision(Teleport& item) = 0;
-    virtual void handleCollision(Characters& item) = 0;
-    virtual void handleCollision(Dwarf& item) = 0;
     virtual void handleCollision(Wall& item) = 0;
     virtual void handleCollision(Gift& item) = 0;
 	
@@ -34,4 +34,5 @@ protected:
     bool validateMove(sf::Vector2f destination);
 	
 	bool m_isActive;
+
 };

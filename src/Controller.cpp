@@ -29,6 +29,7 @@ void Controller::run()
 	characters.push_back(new Mage({2, 7}));
 
 	dwarfs.push_back(new Dwarf(1, {1, 1}));
+	dwarfs.push_back(new Dwarf(3, { 4, 1 }));
 
 	buildBoard(col, row);
 

@@ -25,53 +25,24 @@ bool King::gotToThrone(Location& location)
 	return m_throne;
 }
 
-void King::handleCollision(Fire& item)
-{
-	
-}
+void King::handleCollision(Fire& item){}
 
-void King::handleCollision(Gate& item)
-{
-	
-}
+void King::handleCollision(Gate& item){}
 
-void King::handleCollision(Item& item)
-{
-	
-}
+void King::handleCollision(Item& item){}
 
-void King::handleCollision(Key& item)
-{
-	
-}
+void King::handleCollision(Key& item){}
 
-void King::handleCollision(Ork& item)
-{
-	
-}
+void King::handleCollision(Ork& item){}
 
-void King::handleCollision(Teleport& item)
-{
-	
-}
+void King::handleCollision(Teleport& item){}
 
-void King::handleCollision(Characters& item)
-{
-}
+void King::handleCollision(Characters& item){}
 
-void King::handleCollision(Dwarf& item)
-{
-}
+void King::handleCollision(Dwarf& item){}
 
-void King::handleCollision(Wall& item)
-{
-}
+void King::handleCollision(Wall& item){}
 
-void King::handleCollision(Gift& item)
-{
-}
+void King::handleCollision(Gift& item){}
 
-void King::handleCollision(Throne& item)
-{
-	
-}
+void King::handleCollision(Throne& item){}

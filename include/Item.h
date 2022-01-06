@@ -29,14 +29,6 @@ public:
     virtual void handleCollision(Item& item) = 0;
     virtual void handleCollision(Characters& item) = 0;
     virtual void handleCollision(Dwarf& item) = 0;
-    virtual void handleCollision(Wall& item) = 0;
-    virtual void handleCollision(Gift& item) = 0;
-    virtual void handleCollision(Key& item) = 0;
-    virtual void handleCollision(Ork& item) = 0;
-    virtual void handleCollision(Throne& item) = 0;
-    virtual void handleCollision(Gate& item) = 0;
-    virtual void handleCollision(Fire& item) = 0;
-    virtual void handleCollision(Teleport& item) = 0;
 
     Location getLocation() const;
     void setPosition(sf::Vector2f position);
@@ -70,6 +62,7 @@ protected:
 
     sf::RectangleShape m_rectangle;
     Location m_location;
+
 	bool m_active;
 
 private:

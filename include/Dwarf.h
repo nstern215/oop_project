@@ -32,7 +32,9 @@ public:
 	void handleCollision(Gift& item) override;
 
 	void setDirection(const int& direction);
+	void chengeDirection();
 	sf::Vector2f getDirection();
+
 
 private:
 

@@ -42,6 +42,12 @@ void Dwarf::setDirection(const int& direction)
 	}
 }
 
+void Dwarf::chengeDirection()
+{
+	m_direction.x = -m_direction.x;
+	m_direction.y = -m_direction.y;
+}
+
 sf::Vector2f Dwarf::getDirection()
 {
 	return m_direction;
@@ -56,42 +62,29 @@ void Dwarf::handleCollision(Item& item)
 
 void Dwarf::handleCollision(Wall& item)
 {
-	m_direction.x = -m_direction.x;
-	m_direction.y = -m_direction.y;
-}
-
-void Dwarf::handleCollision(Key& item)
-{
-}
-
-void Dwarf::handleCollision(Ork& item)
-{
-}
-
-void Dwarf::handleCollision(Throne& item)
-{
+	this->chengeDirection();
 }
 
 void Dwarf::handleCollision(Gate& item)
 {
+	this->chengeDirection();
 }
 
 void Dwarf::handleCollision(Fire& item)
 {
+	this->chengeDirection();
 }
 
-void Dwarf::handleCollision(Teleport& item)
-{
-}
+void Dwarf::handleCollision(Characters& item) {}
 
-void Dwarf::handleCollision(Characters& item)
-{
-}
+void Dwarf::handleCollision(Key& item) {}
 
-void Dwarf::handleCollision(Dwarf& item)
-{
-}
+void Dwarf::handleCollision(Ork& item) {}
 
-void Dwarf::handleCollision(Gift& item)
-{
-}
+void Dwarf::handleCollision(Throne& item) {}
+
+void Dwarf::handleCollision(Teleport& item){}
+
+void Dwarf::handleCollision(Dwarf& item){}
+
+void Dwarf::handleCollision(Gift& item){}
