@@ -25,11 +25,11 @@ void Controller::run()
 	const int row = 10;
 	const int col = 10;
 
-	characters.push_back(new King({5, 5}));
-	characters.push_back(new Mage({2, 7}));
+	characters.push_back(new King({5, 5}, boardPosition));
+	characters.push_back(new Mage({2, 7}, boardPosition));
 
-	dwarfs.push_back(new Dwarf(1, {1, 1}));
-	dwarfs.push_back(new Dwarf(3, { 4, 1 }));
+	dwarfs.push_back(new Dwarf({1, 1}, boardPosition));
+	dwarfs.push_back(new Dwarf({ 4, 1 }, boardPosition));
 
 	buildBoard(col, row);
 

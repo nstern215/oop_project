@@ -132,6 +132,4 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 
 	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
 	//	return false;
-
-	return true;
 }
