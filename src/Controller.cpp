@@ -21,7 +21,7 @@ Controller::Controller() :
 void Controller::run()
 {
 	int activeCharacter = 0;
-	
+
 	const int row = 10;
 	const int col = 10;
 
@@ -33,6 +33,12 @@ void Controller::run()
 
 	buildBoard(col, row);
 
+	sf::Vector2f boardPosition = m_boardBorder.getPosition();
+	//sf::Vector2f boardPosition(0,0);
+	
+	characters.push_back(new King({ 1, 5 }, boardPosition));
+	characters.push_back(new Mage({ 3, 1 }, boardPosition));
+
 	m_window.setFramerateLimit(120);
 
 	/*auto shape = sf::RectangleShape({ 50, 50 });
@@ -40,9 +46,9 @@ void Controller::run()
 	shape.setFillColor(sf::Color(100, 100, 200));*/
 
 	sf::Clock clock;
-	
-	
-	while(m_window.isOpen())
+
+
+	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
 		m_window.draw(m_boardBorder);
@@ -74,12 +80,12 @@ void Controller::run()
 					characters[activeCharacter]->setActive(true);
 				}
 				break;
-			/*case sf::Event::Resized:
-				m_windowWidth = event.size.width;
-				m_windowHeight = event.size.height;
+				/*case sf::Event::Resized:
+					m_windowWidth = event.size.width;
+					m_windowHeight = event.size.height;
 
-				buildBoard(row, col);
-				break;*/
+					buildBoard(row, col);
+					break;*/
 			}
 		}
 
@@ -109,15 +115,15 @@ sf::Vector2f Controller::getMovingDirection()
 }
 
 //todo: change method name
-Item* Controller::getItem(Location l)
+Item* Controller::getItem(const Location l)
 {
-	/*for (auto*& item : characters)
+	for (auto*& item : characters)
 		if (item->getLocation() == l)
 			return item;
 
 	for (auto*& item : boardItems)
 		if (item->getLocation() == l)
-			return item;*/
+			return item;
 
 	return nullptr;
 }
@@ -146,4 +152,9 @@ void Controller::buildBoard(int col, int row)
 bool operator==(const Location& a, const Location& b)
 {
 	return a.m_row == b.m_row && a.m_col == b.m_col;
+}
+
+bool operator!=(const Location& a, const Location& b)
+{
+	return !(a == b);
 }

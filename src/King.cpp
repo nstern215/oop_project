@@ -1,8 +1,8 @@
 #include "King.h"
 #include "ResourcesService.h"
 
-King::King(Location location)
-	:Characters(location)
+King::King(Location location, sf::Vector2f boardLocation)
+	:Characters(location, boardLocation)
 {
 	m_throne = false;
 
@@ -19,30 +19,35 @@ King::~King()
 	
 }
 
-
 bool King::gotToThrone(Location& location)
 {
 	return m_throne;
 }
 
-void King::handleCollision(Fire& item){}
+void King::handleCollision(Item* item)
+{
+	if (item == this)
+		return;
 
-void King::handleCollision(Gate& item){}
+	item->handleCollision(this);
+}
 
-void King::handleCollision(Item& item){}
+void King::handleCollision(Key* item){}
 
-void King::handleCollision(Key& item){}
+void King::handleCollision(Ork* item){}
 
-void King::handleCollision(Ork& item){}
+void King::handleCollision(Throne* item){}
 
-void King::handleCollision(Teleport& item){}
+void King::handleCollision(Gate* item){}
 
-void King::handleCollision(Characters& item){}
+void King::handleCollision(Fire* item){}
 
-void King::handleCollision(Dwarf& item){}
+void King::handleCollision(Teleport* item){}
 
-void King::handleCollision(Wall& item){}
+void King::handleCollision(Characters* item){}
 
-void King::handleCollision(Gift& item){}
+void King::handleCollision(Dwarf* item){}
 
-void King::handleCollision(Throne& item){}
+void King::handleCollision(Wall* item){}
+
+void King::handleCollision(Gift* item){}

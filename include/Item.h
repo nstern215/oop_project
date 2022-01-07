@@ -21,14 +21,14 @@ class Item {
 
 public:
 
-    Item(Location location = {0,0}, float speedPerSecond = 200.f);
+    Item(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 }, float speedPerSecond = 200.f);
     virtual ~Item();
 
-    bool checkCollision(const Item& other) const;
+    //bool checkCollision(const Item& other) const;
 
-    virtual void handleCollision(Item& item) = 0;
-    virtual void handleCollision(Characters& item) = 0;
-    virtual void handleCollision(Dwarf& item) = 0;
+    virtual void handleCollision(Item* item) = 0;
+    virtual void handleCollision(Characters* item) = 0;
+    virtual void handleCollision(Dwarf* item) = 0;
 
     Location getLocation() const;
     void setPosition(sf::Vector2f position);
@@ -60,6 +60,7 @@ protected:
 
     float m_speedPerSecond;
 
+    sf::Vector2f m_boardLocation;
     sf::RectangleShape m_rectangle;
     Location m_location;
 

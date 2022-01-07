@@ -29,7 +29,7 @@ public:
 	
 	std::string convertChatToItem(char c) const;
 
-	Item* getItem(Location l);
+	Item* getItem(const Location l);
 
 private:
 	sf::Vector2f getMovingDirection();
@@ -46,10 +46,6 @@ private:
 	std::vector<Characters> m_characters;
 	std::vector<Dwarf> m_dwarfs;
 	std::vector<sf::Texture*> m_textures;
-
-
-	//Menu m_menu;
-	//Board m_board;
   
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
@@ -63,3 +59,6 @@ private:
 	std::vector<Characters*> characters;
 	std::vector<Dwarf*> dwarfs;
 };
+
+bool operator==(const Location& a, const Location& b);
+bool operator!=(const Location& a, const Location& b);

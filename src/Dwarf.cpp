@@ -1,16 +1,18 @@
 #include "Dwarf.h"
 #include "ResourcesService.h"
 
-Dwarf::Dwarf(int go, Location location)
-	:Characters(location)
+Dwarf::Dwarf(Location location, sf::Vector2f boardLocation)
+	:Characters(location, boardLocation)
 {
-	setDirection(go);
+	m_go = rand() % 4;
+
+	setDirection(m_go);
 
 	setActive(true);
 
 	m_rectangle.setFillColor(sf::Color::White);
 
-	sf::Texture* t = ResourcesService::instance()->getTexture("ork.png");
+	sf::Texture* t = ResourcesService::instance()->getTexture("dwarf.png");
 
 	//sf::Texture* t = new sf::Texture();
 	//t->loadFromFile("crown.png");
@@ -53,38 +55,32 @@ sf::Vector2f Dwarf::getDirection()
 	return m_direction;
 }
 
-void Dwarf::handleCollision(Item& item)
+void Dwarf::handleCollision(Item* item)
 {
-	if (&item == this) return;
-	
-	item.handleCollision(*this);
+	if (item == this)
+		return;
+
+	item->handleCollision(this);
 }
 
-void Dwarf::handleCollision(Wall& item)
+void Dwarf::handleCollision(Key* item){}
+
+void Dwarf::handleCollision(Ork* item){}
+
+void Dwarf::handleCollision(Throne* item){}
+
+void Dwarf::handleCollision(Gate* item){}
+
+void Dwarf::handleCollision(Fire* item){}
+
+void Dwarf::handleCollision(Teleport* item){}
+
+void Dwarf::handleCollision(Characters* item)
 {
-	this->chengeDirection();
 }
 
-void Dwarf::handleCollision(Gate& item)
-{
-	this->chengeDirection();
-}
+void Dwarf::handleCollision(Dwarf* item){}
 
-void Dwarf::handleCollision(Fire& item)
-{
-	this->chengeDirection();
-}
+void Dwarf::handleCollision(Wall* item){}
 
-void Dwarf::handleCollision(Characters& item) {}
-
-void Dwarf::handleCollision(Key& item) {}
-
-void Dwarf::handleCollision(Ork& item) {}
-
-void Dwarf::handleCollision(Throne& item) {}
-
-void Dwarf::handleCollision(Teleport& item){}
-
-void Dwarf::handleCollision(Dwarf& item){}
-
-void Dwarf::handleCollision(Gift& item){}
+void Dwarf::handleCollision(Gift* item){}
