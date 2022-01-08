@@ -115,6 +115,9 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 			destLocation.m_row += 1;
 	}
 
+	if ((destLocation.m_col < 0) || (destLocation.m_row < 0))
+		return false;
+
 	Item* destItem = controller.getItem(destLocation);
 
 	if (!destItem)
@@ -122,7 +125,7 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	else
 	{
 		destItem->handleCollision(controller.getItem(position));
-		if (position == destLocation)
+		if ()
 			return true;
 		else
 			return false;

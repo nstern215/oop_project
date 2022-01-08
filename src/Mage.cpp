@@ -21,8 +21,7 @@ void Mage::handleCollision(Item* item)
 {
 	if (item == this)
 		return;
-
-	item->handleCollision(this);
+item->handleCollision(this);
 }
 
 void Mage::handleCollision(Key* item){}

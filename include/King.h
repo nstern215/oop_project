@@ -9,6 +9,9 @@ public:
 	King(Location location = {0,0}, sf::Vector2f boardLocation = {0,0});
     ~King();
 	
+	void sitInThrone();
+	bool isAtThrone();
+
 	void handleCollision(Item* item) override;
 	void handleCollision(Key* item) override;
 	void handleCollision(Ork* item) override;

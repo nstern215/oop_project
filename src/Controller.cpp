@@ -16,20 +16,12 @@ Controller::Controller() :
 	m_bgColor(39, 72, 245, 0.8)
 {}
 
-
-
 void Controller::run()
 {
 	int activeCharacter = 0;
 
 	const int row = 10;
 	const int col = 10;
-
-	characters.push_back(new King({5, 5}, boardPosition));
-	characters.push_back(new Mage({2, 7}, boardPosition));
-
-	dwarfs.push_back(new Dwarf({1, 1}, boardPosition));
-	dwarfs.push_back(new Dwarf({ 4, 1 }, boardPosition));
 
 	buildBoard(col, row);
 
@@ -38,6 +30,10 @@ void Controller::run()
 	
 	characters.push_back(new King({ 1, 5 }, boardPosition));
 	characters.push_back(new Mage({ 3, 1 }, boardPosition));
+
+	dwarfs.push_back(new Dwarf({ 1, 1 }, boardPosition));
+	dwarfs.push_back(new Dwarf({ 4, 1 }, boardPosition));
+
 
 	m_window.setFramerateLimit(120);
 
@@ -97,7 +93,6 @@ void Controller::run()
 		
 		for (auto& d : dwarfs)
 			d->move(d->getDirection(), deltaTime, *this);
-		
 	}
 }
 
@@ -121,6 +116,10 @@ Item* Controller::getItem(const Location l)
 		if (item->getLocation() == l)
 			return item;
 
+	for (auto*& item : dwarfs)
+		if (item->getLocation() == l)
+			return item;
+
 	for (auto*& item : boardItems)
 		if (item->getLocation() == l)
 			return item;
@@ -128,17 +127,17 @@ Item* Controller::getItem(const Location l)
 	return nullptr;
 }
 
-
 void Controller::buildBoard(int col, int row)
 {
 	const auto windowSize = m_window.getSize();
 
 	const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
+	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
+	
 	/*const auto itemWidth = boardSize.x / col;
 	const auto itemHeight = boardSize.y / row;*/
 
-	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
 	m_boardBorder.setOutlineThickness(8);
@@ -148,6 +147,11 @@ void Controller::buildBoard(int col, int row)
 	//m_boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
 	m_boardBorder.setPosition(boardOrigin);
 }
+
+//sf::RectangleShape Controller::getBoardBorder()
+//{
+//	return m_boardBorder;
+//}
 
 bool operator==(const Location& a, const Location& b)
 {

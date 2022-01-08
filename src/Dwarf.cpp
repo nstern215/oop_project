@@ -63,24 +63,34 @@ void Dwarf::handleCollision(Item* item)
 	item->handleCollision(this);
 }
 
+void Dwarf::handleCollision(Wall* item)
+{
+	this->chengeDirection();
+}
+
+void Dwarf::handleCollision(Ork* item) 
+{
+	this->chengeDirection();
+}
+
+void Dwarf::handleCollision(Throne* item) 
+{
+	this->chengeDirection();
+}
+
+void Dwarf::handleCollision(Fire* item) 
+{
+	this->chengeDirection();
+}
+
 void Dwarf::handleCollision(Key* item){}
-
-void Dwarf::handleCollision(Ork* item){}
-
-void Dwarf::handleCollision(Throne* item){}
 
 void Dwarf::handleCollision(Gate* item){}
 
-void Dwarf::handleCollision(Fire* item){}
-
 void Dwarf::handleCollision(Teleport* item){}
 
-void Dwarf::handleCollision(Characters* item)
-{
-}
+void Dwarf::handleCollision(Characters* item){}
 
 void Dwarf::handleCollision(Dwarf* item){}
-
-void Dwarf::handleCollision(Wall* item){}
 
 void Dwarf::handleCollision(Gift* item){}
