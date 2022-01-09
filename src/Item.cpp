@@ -3,7 +3,8 @@
 Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 	m_location(location),
 	m_boardLocation(boardLocation),
-	m_speedPerSecond(speedPerSecond)
+	m_speedPerSecond(speedPerSecond),
+	m_active(true)
 {
 	m_rectangle.setSize({80.f, 80.f});
 

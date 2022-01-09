@@ -12,9 +12,9 @@ public:
 
 protected:
 
-	void handleCollision(Item& item);
-	void handleCollision(Characters& item);
-	void handleCollision(Dwarf& item);
+	virtual void handleCollision(Item& item) = 0;
+	virtual void handleCollision(Characters& item) = 0;
+	virtual void handleCollision(Dwarf& item) = 0;
 
 private:
 

@@ -10,45 +10,72 @@ Mage::Mage(Location location, sf::Vector2f boardLocation)
 	//sf::Texture* t = new sf::Texture();
 	//t->loadFromFile("crown.png");
 
-	//m_rectangle.setTexture(t, true);
+	m_rectangle.setTexture(t, true);
 }
 
 Mage::~Mage()
 {
-
 }
 
-void Mage::handleCollision(Fire& item)
+bool Mage::gotToEdge()
 {
-
+	return false;
 }
 
-void Mage::handleCollision(Gate& item)
+bool Mage::handleCollision(Item* item)
 {
+	if(item == this)
+	return false;
 
+	return item->handleCollision(this);
 }
 
-void Mage::handleCollision(Item& item)
+bool Mage::handleCollision(Fire* item)
 {
-
+	return true;
 }
 
-void Mage::handleCollision(Key& item)
+bool Mage::handleCollision(Teleport* item)
 {
-
+	return true;
 }
 
-void Mage::handleCollision(Ork& item)
+bool Mage::handleCollision(Gift* item)
 {
-
+	return true;
 }
 
-void Mage::handleCollision(Teleport& item)
+bool Mage::handleCollision(Key* item)
 {
-
+	return true;
 }
 
-void Mage::handleCollision(Throne& item)
+bool Mage::handleCollision(Ork* item)
 {
+	return false;
+}
 
+bool Mage::handleCollision(Throne* item)
+{
+	return false;
+}
+
+bool Mage::handleCollision(Gate* item) 
+{
+	return false;
+}
+
+bool Mage::handleCollision(Characters* item) 
+{
+	return false;
+}
+
+bool Mage::handleCollision(Dwarf* item)
+{
+	return false;
+}
+
+bool Mage::handleCollision(Wall* item)
+{
+	return false;
 }

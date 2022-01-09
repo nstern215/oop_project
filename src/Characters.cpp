@@ -31,7 +31,7 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 
 	//todo: if m_location != destLocation - collision!
 	//if (destLocation != m_location)
-	if (m_location != destLocation && !validateMove(destination, controller))
+	if (m_location != destLocation && !validateMove(m_location, destination, controller))
 		return;
 
 	m_location = destLocation;
@@ -76,7 +76,6 @@ Location Characters::calcNewLocation(sf::Vector2f step)
 	return destination;
 }
 
-
 bool Characters::isActive() const
 {
 	return m_isActive;
@@ -93,7 +92,7 @@ void Characters::setActive(bool active)
 	m_isActive = active;
 }
 
-bool Characters::validateMove(sf::Vector2f destination, Controller& controller)
+bool Characters::validateMove(Location& position, sf::Vector2f destination, Controller& controller)
 {
 	if (destination.x == 0 && destination.y == 0)
 		return false;
@@ -115,29 +114,27 @@ bool Characters::validateMove(sf::Vector2f destination, Controller& controller)
 			destLocation.m_row += 1;
 	}
 
+	if ((destLocation.m_col < 0) ||
+		(destLocation.m_row < 0) ||
+		(destLocation.m_col > controller.getBoardSize().x)||
+		(destLocation.m_row > controller.getBoardSize().y))
+		return gotToEdge();
+
 	Item* destItem = controller.getItem(destLocation);
 
 	if (!destItem)
 		return true;
+	else
+	{
+		destItem->handleCollision(controller.getItem(position));
+		if (!destItem)
+			return true;
+		else
+			return false;
+	}
+	
+	//todo: handle collision
 
-	if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
-		return false;
-
-	return true;
-}
-
-void Characters::handleCollision(Characters& item)
-{
-}
-
-void Characters::handleCollision(Dwarf& item)
-{
-}
-
-void Characters::handleCollision(Wall& item)
-{
-}
-
-void Characters::handleCollision(Gift& item)
-{
+	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
+	//	return false;
 }
