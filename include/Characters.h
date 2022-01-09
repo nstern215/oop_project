@@ -14,14 +14,17 @@ public:
     /*virtual void handleCollision(Characters& item) = 0;*/
     //virtual void handleCollision(Dwarf& item) = 0;
 	
-    virtual void handleCollision(Key* item) = 0;
-    virtual void handleCollision(Ork* item) = 0;
-    virtual void handleCollision(Throne* item) = 0;
-    virtual void handleCollision(Gate* item) = 0;
-    virtual void handleCollision(Fire* item) = 0;
-    virtual void handleCollision(Teleport* item) = 0;
-    virtual void handleCollision(Wall* item) = 0;
-    virtual void handleCollision(Gift* item) = 0;
+    virtual bool gotToEdge() = 0;
+
+    virtual bool handleCollision(Key* item) = 0;
+    virtual bool handleCollision(Ork* item) = 0;
+    virtual bool handleCollision(Throne* item) = 0;
+    virtual bool handleCollision(Gate* item) = 0;
+    virtual bool handleCollision(Fire* item) = 0;
+    virtual bool handleCollision(Wall* item) = 0;
+
+    virtual bool handleCollision(Teleport* item) = 0;
+    virtual bool handleCollision(Gift* item) = 0;
 	
 	virtual void move(sf::Vector2f destination, float deltaTime, Controller& controller);
 	void setActive(bool active);

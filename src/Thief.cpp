@@ -9,26 +9,78 @@ Thief::~Thief()
 {
 }
 
-void Thief::collectKey(Location& location) {}
+void Thief::collectKey() 
+{
+	m_key = true;
+}
 
-void Thief::handleCollision(Item* item){}
+bool Thief::gotKey()
+{
+	return m_key;
+}
 
-void Thief::handleCollision(Key* item){}
+bool Thief::handleCollision(Item* item)
+{
+	if (item == this)
+		return false;
 
-void Thief::handleCollision(Ork* item){}
+	return item->handleCollision(this);
+}
 
-void Thief::handleCollision(Throne* item){}
+bool Thief::handleCollision(Gate* item)
+{
+	if (m_key == true)
+	{
+		m_key = false;
+		return true;
+	}
 
-void Thief::handleCollision(Gate* item){}
+	return false;
+}
 
-void Thief::handleCollision(Fire* item){}
+bool Thief::handleCollision(Key* item)
+{
+	this->collectKey();
 
-void Thief::handleCollision(Teleport* item){}
+	return true;
+}
 
-void Thief::handleCollision(Characters* item){}
+bool Thief::handleCollision(Gift* item)
+{
+	return true;
+}
 
-void Thief::handleCollision(Dwarf* item){}
+bool Thief::handleCollision(Teleport* item)
+{
+	return true;
+}
 
-void Thief::handleCollision(Wall* item){}
+bool Thief::handleCollision(Ork* item)
+{
+	return false;
+}
 
-void Thief::handleCollision(Gift* item){}
+bool Thief::handleCollision(Throne* item)
+{
+	return false;
+}
+
+bool Thief::handleCollision(Fire* item)
+{
+	return false;
+}
+
+bool Thief::handleCollision(Characters* item)
+{
+	return false;
+}
+
+bool Thief::handleCollision(Dwarf* item)
+{
+	return false;
+}
+
+bool Thief::handleCollision(Wall* item)
+{
+	return false;
+}

@@ -76,7 +76,6 @@ Location Characters::calcNewLocation(sf::Vector2f step)
 	return destination;
 }
 
-
 bool Characters::isActive() const
 {
 	return m_isActive;
@@ -115,8 +114,11 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 			destLocation.m_row += 1;
 	}
 
-	if ((destLocation.m_col < 0) || (destLocation.m_row < 0))
-		return false;
+	if ((destLocation.m_col < 0) ||
+		(destLocation.m_row < 0) ||
+		(destLocation.m_col > controller.getBoardSize().x)||
+		(destLocation.m_row > controller.getBoardSize().y))
+		return gotToEdge();
 
 	Item* destItem = controller.getItem(destLocation);
 
@@ -125,7 +127,7 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	else
 	{
 		destItem->handleCollision(controller.getItem(position));
-		if ()
+		if (!destItem)
 			return true;
 		else
 			return false;

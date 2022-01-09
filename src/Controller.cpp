@@ -12,7 +12,7 @@
 #include "Dwarf.h"
 
 Controller::Controller() :
-	m_window(sf::VideoMode(800, 800), "Save the King", sf::Style::Default),
+	m_window(sf::VideoMode(1000, 1000), "Save the King", sf::Style::Default),
 	m_bgColor(39, 72, 245, 0.8)
 {}
 
@@ -32,7 +32,7 @@ void Controller::run()
 	characters.push_back(new Mage({ 3, 1 }, boardPosition));
 
 	dwarfs.push_back(new Dwarf({ 1, 1 }, boardPosition));
-	dwarfs.push_back(new Dwarf({ 4, 1 }, boardPosition));
+	dwarfs.push_back(new Dwarf({ 2, 1 }, boardPosition));
 
 
 	m_window.setFramerateLimit(120);
@@ -125,6 +125,13 @@ Item* Controller::getItem(const Location l)
 			return item;
 
 	return nullptr;
+}
+
+sf::Vector2u Controller::getBoardSize()
+{
+	sf::Vector2u boardSize((m_window.getSize().x)/100, (m_window.getSize().y) / 100);
+
+	return boardSize;
 }
 
 void Controller::buildBoard(int col, int row)

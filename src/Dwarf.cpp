@@ -55,42 +55,78 @@ sf::Vector2f Dwarf::getDirection()
 	return m_direction;
 }
 
-void Dwarf::handleCollision(Item* item)
+bool Dwarf::gotToEdge()
+{
+	chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Item* item)
 {
 	if (item == this)
-		return;
+		return false;
 
-	item->handleCollision(this);
+	return item->handleCollision(this);
 }
 
-void Dwarf::handleCollision(Wall* item)
+bool Dwarf::handleCollision(Wall* item)
 {
 	this->chengeDirection();
+	
+	return false;
 }
 
-void Dwarf::handleCollision(Ork* item) 
+bool Dwarf::handleCollision(Ork* item) 
 {
 	this->chengeDirection();
+
+	return false;
 }
 
-void Dwarf::handleCollision(Throne* item) 
+bool Dwarf::handleCollision(Throne* item) 
 {
 	this->chengeDirection();
+
+	return false;
 }
 
-void Dwarf::handleCollision(Fire* item) 
+bool Dwarf::handleCollision(Fire* item) 
 {
 	this->chengeDirection();
+
+	return false;
 }
 
-void Dwarf::handleCollision(Key* item){}
+bool Dwarf::handleCollision(Gift* item)
+{
+	return true;
+}
 
-void Dwarf::handleCollision(Gate* item){}
+bool Dwarf::handleCollision(Teleport* item)
+{
+	return true;
+}
 
-void Dwarf::handleCollision(Teleport* item){}
+bool Dwarf::handleCollision(Key* item)
+{
+	return true;
+}
 
-void Dwarf::handleCollision(Characters* item){}
+bool Dwarf::handleCollision(Gate* item)
+{
+	this->chengeDirection();
 
-void Dwarf::handleCollision(Dwarf* item){}
+	return false;
+}
 
-void Dwarf::handleCollision(Gift* item){}
+bool Dwarf::handleCollision(Characters* item)
+{
+	this->chengeDirection();
+
+	return false;
+}
+
+bool Dwarf::handleCollision(Dwarf* item)
+{
+	return false;
+}

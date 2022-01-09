@@ -9,22 +9,25 @@ public:
 	Thief(Location location = { 0,0 });
 	~Thief();
 
-	void handleCollision(Item* item) override;
-	void handleCollision(Key* item) override;
-	void handleCollision(Ork* item) override;
-	void handleCollision(Throne* item) override;
-	void handleCollision(Gate* item) override;
-	void handleCollision(Fire* item) override;
-	void handleCollision(Teleport* item) override;
-	void handleCollision(Characters* item) override;
-	void handleCollision(Dwarf* item) override;
-	void handleCollision(Wall* item) override;
-	void handleCollision(Gift* item) override;
+	bool gotKey();
+
+	bool handleCollision(Item* item) override;
+	bool handleCollision(Key* item) override;
+	bool handleCollision(Ork* item) override;
+	bool handleCollision(Throne* item) override;
+	bool handleCollision(Gate* item) override;
+	bool handleCollision(Fire* item) override;
+	bool handleCollision(Characters* item) override;
+	bool handleCollision(Dwarf* item) override;
+	bool handleCollision(Wall* item) override;
+
+	bool handleCollision(Teleport* item) override;
+	bool handleCollision(Gift* item) override;
 
 
 private:
 
-	void collectKey(Location& location);
+	void collectKey();
 
 	bool m_key;
 

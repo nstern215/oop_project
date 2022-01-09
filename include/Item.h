@@ -26,9 +26,9 @@ public:
 
     //bool checkCollision(const Item& other) const;
 
-    virtual void handleCollision(Item* item) = 0;
-    virtual void handleCollision(Characters* item) = 0;
-    virtual void handleCollision(Dwarf* item) = 0;
+    virtual bool handleCollision(Item* item) = 0;
+    virtual bool handleCollision(Characters* item) = 0;
+    virtual bool handleCollision(Dwarf* item) = 0;
 
     Location getLocation() const;
     void setPosition(sf::Vector2f position);

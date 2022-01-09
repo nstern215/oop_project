@@ -34,36 +34,67 @@ bool King::gotToThrone(Location& location)
 	return m_throne;
 }
 
-void King::handleCollision(Item* item)
+bool King::gotToEdge()
+{
+	return false;
+}
+
+bool King::handleCollision(Item* item)
 {
 	if (item == this)
-		return;
+		return false;
 
-	item->handleCollision(this);
+	return item->handleCollision(this);
 }
 
-void King::handleCollision(Throne* item)
+bool King::handleCollision(Throne* item)
 {
 	this->sitInThrone();
+
+	return true;
 }
 
-void King::handleCollision(Teleport* item) 
+bool King::handleCollision(Teleport* item)
 {
-
+	return true;
 }
 
-void King::handleCollision(Gift* item) {}
+bool King::handleCollision(Gift* item) 
+{
+	return true;
+}
 
-void King::handleCollision(Key* item){}
+bool King::handleCollision(Key* item)
+{
+	return true;
+}
 
-void King::handleCollision(Ork* item){}
+bool King::handleCollision(Ork* item)
+{
+	return false;
+}
 
-void King::handleCollision(Gate* item){}
+bool King::handleCollision(Gate* item)
+{
+	return false;
+}
 
-void King::handleCollision(Fire* item){}
+bool King::handleCollision(Fire* item)
+{
+	return false;
+}
 
-void King::handleCollision(Characters* item){}
+bool King::handleCollision(Characters* item)
+{
+	return false;
+}
 
-void King::handleCollision(Dwarf* item){}
+bool King::handleCollision(Dwarf* item)
+{
+	return false;
+}
 
-void King::handleCollision(Wall* item){}
+bool King::handleCollision(Wall* item)
+{
+	return false;
+}

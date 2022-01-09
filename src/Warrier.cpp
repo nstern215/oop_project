@@ -9,28 +9,60 @@ Warrier::~Warrier()
 {
 }
 
-void Warrier::handleCollision(Item* item)
+bool Warrier::handleCollision(Item* item)
 {
+	if (item == this)
+		return false;
+
+	return item->handleCollision(this);
 }
 
-void Warrier::handleCollision(Key* item){}
+bool Warrier::handleCollision(Gift* item)
+{
+	return true;
+}
 
-void Warrier::handleCollision(Ork* item){}
+bool Warrier::handleCollision(Teleport* item)
+{
+	return true;
+}
 
-void Warrier::handleCollision(Throne* item){}
+bool Warrier::handleCollision(Ork* item)
+{
+	return true;
+}
 
-void Warrier::handleCollision(Gate* item){}
+bool Warrier::handleCollision(Key* item)
+{
+	return true;
+}
 
-void Warrier::handleCollision(Fire* item){}
+bool Warrier::handleCollision(Throne* item)
+{
+	return false;
+}
 
-void Warrier::handleCollision(Teleport* item){}
+bool Warrier::handleCollision(Gate* item)
+{
+	return false;
+}
 
-void Warrier::handleCollision(Characters* item){}
+bool Warrier::handleCollision(Fire* item)
+{
+	return false;
+}
 
-void Warrier::handleCollision(Dwarf* item){}
+bool Warrier::handleCollision(Characters* item)
+{
+	return false;
+}
 
-void Warrier::handleCollision(Wall* item){}
+bool Warrier::handleCollision(Dwarf* item)
+{
+	return false;
+}
 
-void Warrier::handleCollision(Gift* item){}
-
-
+bool Warrier::handleCollision(Wall* item)
+{
+	return false;
+}
