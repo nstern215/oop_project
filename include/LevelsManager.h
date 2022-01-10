@@ -9,7 +9,7 @@
 class LevelsManager
 {
 public:
-	~LevelsManager() = default;
+	~LevelsManager();
 
 	static LevelsManager* instance();
 	

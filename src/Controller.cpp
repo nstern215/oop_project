@@ -8,6 +8,7 @@
 #include "BoardItem.h"
 #include "Characters.h"
 #include "King.h"
+#include "LevelsManager.h"
 #include "Mage.h"
 
 Controller::Controller() :
@@ -19,6 +20,8 @@ Controller::Controller() :
 
 void Controller::run()
 {
+	m_currentLevel = LevelsManager::instance()->loadLevel(0);
+
 	int activeCharacter = 0;
 
 	const int row = 10;
@@ -28,9 +31,9 @@ void Controller::run()
 
 	sf::Vector2f boardPosition = m_boardBorder.getPosition();
 	//sf::Vector2f boardPosition(0,0);
-	
-	characters.push_back(new King({ 1, 1 }, boardPosition));
-	characters.push_back(new Mage({ 3, 1 }, boardPosition));
+
+	/*characters.push_back(new King({ 1, 1 }, boardPosition));
+	characters.push_back(new Mage({ 3, 1 }, boardPosition));*/
 
 	m_window.setFramerateLimit(120);
 
@@ -47,11 +50,12 @@ void Controller::run()
 		m_window.draw(m_boardBorder);
 		//m_window.draw(shape);
 
-		for (auto& item : characters)
+		//for (auto& item : characters)
+		for (auto& item : m_currentLevel->m_characters)
 			if (!item->isActive())
 				item->draw(m_window);
 
-		characters[activeCharacter]->draw(m_window);
+		m_currentLevel->m_characters[activeCharacter]->draw(m_window);
 
 		m_window.display();
 
@@ -65,9 +69,9 @@ void Controller::run()
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Key::P)
 				{
-					characters[activeCharacter]->setActive(false);
-					activeCharacter = (activeCharacter + 1) % characters.size();
-					characters[activeCharacter]->setActive(true);
+					m_currentLevel->m_characters[activeCharacter]->setActive(false);
+					activeCharacter = (activeCharacter + 1) % m_currentLevel->m_characters.size();
+					m_currentLevel->m_characters[activeCharacter]->setActive(true);
 				}
 				break;
 				/*case sf::Event::Resized:
@@ -83,7 +87,7 @@ void Controller::run()
 		auto deltaTime = clock.restart().asSeconds();
 
 		if (moveDirection.x != 0 || moveDirection.y != 0)
-			for (auto& c : characters)
+			for (auto& c : m_currentLevel->m_characters)
 				c->move(moveDirection, deltaTime, *this);
 	}
 }
@@ -104,9 +108,9 @@ sf::Vector2f Controller::getMovingDirection()
 //todo: change method name
 Item* Controller::getItem(const Location l)
 {
-	for (auto*& item : characters)
+	for (auto& item : m_currentLevel->m_characters)
 		if (item->getLocation() == l)
-			return item;
+			return item.get();
 
 	for (auto*& item : boardItems)
 		if (item->getLocation() == l)
