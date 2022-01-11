@@ -10,6 +10,7 @@
 
 #include "BoardItem.h"
 #include "Characters.h"
+#include "Clock.h"
 #include "Dwarf.h"
 
 class Controller{
@@ -49,7 +50,8 @@ private:
 	std::vector<Dwarf> m_dwarfs;
 	std::vector<sf::Texture*> m_textures;
 
-
+	Clock m_gameClock;
+	
 	//Menu m_menu;
 	//Board m_board;
   

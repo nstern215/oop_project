@@ -13,3 +13,4 @@ configure_file ("add.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("key.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("mage.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Hypeblox.ttf" ${CMAKE_BINARY_DIR} COPYONLY) #font
