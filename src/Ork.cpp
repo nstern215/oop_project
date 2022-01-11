@@ -1,22 +1,32 @@
 #include "Ork.h"
+#include "ResourcesService.h"
 
-Ork::Ork(Location location)
-	:BoardItem(location)
+Ork::Ork(Location location, sf::Vector2f boardLocation)
+	:BoardItem(location, boardLocation) 
 {
+	sf::Texture* t = ResourcesService::instance()->getTexture("ork.png");
+
+	//sf::Texture* t = new sf::Texture();
+	//t->loadFromFile("crown.png");
+
+	m_rectangle.setTexture(t, true);
 }
 
 Ork::~Ork()
 {
 }
 
-void Ork::handleCollision(Item& item)
+bool Ork::handleCollision(Item& item)
 {
+	return item.handleCollision(this);
 }
 
-void Ork::handleCollision(Characters& item)
+bool Ork::handleCollision(Characters& item)
 {
+	return true;
 }
 
-void Ork::handleCollision(Dwarf& item)
+bool Ork::handleCollision(Dwarf& item)
 {
+	return false;
 }

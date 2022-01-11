@@ -1,16 +1,33 @@
 #include "Teleport.h"
+#include "ResourcesService.h"
 
-Teleport::Teleport(Location location)
-	:BoardItem(location)
+Teleport::Teleport(Location location, sf::Vector2f boardLocation)
+	:BoardItem(location, boardLocation)
 {
+	sf::Texture* t = ResourcesService::instance()->getTexture("teleport.png");
+
+	//sf::Texture* t = new sf::Texture();
+	//t->loadFromFile("crown.png");
+
+	m_rectangle.setTexture(t, true);
 }
 
 Teleport::~Teleport()
 {
 }
 
-void Teleport::handleCollision(Item& item){}
+bool Teleport::handleCollision(Item& item)
+{
+	return item.handleCollision(this);
+}
 
-void Teleport::handleCollision(Characters& item){}
+bool Teleport::handleCollision(Characters& item)
+{
+	/*if(item == )*/
+	return true;
+}
 
-void Teleport::handleCollision(Dwarf& item) {}
+bool Teleport::handleCollision(Dwarf& item)
+{
+	return false;
+}

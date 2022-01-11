@@ -34,6 +34,11 @@ void Controller::run()
 	dwarfs.push_back(new Dwarf({ 1, 1 }, boardPosition));
 	dwarfs.push_back(new Dwarf({ 2, 1 }, boardPosition));
 
+	//boardItems.push_back(new Wall({ 7,7 }, boardPosition));
+	//boardItems.push_back(new Wall({ 6,7 }, boardPosition));
+	//boardItems.push_back(new Wall({ 5,7 }, boardPosition));
+	//boardItems.push_back(new Wall({ 4,7 }, boardPosition));
+
 
 	m_window.setFramerateLimit(120);
 

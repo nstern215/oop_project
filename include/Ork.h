@@ -6,12 +6,12 @@ class Ork : public BoardItem {
 
 public:
 	
-	Ork(Location location = { 0, 0 });
+	Ork(Location location = { 0, 0 }, sf::Vector2f boardLocation = { 0, 0 });
 	~Ork();
 
-	void handleCollision(Item& item);
-	void handleCollision(Characters& item);
-	void handleCollision(Dwarf& item);
+	bool handleCollision(Item& item);
+	bool handleCollision(Characters& item);
+	bool handleCollision(Dwarf& item);
 
 private:
 

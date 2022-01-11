@@ -8,14 +8,12 @@ class BoardItem : public Item {
 
 public:
 
-	BoardItem(Location location = {0, 0});
+	BoardItem(Location location = {0, 0}, sf::Vector2f boardLocation = { 0, 0 });
+	~BoardItem();
 
 protected:
 
-	virtual void handleCollision(Item& item) = 0;
-	virtual void handleCollision(Characters& item) = 0;
-	virtual void handleCollision(Dwarf& item) = 0;
-
-private:
-
+	virtual bool handleCollision(Item& item) = 0;
+	virtual bool handleCollision(Characters& item) = 0;
+	virtual bool handleCollision(Dwarf& item) = 0;
 };

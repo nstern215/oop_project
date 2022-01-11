@@ -9,9 +9,9 @@ public:
 	Wall(Location location = { 0, 0 });
 	~Wall();
 
-	void handleCollision(Item& item);
-	void handleCollision(Characters& item);
-	void handleCollision(Dwarf& item);
+	bool handleCollision(Item& item);
+	bool handleCollision(Characters& item);
+	bool handleCollision(Dwarf& item);
 
 private:
 
