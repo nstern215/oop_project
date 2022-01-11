@@ -1,51 +1,52 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-#include "Controller.h"
-
 #include <iostream>
 
+#include "Controller.h"
+#include "Clock.h"
 #include "BoardItem.h"
 #include "Characters.h"
 #include "King.h"
 #include "Mage.h"
+#include "ResourcesService.h"
+
 
 Controller::Controller() :
 	m_window(sf::VideoMode(800, 800), "Save the King", sf::Style::Default),
 	m_bgColor(39, 72, 245, 0.8)
 {}
 
-
-
 void Controller::run()
-{
+{	
 	int activeCharacter = 0;
 
 	const int row = 10;
 	const int col = 10;
 
 	buildBoard(col, row);
-
+	
 	sf::Vector2f boardPosition = m_boardBorder.getPosition();
-	//sf::Vector2f boardPosition(0,0);
+
+	sf::Text statusLine;
+	statusLine.setFont(*(ResourcesService::instance()->getFont("Hypeblox.ttf")));
+	statusLine.setFillColor(sf::Color::Black);
+	statusLine.setCharacterSize(50);
+	statusLine.setPosition({ 10,10 });
 	
 	characters.push_back(new King({ 1, 1 }, boardPosition));
 	characters.push_back(new Mage({ 3, 1 }, boardPosition));
 
 	m_window.setFramerateLimit(120);
 
-	/*auto shape = sf::RectangleShape({ 50, 50 });
-	shape.setPosition(0, 0);
-	shape.setFillColor(sf::Color(100, 100, 200));*/
-
-	sf::Clock clock;
-
-
+	m_gameClock.reset();
+	statusLine.setString(m_gameClock.toString());
+	
 	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
 		m_window.draw(m_boardBorder);
-		//m_window.draw(shape);
+		m_window.draw(statusLine);
 
 		for (auto& item : characters)
 			if (!item->isActive())
@@ -80,11 +81,14 @@ void Controller::run()
 		}
 
 		auto moveDirection = getMovingDirection();
-		auto deltaTime = clock.restart().asSeconds();
+		//auto deltaTime = clock.restart().asSeconds();
+		auto deltaTime = m_gameClock.updateTime();
 
 		if (moveDirection.x != 0 || moveDirection.y != 0)
 			for (auto& c : characters)
 				c->move(moveDirection, deltaTime, *this);
+
+		statusLine.setString(m_gameClock.toString());
 	}
 }
 
@@ -125,7 +129,7 @@ void Controller::buildBoard(int col, int row)
 	/*const auto itemWidth = boardSize.x / col;
 	const auto itemHeight = boardSize.y / row;*/
 
-	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
+	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.08f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
 	m_boardBorder.setOutlineThickness(3);
