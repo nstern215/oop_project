@@ -31,7 +31,7 @@ public:
     virtual bool handleCollision(Dwarf* item) = 0;
 
     Location getLocation() const;
-    void setPosition(sf::Vector2f position);
+    void setBoardLocation(sf::Vector2f position);
     sf::Vector2f getPosition() const;
 
     virtual void draw(sf::RenderWindow& window);

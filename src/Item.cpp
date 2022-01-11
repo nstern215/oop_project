@@ -22,8 +22,15 @@ void Item::draw(sf::RenderWindow& window)
 	window.draw(m_rectangle);
 }
 
-void Item::setPosition(sf::Vector2f position)
+void Item::setBoardLocation(sf::Vector2f position)
 {
+	auto currentPosition = m_rectangle.getPosition();
+	currentPosition -= m_boardLocation;
+	
+	m_boardLocation = position;
+
+	currentPosition += m_boardLocation;
+
 	m_rectangle.setPosition(position);
 }
 
