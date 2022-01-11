@@ -1,16 +1,32 @@
 #include "Throne.h"
+#include "ResourcesService.h"
 
 Throne::Throne(Location location)
 	:BoardItem(location)
 {
+	sf::Texture* t = ResourcesService::instance()->getTexture("throne.png");
+
+	//sf::Texture* t = new sf::Texture();
+	//t->loadFromFile("crown.png");
+
+	m_rectangle.setTexture(t, true);
 }
 
 Throne::~Throne()
 {
 }
 
-void Throne::handleCollision(Item& item){}
+bool Throne::handleCollision(Item& item)
+{
+	return item.handleCollision(this);
+}
 
-void Throne::handleCollision(Characters& item){}
+bool Throne::handleCollision(Characters& item)
+{
+	return false;
+}
 
-void Throne::handleCollision(Dwarf& item){}
+bool Throne::handleCollision(Dwarf& item)
+{
+	return false;
+}
