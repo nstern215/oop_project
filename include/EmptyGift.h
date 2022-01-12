@@ -6,8 +6,8 @@ class EmptyGift : public Gift {
 
 public:
 
-protected:
+	EmptyGift(Location location = { 0, 0 }, sf::Vector2f boardLocation = { 0, 0 });
+	~EmptyGift();
 
-private:
-
+	bool handleCollision(Characters& item);
 };
