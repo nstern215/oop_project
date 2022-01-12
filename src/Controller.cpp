@@ -1,16 +1,17 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-#include "Controller.h"
-
 #include <iostream>
 
+#include "Controller.h"
+#include "Clock.h"
 #include "BoardItem.h"
 #include "Characters.h"
 #include "King.h"
 #include "LevelsManager.h"
 #include "Mage.h"
 #include "Dwarf.h"
+#include "ResourcesService.h"
 
 Controller::Controller() :
 	m_window(sf::VideoMode(1000, 1000), "Save the King", sf::Style::Default),
@@ -18,7 +19,7 @@ Controller::Controller() :
 {}
 
 void Controller::run()
-{
+{	
 	int activeCharacter = 0;
 
 	const int row = 10;
@@ -32,12 +33,24 @@ void Controller::run()
 	m_window.setFramerateLimit(120);
 
 	sf::Clock clock;
+	
+	sf::Vector2f boardPosition = m_boardBorder.getPosition();
 
+	sf::Text statusLine;
+	statusLine.setFont(*(ResourcesService::instance()->getFont("Hypeblox.ttf")));
+	statusLine.setFillColor(sf::Color::Black);
+	statusLine.setCharacterSize(50);
+	statusLine.setPosition({ 10,10 });
+
+	m_gameClock.reset();
+	statusLine.setString(m_gameClock.toString());
 
 	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
 		m_window.draw(m_boardBorder);
+
+		m_window.draw(statusLine);
 
 		for (auto& item : m_currentLevel->m_boardItems)
 			item->draw(m_window);
@@ -77,7 +90,8 @@ void Controller::run()
 			}
 		}
 		auto moveDirection = getMovingDirection();
-		auto deltaTime = clock.restart().asSeconds();
+		//auto deltaTime = clock.restart().asSeconds();
+		auto deltaTime = m_gameClock.updateTime();
 
 		for (auto& d : dwarfs)
 			d->move(d->getDirection(), deltaTime, *this);
@@ -85,6 +99,8 @@ void Controller::run()
 		if (moveDirection.x != 0 || moveDirection.y != 0)
 			for (auto& c : m_currentLevel->m_characters)
 				c->move(moveDirection, deltaTime, *this);
+
+		statusLine.setString(m_gameClock.toString());
 	}
 }
 
@@ -137,6 +153,7 @@ void Controller::buildBoard(int col, int row)
 	/*const auto itemWidth = boardSize.x / col;
 	const auto itemHeight = boardSize.y / row;*/
 
+	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.08f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
 	m_boardBorder.setOutlineThickness(8);

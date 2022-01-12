@@ -9,6 +9,7 @@
 
 #include "BoardItem.h"
 #include "Characters.h"
+#include "Clock.h"
 #include "Dwarf.h"
 #include "LevelData.h"
 
@@ -51,6 +52,8 @@ private:
 	std::vector<Characters> m_characters;
 	std::vector<Dwarf> m_dwarfs;
 	std::vector<sf::Texture*> m_textures;
+
+	Clock m_gameClock;
   
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;

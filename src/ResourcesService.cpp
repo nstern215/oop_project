@@ -20,7 +20,7 @@ ResourcesService::~ResourcesService()
 	delete m_instance;
 }
 
-//todo: is it copy the pointer?
+//todo: merge to a single method
 sf::Texture* ResourcesService::getTexture(std::string textureName)
 {
 	for (int i = 0; i < m_textureNames.size(); ++i)
@@ -32,6 +32,16 @@ sf::Texture* ResourcesService::getTexture(std::string textureName)
 	return nullptr;
 }
 
+sf::Font* ResourcesService::getFont(std::string fontName)
+{
+	for (int i = 0; i < m_fontNames.size(); ++i)
+		if (m_fontNames[i] == fontName)
+			return m_fonts[i];
+
+	std::cerr << "Font " << fontName << " not found" << std::endl;
+
+	return nullptr;
+}
 
 ResourcesService::ResourcesService()
 {
@@ -51,7 +61,10 @@ ResourcesService::ResourcesService()
 						"dwarf.png",
 						"gift.png"};
 
+	m_fontNames = { "Hypeblox.ttf" };
+
 	loadTexture();
+	loadFonts();
 }
 
 void ResourcesService::loadTexture()
@@ -64,3 +77,12 @@ void ResourcesService::loadTexture()
 	}
 }
 
+void ResourcesService::loadFonts()
+{
+	int counter = 0;
+	for (const auto& fontName : m_fontNames)
+	{
+		m_fonts.push_back(new sf::Font());
+		m_fonts[counter++]->loadFromFile(fontName);
+	}
+}
