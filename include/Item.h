@@ -24,24 +24,18 @@ public:
     Item(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 }, float speedPerSecond = 200.f);
     virtual ~Item();
 
-    bool checkCollision(const Item& other) const;
+    //bool checkCollision(const Item& other) const;
 
-    virtual void handleCollision(Item& item) = 0;
-    virtual void handleCollision(Characters& item) = 0;
-    virtual void handleCollision(Dwarf& item) = 0;
-    virtual void handleCollision(Wall& item) = 0;
-    virtual void handleCollision(Gift& item) = 0;
-    virtual void handleCollision(Key& item) = 0;
-    virtual void handleCollision(Ork& item) = 0;
-    virtual void handleCollision(Throne& item) = 0;
-    virtual void handleCollision(Gate& item) = 0;
-    virtual void handleCollision(Fire& item) = 0;
-    virtual void handleCollision(Teleport& item) = 0;
+    virtual bool handleCollision(Item* item) = 0;
+    virtual bool handleCollision(Characters* item) = 0;
+    virtual bool handleCollision(Dwarf* item) = 0;
 
     Location getLocation() const;
-    void setPosition(sf::Vector2f position);
+    void setBoardLocation(sf::Vector2f position);
     sf::Vector2f getPosition() const;
 
+    virtual void setSize(sf::Vector2f size);
+	
     virtual void draw(sf::RenderWindow& window);
 
     /*void setPosition(const sf::Vector2f& position);
@@ -71,6 +65,7 @@ protected:
     sf::Vector2f m_boardLocation;
     sf::RectangleShape m_rectangle;
     Location m_location;
+
 	bool m_active;
 
 private:

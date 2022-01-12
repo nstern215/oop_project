@@ -57,7 +57,9 @@ ResourcesService::ResourcesService()
 						"open.png",
 						"save.png",
 						"wall.png",
-						"mage.png" };
+						"mage.png",
+						"dwarf.png",
+						"gift.png"};
 
 	m_fontNames = { "Hypeblox.ttf" };
 

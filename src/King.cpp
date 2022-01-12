@@ -7,11 +7,8 @@ King::King(Location location, sf::Vector2f boardLocation)
 	m_throne = false;
 
 	sf::Texture* t = ResourcesService::instance()->getTexture("crown.png");
-
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
 	
-	//m_rectangle.setTexture(t, true);
+	m_rectangle.setTexture(t, true);
 }
 
 King::~King()
@@ -19,43 +16,82 @@ King::~King()
 	
 }
 
+void King::sitInThrone()
+{
+	m_throne == true;
+}
+
+bool King::isAtThrone()
+{
+	return m_throne;
+}
 
 bool King::gotToThrone(Location& location)
 {
 	return m_throne;
 }
 
-void King::handleCollision(Fire& item)
+bool King::gotToEdge()
 {
-	
+	return false;
 }
 
-void King::handleCollision(Gate& item)
+bool King::handleCollision(Item* item)
 {
-	
+	if (item == this)
+		return false;
+
+	return item->handleCollision(this);
 }
 
-void King::handleCollision(Item& item)
+bool King::handleCollision(Throne* item)
 {
-	
+	this->sitInThrone();
+
+	return true;
 }
 
-void King::handleCollision(Key& item)
+bool King::handleCollision(Teleport* item)
 {
-	
+	return true;
 }
 
-void King::handleCollision(Ork& item)
+bool King::handleCollision(Gift* item) 
 {
-	
+	return true;
 }
 
-void King::handleCollision(Teleport& item)
+bool King::handleCollision(Key* item)
 {
-	
+	return true;
 }
 
-void King::handleCollision(Throne& item)
+bool King::handleCollision(Ork* item)
 {
-	
+	return false;
+}
+
+bool King::handleCollision(Gate* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Fire* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Characters* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Dwarf* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Wall* item)
+{
+	return false;
 }

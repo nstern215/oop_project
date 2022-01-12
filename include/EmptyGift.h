@@ -6,10 +6,8 @@ class EmptyGift : public Gift {
 
 public:
 
-	void useGift(Controller& controller);
+	EmptyGift(Location location = { 0, 0 }, sf::Vector2f boardLocation = { 0, 0 });
+	~EmptyGift();
 
-protected:
-
-private:
-
+	bool handleCollision(Characters& item);
 };
