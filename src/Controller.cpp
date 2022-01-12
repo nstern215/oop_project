@@ -89,7 +89,6 @@ void Controller::run()
 					break;*/
 			}
 		}
-
 		auto moveDirection = getMovingDirection();
 		auto deltaTime = clock.restart().asSeconds();
 		

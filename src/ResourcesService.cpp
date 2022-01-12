@@ -48,7 +48,8 @@ ResourcesService::ResourcesService()
 						"save.png",
 						"wall.png",
 						"mage.png",
-						"dwarf.png"};
+						"dwarf.png",
+						"gift.png"};
 
 	loadTexture();
 }

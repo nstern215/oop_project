@@ -26,19 +26,19 @@ Dwarf::~Dwarf()
 
 void Dwarf::setDirection(const int& direction)
 {
-	if (direction == UP)
+	if(direction == UP)
 	{
 		m_direction = { -1,0 };
 	}
-	if (direction == DOWN)
+	if(direction == DOWN)
 	{
 		m_direction = { 1,0 };
 	}
-	if (direction == LEFT)
+	if(direction == LEFT)
 	{
 		m_direction = { 0,-1 };
 	}
-	if (direction == RIGHT)
+	if(direction == RIGHT)
 	{
 		m_direction = { 0,1 };
 	}
