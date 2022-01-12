@@ -16,17 +16,17 @@ Throne::~Throne()
 {
 }
 
-bool Throne::handleCollision(Item& item)
+bool Throne::handleCollision(Item* item)
 {
-	return item.handleCollision(this);
+	return item->handleCollision(this);
 }
 
-bool Throne::handleCollision(Characters& item)
+bool Throne::handleCollision(Characters* item)
 {
 	return false;
 }
 
-bool Throne::handleCollision(Dwarf& item)
+bool Throne::handleCollision(Dwarf* item)
 {
 	return false;
 }

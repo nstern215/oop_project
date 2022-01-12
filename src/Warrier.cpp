@@ -1,8 +1,11 @@
 #include "Warrier.h"
 
+#include "ResourcesService.h"
+
 Warrier::Warrier(Location location)
 	:Characters(location)
 {
+	m_rectangle.setTexture(ResourcesService::instance()->getTexture("warrior.png"), true);
 }
 
 Warrier::~Warrier()

@@ -9,7 +9,7 @@ Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 	m_rectangle.setSize({80.f, 80.f});
 
 	sf::Vector2f position(m_location.m_col * 80.f, m_location.m_row * 80.f);
-	position += boardLocation;
+	position += m_boardLocation;
 	
 	m_rectangle.setPosition(position);
 }
@@ -31,7 +31,7 @@ void Item::setBoardLocation(sf::Vector2f position)
 
 	currentPosition += m_boardLocation;
 
-	m_rectangle.setPosition(position);
+	m_rectangle.setPosition(currentPosition);
 }
 
 sf::Vector2f Item::getPosition() const
@@ -42,4 +42,14 @@ sf::Vector2f Item::getPosition() const
 Location Item::getLocation() const
 {
 	return m_location;
+}
+
+void Item::setSize(sf::Vector2f size)
+{
+	m_rectangle.setSize(size);
+
+	sf::Vector2f position(m_location.m_col * size.x, m_location.m_row * size.y);
+	position += m_boardLocation;
+
+	m_rectangle.setPosition(position);
 }

@@ -14,7 +14,7 @@ public:
     /*virtual void handleCollision(Characters& item) = 0;*/
     //virtual void handleCollision(Dwarf& item) = 0;
 	
-    virtual bool gotToEdge() = 0;
+    //virtual bool gotToEdge() = 0;
 
     virtual bool handleCollision(Key* item) = 0;
     virtual bool handleCollision(Ork* item) = 0;

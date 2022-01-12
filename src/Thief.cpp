@@ -1,8 +1,11 @@
 #include "Thief.h"
 
+#include "ResourcesService.h"
+
 Thief::Thief(Location location)
 	:Characters(location)
 {
+	m_rectangle.setTexture(ResourcesService::instance()->getTexture("thief.png"), true);
 }
 
 Thief::~Thief()

@@ -38,7 +38,8 @@ private:
 
 	sf::Vector2f getMovingDirection();
 	void buildBoard(int col, int row);
-
+	void initalizeLevel();
+	
 	//void save();
 	//std::string getInfoString() const;
 	//void setNewBoard();
@@ -61,8 +62,6 @@ private:
 	std::unique_ptr<LevelData> m_currentLevel;
 
 	//------------------------------------------
-	std::vector<BoardItem*> boardItems;
-	std::vector<Characters*> characters;
 	std::vector<Dwarf*> dwarfs;
 
 };

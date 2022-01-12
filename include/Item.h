@@ -34,6 +34,8 @@ public:
     void setBoardLocation(sf::Vector2f position);
     sf::Vector2f getPosition() const;
 
+    virtual void setSize(sf::Vector2f size);
+	
     virtual void draw(sf::RenderWindow& window);
 
     /*void setPosition(const sf::Vector2f& position);

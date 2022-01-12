@@ -1,8 +1,9 @@
 #include "Teleport.h"
 #include "ResourcesService.h"
 
-Teleport::Teleport(Location location, sf::Vector2f boardLocation)
-	:BoardItem(location, boardLocation)
+Teleport::Teleport(Location location, Location pairLocation, sf::Vector2f boardLocation)
+	:BoardItem(location, boardLocation),
+	m_pairLocation(pairLocation)
 {
 	sf::Texture* t = ResourcesService::instance()->getTexture("teleport.png");
 
@@ -16,18 +17,18 @@ Teleport::~Teleport()
 {
 }
 
-bool Teleport::handleCollision(Item& item)
+bool Teleport::handleCollision(Item* item)
 {
-	return item.handleCollision(this);
+	return item->handleCollision(this);
 }
 
-bool Teleport::handleCollision(Characters& item)
+bool Teleport::handleCollision(Characters* item)
 {
 	/*if(item == )*/
 	return true;
 }
 
-bool Teleport::handleCollision(Dwarf& item)
+bool Teleport::handleCollision(Dwarf* item)
 {
 	return false;
 }

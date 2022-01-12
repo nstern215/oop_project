@@ -16,17 +16,17 @@ Fire::~Fire()
 {
 }
 
-bool Fire::handleCollision(Item& item)
+bool Fire::handleCollision(Item* item)
 {
     return false;
 }
 
-bool Fire::handleCollision(Characters& item)
+bool Fire::handleCollision(Characters* item)
 {
     return false;
 }
 
-bool Fire::handleCollision(Dwarf& item)
+bool Fire::handleCollision(Dwarf* item)
 {
     return false;
 }

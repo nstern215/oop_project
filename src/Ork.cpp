@@ -16,17 +16,17 @@ Ork::~Ork()
 {
 }
 
-bool Ork::handleCollision(Item& item)
+bool Ork::handleCollision(Item* item)
 {
-	return item.handleCollision(this);
+	return item->handleCollision(this);
 }
 
-bool Ork::handleCollision(Characters& item)
+bool Ork::handleCollision(Characters* item)
 {
 	return true;
 }
 
-bool Ork::handleCollision(Dwarf& item)
+bool Ork::handleCollision(Dwarf* item)
 {
 	return false;
 }

@@ -16,17 +16,17 @@ Wall::~Wall()
 {
 }
 
-bool Wall::handleCollision(Item& item)
+bool Wall::handleCollision(Item* item)
 {
-	return item.handleCollision(this);
+	return item->handleCollision(this);
 }
 
-bool Wall::handleCollision(Characters& item)
+bool Wall::handleCollision(Characters* item)
 {
 	return false;
 }
 
-bool Wall::handleCollision(Dwarf& item)
+bool Wall::handleCollision(Dwarf* item)
 {
 	return false;
 }

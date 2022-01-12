@@ -9,9 +9,9 @@ public:
 	Throne(Location location = { 0, 0 });
 	~Throne();
 
-	bool handleCollision(Item& item);
-	bool handleCollision(Characters& item);
-	bool handleCollision(Dwarf& item);
+	bool handleCollision(Item* item) override;
+	bool handleCollision(Characters* item) override;
+	bool handleCollision(Dwarf* item) override;
 
 
 private:

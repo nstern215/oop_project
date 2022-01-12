@@ -116,9 +116,9 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 
 	if ((destLocation.m_col < 0) ||
 		(destLocation.m_row < 0) ||
-		(destLocation.m_col > controller.getBoardSize().x)||
+		(destLocation.m_col > controller.getBoardSize().x) ||
 		(destLocation.m_row > controller.getBoardSize().y))
-		return gotToEdge();
+		return false;
 
 	Item* destItem = controller.getItem(destLocation);
 

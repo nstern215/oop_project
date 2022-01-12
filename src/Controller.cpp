@@ -19,8 +19,6 @@ Controller::Controller() :
 
 void Controller::run()
 {
-	m_currentLevel = LevelsManager::instance()->loadLevel(0);
-
 	int activeCharacter = 0;
 
 	const int row = 10;
@@ -28,26 +26,10 @@ void Controller::run()
 
 	buildBoard(col, row);
 
-	sf::Vector2f boardPosition = m_boardBorder.getPosition();
-	//sf::Vector2f boardPosition(0,0);
-
-	/*characters.push_back(new King({ 1, 1 }, boardPosition));
-	characters.push_back(new Mage({ 3, 1 }, boardPosition));*/
-
-	dwarfs.push_back(new Dwarf({ 1, 1 }, boardPosition));
-	dwarfs.push_back(new Dwarf({ 2, 1 }, boardPosition));
-
-	//boardItems.push_back(new Wall({ 7,7 }, boardPosition));
-	//boardItems.push_back(new Wall({ 6,7 }, boardPosition));
-	//boardItems.push_back(new Wall({ 5,7 }, boardPosition));
-	//boardItems.push_back(new Wall({ 4,7 }, boardPosition));
-
+	m_currentLevel = LevelsManager::instance()->loadLevel(0);
+	initalizeLevel();
 
 	m_window.setFramerateLimit(120);
-
-	/*auto shape = sf::RectangleShape({ 50, 50 });
-	shape.setPosition(0, 0);
-	shape.setFillColor(sf::Color(100, 100, 200));*/
 
 	sf::Clock clock;
 
@@ -56,18 +38,19 @@ void Controller::run()
 	{
 		m_window.clear(m_bgColor);
 		m_window.draw(m_boardBorder);
-		//m_window.draw(shape);
 
-		//for (auto& item : characters)
+		for (auto& item : m_currentLevel->m_boardItems)
+			item->draw(m_window);
+
 		for (auto& item : m_currentLevel->m_characters)
 			if (!item->isActive())
 				item->draw(m_window);
-		
+
 		for (auto& item : dwarfs)
 			item->draw(m_window);
-    
-    characters[activeCharacter]->draw(m_window);
-    
+
+		m_currentLevel->m_characters[activeCharacter]->draw(m_window);
+
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -95,7 +78,7 @@ void Controller::run()
 		}
 		auto moveDirection = getMovingDirection();
 		auto deltaTime = clock.restart().asSeconds();
-		
+
 		for (auto& d : dwarfs)
 			d->move(d->getDirection(), deltaTime, *this);
 
@@ -129,16 +112,16 @@ Item* Controller::getItem(const Location l)
 		if (item->getLocation() == l)
 			return item;
 
-	for (auto*& item : boardItems)
+	for (auto& item : m_currentLevel->m_boardItems)
 		if (item->getLocation() == l)
-			return item;
+			return item.get();
 
 	return nullptr;
 }
 
 sf::Vector2u Controller::getBoardSize()
 {
-	sf::Vector2u boardSize((m_window.getSize().x)/100, (m_window.getSize().y) / 100);
+	sf::Vector2u boardSize((m_window.getSize().x) / 100, (m_window.getSize().y) / 100);
 
 	return boardSize;
 }
@@ -150,7 +133,7 @@ void Controller::buildBoard(int col, int row)
 	const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
 	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
-	
+
 	/*const auto itemWidth = boardSize.x / col;
 	const auto itemHeight = boardSize.y / row;*/
 
@@ -164,11 +147,26 @@ void Controller::buildBoard(int col, int row)
 	m_boardBorder.setPosition(boardOrigin);
 }
 
-//sf::RectangleShape Controller::getBoardBorder()
-//{
-//	return m_boardBorder;
-//}
+void Controller::initalizeLevel()
+{
+	const float item_width = m_boardBorder.getSize().x / static_cast<float>(m_currentLevel->m_cols);
+	const float item_height = m_boardBorder.getSize().y / static_cast<float>(m_currentLevel->m_rows);
+	const sf::Vector2f itemSize = { item_width, item_height };
 
+	for (auto& item : m_currentLevel->m_boardItems)
+	{
+		item->setBoardLocation(m_boardBorder.getPosition());
+		item->setSize(itemSize);
+	}
+
+	for (auto& item : m_currentLevel->m_characters)
+	{
+		item->setBoardLocation(m_boardBorder.getPosition());
+		item->setSize(itemSize);
+	}
+}
+
+//location operators
 bool operator==(const Location& a, const Location& b)
 {
 	return a.m_row == b.m_row && a.m_col == b.m_col;

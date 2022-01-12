@@ -16,17 +16,17 @@ Gate::~Gate()
 {
 }
 
-bool Gate::handleCollision(Item& item)
+bool Gate::handleCollision(Item* item)
 {
 	return false;
 }
 
-bool Gate::handleCollision(Characters& item)
+bool Gate::handleCollision(Characters* item)
 {
 	return false;
 }
 
-bool Gate::handleCollision(Dwarf& item)
+bool Gate::handleCollision(Dwarf* item)
 {
 	return false;
 }

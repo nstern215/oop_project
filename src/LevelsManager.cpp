@@ -85,21 +85,21 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 			
 			switch (line[i])
 			{
-			/*case '=':
-				levelData->m_boardItems.push_back(std::make_unique<Wall>());
+			case '=':
+				levelData->m_boardItems.push_back(std::make_unique<Wall>(location));
 				break;
 			case '*':
-				levelData->m_boardItems.push_back(std::make_unique<Fire>());
+				levelData->m_boardItems.push_back(std::make_unique<Fire>(location));
 				break;
 			case '#':
-				levelData->m_boardItems.push_back(std::make_unique<Gate>());
+				levelData->m_boardItems.push_back(std::make_unique<Gate>(location));
 				break;
 			case '!':
-				levelData->m_boardItems.push_back(std::make_unique<Ork>());
+				levelData->m_boardItems.push_back(std::make_unique<Ork>(location));
 				break;
 			case '@':
-				levelData->m_boardItems.push_back(std::make_unique<Throne>());
-				break;*/
+				levelData->m_boardItems.push_back(std::make_unique<Throne>(location));
+				break;
 			/*case 'X':
 				levelData->m_boardItems.push_back(std::make_unique<Teleport>());
 				break;*/
@@ -110,14 +110,14 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 			case 'M':
 				levelData->m_characters.push_back(std::make_unique<Mage>(location));
 				break;
-			/*case 'T':
-				levelData->m_characters.push_back(std::make_unique<Thief>());
-				break;*/
-			/*case 'W':
-				levelData->m_characters.push_back(std::make_unique<Warrier>());
+			case 'T':
+				levelData->m_characters.push_back(std::make_unique<Thief>(location));
+				break;
+			case 'W':
+				levelData->m_characters.push_back(std::make_unique<Warrier>(location));
 				break;
 			case '^':
-				levelData->m_characters.push_back(std::make_unique<Dwarf>(location));*/
+				levelData->m_characters.push_back(std::make_unique<Dwarf>(location));
 			}
 		}
 
@@ -139,8 +139,8 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 		Location source = { sourceRow, sourceCol };
 		Location pair = { pairRow, pairCol };
 		
-		/*levelData->m_boardItems.push_back(std::make_unique<Teleport>(pair));
-		levelData->m_boardItems.push_back(std::make_unique<Teleport>(source));*/
+		levelData->m_boardItems.push_back(std::make_unique<Teleport>(source, pair));
+		levelData->m_boardItems.push_back(std::make_unique<Teleport>(pair, source));
 	}
 
 	levelData->m_rows = board.size();
