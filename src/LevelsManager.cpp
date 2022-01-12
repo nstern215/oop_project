@@ -15,7 +15,7 @@
 #include "Wall.h"
 #include "Warrier.h"
 
-#define LEVELS_DIRECTORY "levels"
+#define LEVELS_DIRECTORY "levels\\levels"
 
 LevelsManager* LevelsManager::m_instance = nullptr;
 
@@ -118,6 +118,7 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 				break;
 			case '^':
 				levelData->m_characters.push_back(std::make_unique<Dwarf>(location));
+				break;
 			}
 		}
 

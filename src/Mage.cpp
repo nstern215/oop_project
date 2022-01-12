@@ -1,4 +1,7 @@
 #include "Mage.h"
+
+#include <iostream>
+
 #include "ResourcesService.h"
 
 Mage::Mage(Location location, sf::Vector2f boardLocation)
@@ -32,6 +35,7 @@ bool Mage::handleCollision(Item* item)
 
 bool Mage::handleCollision(Fire* item)
 {
+	std::cout << "collision mage with fire" << std::endl;
 	return true;
 }
 

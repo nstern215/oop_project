@@ -36,7 +36,7 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 
 	m_location = destLocation;
 
-	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << " Position: " << m_rectangle.getPosition().x << ":" << m_rectangle.getPosition().y << std::endl;
+	//std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << " Position: " << m_rectangle.getPosition().x << ":" << m_rectangle.getPosition().y << std::endl;
 
 	m_rectangle.move(step);
 }
@@ -116,23 +116,17 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 
 	if ((destLocation.m_col < 0) ||
 		(destLocation.m_row < 0) ||
-		(destLocation.m_col > controller.getBoardSize().x) ||
-		(destLocation.m_row > controller.getBoardSize().y))
+		(destLocation.m_col > controller.getLevelBoardSize().x) ||
+		(destLocation.m_row > controller.getLevelBoardSize().y))
 		return false;
 
 	Item* destItem = controller.getItem(destLocation);
 
 	if (!destItem)
 		return true;
-	else
-	{
-		destItem->handleCollision(controller.getItem(position));
-		if (!destItem)
-			return true;
-		else
-			return false;
-	}
-	
+
+	return destItem->handleCollision(this);
+
 	//todo: handle collision
 
 	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))

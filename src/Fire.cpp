@@ -1,4 +1,7 @@
 #include "Fire.h"
+
+#include <iostream>
+
 #include "ResourcesService.h"
 
 Fire::Fire(Location location, sf::Vector2f boardLocation)
@@ -23,7 +26,8 @@ bool Fire::handleCollision(Item* item)
 
 bool Fire::handleCollision(Characters* item)
 {
-    return false;
+    std::cout << "collision" << std::endl;
+    return item->handleCollision(this);
 }
 
 bool Fire::handleCollision(Dwarf* item)

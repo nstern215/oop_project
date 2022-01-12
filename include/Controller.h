@@ -22,7 +22,8 @@ public:
 	void run();
 	Item* getItem(const Location l);
 	sf::Vector2u getBoardSize();
-
+	sf::Vector2u getLevelBoardSize() const;
+	
 	/*void takeAction(const std::string& command);
 	void addTeleport(const int& col, const int& row);
 	void addCharacters(const std::string& character);

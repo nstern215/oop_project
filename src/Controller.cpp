@@ -27,7 +27,7 @@ void Controller::run()
 
 	buildBoard(col, row);
 
-	m_currentLevel = LevelsManager::instance()->loadLevel(0);
+	m_currentLevel = LevelsManager::instance()->loadLevel(2);
 	initalizeLevel();
 
 	m_window.setFramerateLimit(120);
@@ -148,19 +148,12 @@ void Controller::buildBoard(int col, int row)
 
 	const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
-	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.05f);
-
-	/*const auto itemWidth = boardSize.x / col;
-	const auto itemHeight = boardSize.y / row;*/
-
 	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.08f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
 	m_boardBorder.setOutlineThickness(8);
 	m_boardBorder.setOutlineColor(sf::Color::Black);
 	m_boardBorder.setFillColor(sf::Color::White);
-	//m_boardBorder.setOrigin(boardSize / 2.f);
-	//m_boardBorder.setPosition(boardOrigin.x + boardSize.x / 2.f, boardOrigin.y + boardSize.y / 2.f);
 	m_boardBorder.setPosition(boardOrigin);
 }
 
@@ -181,6 +174,11 @@ void Controller::initalizeLevel()
 		item->setBoardLocation(m_boardBorder.getPosition());
 		item->setSize(itemSize);
 	}
+}
+
+sf::Vector2u Controller::getLevelBoardSize() const
+{
+	return { m_currentLevel->m_cols, m_currentLevel->m_rows };
 }
 
 //location operators
