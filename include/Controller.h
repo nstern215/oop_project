@@ -9,6 +9,8 @@
 
 #include "BoardItem.h"
 #include "Characters.h"
+#include "Dwarf.h"
+#include "LevelData.h"
 
 class Controller{
 
@@ -56,10 +58,13 @@ private:
 	unsigned int m_windowWidth;
 	unsigned int m_windowHeight;
 
+	std::unique_ptr<LevelData> m_currentLevel;
+
 	//------------------------------------------
 	std::vector<BoardItem*> boardItems;
 	std::vector<Characters*> characters;
 	std::vector<Dwarf*> dwarfs;
+
 };
 
 bool operator==(const Location& a, const Location& b);
