@@ -13,3 +13,6 @@ configure_file ("add.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("key.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("mage.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("dwarf.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("gift.png" ${CMAKE_BINARY_DIR} COPYONLY)
+

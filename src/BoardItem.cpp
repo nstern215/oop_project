@@ -1,22 +1,9 @@
 #include "BoardItem.h"
 
 
-BoardItem::BoardItem(Location location)
-	:Item(location)
-{
-}
+BoardItem::BoardItem(Location location, sf::Vector2f boardLocation)
+	:Item(location, boardLocation)
+{}
 
-void BoardItem::handleCollision(Item& item)
-{
-	item.handleCollision(*this);
-}
-
-void BoardItem::handleCollision(Characters& item)
-{
-	item.handleCollision(*this);
-}
-
-void BoardItem::handleCollision(Dwarf& item)
-{
-	item.handleCollision(*this);
-}
+BoardItem::~BoardItem()
+{}
