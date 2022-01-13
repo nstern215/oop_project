@@ -117,7 +117,7 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 				levelData->m_characters.push_back(std::make_unique<Warrier>(location));
 				break;
 			case '^':
-				levelData->m_characters.push_back(std::make_unique<Dwarf>(location));
+				//levelData->m_characters.push_back(std::make_unique<Dwarf>(location));
 				break;
 			}
 		}
