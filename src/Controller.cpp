@@ -15,55 +15,54 @@
 
 Controller::Controller() :
 	m_window(sf::VideoMode(1000, 1000), "Save the King", sf::Style::Default),
-	m_bgColor(39, 72, 245, 0.8)
-{}
+	m_bgColor(39, 72, 245, 0.8),
+	m_currentLevelNum(0),
+	m_activeCharacter(0),
+	m_mode(GAME)
+{
+	initializeMenu();
+	buildBoard();
+
+	m_statusLine.setFont(*(ResourcesService::instance()->getFont("Hypeblox.ttf")));
+	m_statusLine.setFillColor(sf::Color::Black);
+	m_statusLine.setCharacterSize(50);
+	m_statusLine.setPosition({ 10,10 });
+}
 
 void Controller::run()
-{	
-	int activeCharacter = 0;
-
-	const int row = 10;
-	const int col = 10;
-
-	buildBoard(col, row);
-
+{
 	m_currentLevel = LevelsManager::instance()->loadLevel(2);
 	initalizeLevel();
 
 	m_window.setFramerateLimit(120);
-
-	sf::Clock clock;
 	
 	sf::Vector2f boardPosition = m_boardBorder.getPosition();
 
-	sf::Text statusLine;
-	statusLine.setFont(*(ResourcesService::instance()->getFont("Hypeblox.ttf")));
-	statusLine.setFillColor(sf::Color::Black);
-	statusLine.setCharacterSize(50);
-	statusLine.setPosition({ 10,10 });
-
 	m_gameClock.reset();
-	statusLine.setString(m_gameClock.toString());
-
+	updateStatusLine();
+	
 	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
-		m_window.draw(m_boardBorder);
 
-		m_window.draw(statusLine);
-
-		for (auto& item : m_currentLevel->m_boardItems)
-			item->draw(m_window);
-
-		for (auto& item : m_currentLevel->m_characters)
-			if (!item->isActive())
-				item->draw(m_window);
-
-		for (auto& item : dwarfs)
-			item->draw(m_window);
-
-		m_currentLevel->m_characters[activeCharacter]->draw(m_window);
-
+		switch (m_mode)
+		{
+		case WELCOME:
+			drawWelcomeView();
+			break;
+		case GAME:
+			drawLevel();
+			break;
+		case TUTORIAL:
+			drawTutorialView();
+			break;
+		case LEVEL_COMPLETED:
+			drawLevelCompletedView();
+		case WIN:
+			drawWinGameView();
+			break;
+		}
+		
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -76,31 +75,31 @@ void Controller::run()
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::Key::P)
 				{
-					m_currentLevel->m_characters[activeCharacter]->setActive(false);
-					activeCharacter = (activeCharacter + 1) % m_currentLevel->m_characters.size();
-					m_currentLevel->m_characters[activeCharacter]->setActive(true);
+					m_currentLevel->m_characters[m_activeCharacter]->setActive(false);
+					m_activeCharacter = (m_activeCharacter + 1) % m_currentLevel->m_characters.size();
+					m_currentLevel->m_characters[m_activeCharacter]->setActive(true);
 				}
 				break;
-				/*case sf::Event::Resized:
-					m_windowWidth = event.size.width;
-					m_windowHeight = event.size.height;
-
-					buildBoard(row, col);
-					break;*/
+			case sf::Event::MouseButtonReleased:
+				m_menu.containsAndClick(m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }), *this);
+				break;
 			}
 		}
-		auto moveDirection = getMovingDirection();
-		//auto deltaTime = clock.restart().asSeconds();
-		auto deltaTime = m_gameClock.updateTime();
 
-		for (auto& d : dwarfs)
-			d->move(d->getDirection(), deltaTime, *this);
+		if (m_mode == GAME)
+		{
+			const auto moveDirection = getMovingDirection();
+			const auto deltaTime = m_gameClock.updateTime();
 
-		if (moveDirection.x != 0 || moveDirection.y != 0)
-			for (auto& c : m_currentLevel->m_characters)
-				c->move(moveDirection, deltaTime, *this);
+			for (auto& d : dwarfs)
+				d->move(d->getDirection(), deltaTime, *this);
 
-		statusLine.setString(m_gameClock.toString());
+			if (moveDirection.x != 0 || moveDirection.y != 0)
+				for (auto& c : m_currentLevel->m_characters)
+					c->move(moveDirection, deltaTime, *this);
+
+			updateStatusLine();
+		}
 	}
 }
 
@@ -117,7 +116,7 @@ sf::Vector2f Controller::getMovingDirection()
 	return { 0,0 };
 }
 
-//todo: change method name
+
 Item* Controller::getItem(const Location l)
 {
 	for (auto& item : m_currentLevel->m_characters)
@@ -142,13 +141,14 @@ sf::Vector2u Controller::getBoardSize()
 	return boardSize;
 }
 
-void Controller::buildBoard(int col, int row)
+void Controller::buildBoard()
 {
 	const auto windowSize = m_window.getSize();
 
-	const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
+	/*const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);*/
+	const sf::Vector2f boardSize(static_cast<float>(windowSize.y) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
-	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.08f);
+	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.09f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
 	m_boardBorder.setOutlineThickness(8);
@@ -174,12 +174,90 @@ void Controller::initalizeLevel()
 		item->setBoardLocation(m_boardBorder.getPosition());
 		item->setSize(itemSize);
 	}
+
+	m_activeCharacter = 0;
+
+	m_gameClock.reset();
 }
 
 sf::Vector2u Controller::getLevelBoardSize() const
 {
 	return { m_currentLevel->m_cols, m_currentLevel->m_rows };
 }
+
+void Controller::initializeMenu()
+{
+	m_menu.setPosition({m_window.getSize().x / 2.f, 3});
+	
+	m_menu.addMenuItem("crown.png", &Controller::exitGame);
+	m_menu.addMenuItem("crown.png", &Controller::resetLevel);
+	m_menu.addMenuItem("crown.png", &Controller::tutorial);
+}
+
+void Controller::exitGame()
+{
+	std::cout << "exit" << std::endl;
+	m_window.close();
+}
+
+void Controller::resetLevel()
+{
+	m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
+	initalizeLevel();
+	std::cout << "reset" << std::endl;
+}
+
+void Controller::tutorial()
+{
+	m_mode = TUTORIAL;
+	std::cout << "tutorial" << std::endl;
+}
+
+void Controller::updateStatusLine()
+{
+	m_statusLine.setString(m_gameClock.toString());
+}
+
+void Controller::drawLevel()
+{
+	m_window.draw(m_boardBorder);
+	m_window.draw(m_statusLine);
+	m_menu.drawMenu(m_window);
+	
+	for (auto& item : m_currentLevel->m_boardItems)
+		item->draw(m_window);
+
+	for (auto& item : m_currentLevel->m_characters)
+		if (!item->isActive())
+			item->draw(m_window);
+
+	for (auto& item : dwarfs)
+		item->draw(m_window);
+
+	m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);
+}
+
+void Controller::drawLevelCompletedView()
+{
+	
+}
+
+void Controller::drawTutorialView()
+{
+	
+}
+
+void Controller::drawWelcomeView()
+{
+	
+}
+
+void Controller::drawWinGameView()
+{
+	
+}
+
+
 
 //location operators
 bool operator==(const Location& a, const Location& b)

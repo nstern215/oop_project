@@ -41,7 +41,7 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 	m_rectangle.move(step);
 }
 
-Location Characters::calcNewLocation(sf::Vector2f step)
+Location Characters::calcNewLocation(sf::Vector2f step) const
 {
 	sf::Vector2f size = m_rectangle.getSize();
 	size /= 2.f;

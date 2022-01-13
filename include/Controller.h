@@ -1,17 +1,15 @@
 #pragma once
 
 #include <vector>
-
-//class Characters;
-//class BoardItem;
 #include <SFML/Graphics.hpp>
-
 
 #include "BoardItem.h"
 #include "Characters.h"
 #include "Clock.h"
 #include "Dwarf.h"
+#include "GameMode.h"
 #include "LevelData.h"
+#include "Menu.h"
 
 class Controller{
 
@@ -39,8 +37,20 @@ public:
 private:
 
 	sf::Vector2f getMovingDirection();
-	void buildBoard(int col, int row);
+	void buildBoard();
 	void initalizeLevel();
+	void initializeMenu();
+	void updateStatusLine();
+
+	void drawLevel();
+	void drawWelcomeView();
+	void drawTutorialView();
+	void drawLevelCompletedView();
+	void drawWinGameView();
+	
+	void exitGame();
+	void tutorial();
+	void resetLevel();
 	
 	//void save();
 	//std::string getInfoString() const;
@@ -59,12 +69,19 @@ private:
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
 	sf::Color m_bgColor;
-
+	sf::Text m_statusLine;
+	
+	unsigned int m_currentLevelNum;
+	unsigned int m_activeCharacter;
+	
 	unsigned int m_windowWidth;
 	unsigned int m_windowHeight;
 
 	std::unique_ptr<LevelData> m_currentLevel;
 
+	Menu m_menu;
+	GameMode m_mode;
+	
 	//------------------------------------------
 	std::vector<Dwarf*> dwarfs;
 
