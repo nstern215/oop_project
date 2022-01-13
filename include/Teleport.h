@@ -14,10 +14,15 @@ public:
 	Location launch();*/
 
 	bool handleCollision(Item* item) override;
-	bool handleCollision(Characters* item) override;
-	bool handleCollision(Dwarf* item) override;
+	bool handleCollision(King* item);
+	bool handleCollision(Warrier* item);
+	bool handleCollision(Thief* item);
+	bool handleCollision(Mage* item);
+	bool handleCollision(Dwarf* item);
 
 private:
+
+	void getItemToPair();
 
 	Location m_pairLocation;
 

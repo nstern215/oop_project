@@ -48,10 +48,10 @@ private:
 	//void loadTextures();
 	/*void loadBoardFile();
 	void getBoardInfo(const std::string line);*/
-
-	std::vector<sf::Vector2i> m_teleports;
+	/*std::vector<sf::Vector2i> m_teleports;
 	std::vector<Characters> m_characters;
-	std::vector<Dwarf> m_dwarfs;
+	std::vector<Dwarf> m_dwarfs;*/
+
 	std::vector<sf::Texture*> m_textures;
 
 	Clock m_gameClock;
@@ -64,10 +64,6 @@ private:
 	unsigned int m_windowHeight;
 
 	std::unique_ptr<LevelData> m_currentLevel;
-
-	//------------------------------------------
-	std::vector<Dwarf*> dwarfs;
-
 };
 
 bool operator==(const Location& a, const Location& b);

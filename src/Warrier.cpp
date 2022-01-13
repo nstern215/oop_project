@@ -55,7 +55,22 @@ bool Warrier::handleCollision(Fire* item)
 	return false;
 }
 
-bool Warrier::handleCollision(Characters* item)
+bool Warrier::handleCollision(King* item)
+{
+	return false;
+}
+
+bool Warrier::handleCollision(Warrier* item)
+{
+	return false;
+}
+
+bool Warrier::handleCollision(Mage* item)
+{
+	return false;
+}
+
+bool Warrier::handleCollision(Thief* item)
 {
 	return false;
 }

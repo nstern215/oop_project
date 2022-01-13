@@ -55,12 +55,6 @@ sf::Vector2f Dwarf::getDirection()
 	return m_direction;
 }
 
-bool Dwarf::gotToEdge()
-{
-	chengeDirection();
-	return false;
-}
-
 bool Dwarf::handleCollision(Item* item)
 {
 	if (item == this)
@@ -73,6 +67,26 @@ bool Dwarf::handleCollision(Wall* item)
 {
 	this->chengeDirection();
 	
+	return false;
+}
+
+bool Dwarf::handleCollision(King* item)
+{
+	return false;
+}
+
+bool Dwarf::handleCollision(Warrier* item)
+{
+	return false;
+}
+
+bool Dwarf::handleCollision(Mage* item)
+{
+	return false;
+}
+
+bool Dwarf::handleCollision(Thief* item)
+{
 	return false;
 }
 
@@ -97,6 +111,11 @@ bool Dwarf::handleCollision(Fire* item)
 	return false;
 }
 
+bool Dwarf::handleCollision(Dwarf* item)
+{
+	return false;
+}
+
 bool Dwarf::handleCollision(Gift* item)
 {
 	return true;
@@ -116,17 +135,5 @@ bool Dwarf::handleCollision(Gate* item)
 {
 	this->chengeDirection();
 
-	return false;
-}
-
-bool Dwarf::handleCollision(Characters* item)
-{
-	this->chengeDirection();
-
-	return false;
-}
-
-bool Dwarf::handleCollision(Dwarf* item)
-{
 	return false;
 }

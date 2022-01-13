@@ -5,16 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+class Controller;
 class Characters;
-class Gift;
-class Teleport;
-class Dwarf;
-class Wall;
-class Fire;
-class Gate;
-class Throne;
-class Ork;
-class Key;
+class BoardItem;
 
 class Item {
 
@@ -24,11 +17,9 @@ public:
     Item(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 }, float speedPerSecond = 200.f);
     virtual ~Item();
 
-    //bool checkCollision(const Item& other) const;
-
     virtual bool handleCollision(Item* item) = 0;
     virtual bool handleCollision(Characters* item) = 0;
-    virtual bool handleCollision(Dwarf* item) = 0;
+    virtual bool handleCollision(BoardItem* item) = 0;
 
     Location getLocation() const;
     void setBoardLocation(sf::Vector2f position);

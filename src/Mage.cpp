@@ -20,11 +20,6 @@ Mage::~Mage()
 {
 }
 
-bool Mage::gotToEdge()
-{
-	return false;
-}
-
 bool Mage::handleCollision(Item* item)
 {
 	if(item == this)
@@ -37,6 +32,26 @@ bool Mage::handleCollision(Fire* item)
 {
 	std::cout << "collision mage with fire" << std::endl;
 	return true;
+}
+
+bool Mage::handleCollision(King* item)
+{
+	return false;
+}
+
+bool Mage::handleCollision(Warrier* item)
+{
+	return false;
+}
+
+bool Mage::handleCollision(Thief* item)
+{
+	return false;
+}
+
+bool Mage::handleCollision(Mage* item)
+{
+	return false;
 }
 
 bool Mage::handleCollision(Teleport* item)
@@ -65,11 +80,6 @@ bool Mage::handleCollision(Throne* item)
 }
 
 bool Mage::handleCollision(Gate* item) 
-{
-	return false;
-}
-
-bool Mage::handleCollision(Characters* item) 
 {
 	return false;
 }

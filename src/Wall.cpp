@@ -21,7 +21,22 @@ bool Wall::handleCollision(Item* item)
 	return item->handleCollision(this);
 }
 
-bool Wall::handleCollision(Characters* item)
+bool Wall::handleCollision(King* item)
+{
+	return false;
+}
+
+bool Wall::handleCollision(Warrier* item)
+{
+	return false;
+}
+
+bool Wall::handleCollision(Thief* item)
+{
+	return false;
+}
+
+bool Wall::handleCollision(Mage* item)
 {
 	return false;
 }

@@ -1,8 +1,21 @@
 #pragma once
 
 #include "Item.h"
-#include "Characters.h"
-#include "Dwarf.h"
+
+class Controller;
+class Warrier;
+class King;
+class Mage;
+class Thief;
+class Gift;
+class Teleport;
+class Dwarf;
+class Wall;
+class Fire;
+class Gate;
+class Throne;
+class Ork;
+class Key;
 
 class BoardItem : public Item {
 
@@ -12,8 +25,4 @@ public:
 	virtual ~BoardItem();
 
 protected:
-
-	/*virtual bool handleCollision(Item& item) = 0;
-	virtual bool handleCollision(Characters& item) = 0;
-	virtual bool handleCollision(Dwarf& item) = 0;*/
 };

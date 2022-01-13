@@ -59,9 +59,6 @@ void Controller::run()
 			if (!item->isActive())
 				item->draw(m_window);
 
-		for (auto& item : dwarfs)
-			item->draw(m_window);
-
 		m_currentLevel->m_characters[activeCharacter]->draw(m_window);
 
 		m_window.display();
@@ -93,9 +90,6 @@ void Controller::run()
 		//auto deltaTime = clock.restart().asSeconds();
 		auto deltaTime = m_gameClock.updateTime();
 
-		for (auto& d : dwarfs)
-			d->move(d->getDirection(), deltaTime, *this);
-
 		if (moveDirection.x != 0 || moveDirection.y != 0)
 			for (auto& c : m_currentLevel->m_characters)
 				c->move(moveDirection, deltaTime, *this);
@@ -117,16 +111,11 @@ sf::Vector2f Controller::getMovingDirection()
 	return { 0,0 };
 }
 
-//todo: change method name
 Item* Controller::getItem(const Location l)
 {
 	for (auto& item : m_currentLevel->m_characters)
 		if (item->getLocation() == l)
 			return item.get();
-
-	for (auto*& item : dwarfs)
-		if (item->getLocation() == l)
-			return item;
 
 	for (auto& item : m_currentLevel->m_boardItems)
 		if (item->getLocation() == l)
@@ -181,7 +170,6 @@ sf::Vector2u Controller::getLevelBoardSize() const
 	return { m_currentLevel->m_cols, m_currentLevel->m_rows };
 }
 
-//location operators
 bool operator==(const Location& a, const Location& b)
 {
 	return a.m_row == b.m_row && a.m_col == b.m_col;

@@ -21,16 +21,36 @@ Fire::~Fire()
 
 bool Fire::handleCollision(Item* item)
 {
+    return item->handleCollision(this);
+}
+
+bool Fire::handleCollision(King* item)
+{
     return false;
 }
 
-bool Fire::handleCollision(Characters* item)
+bool Fire::handleCollision(Warrier* item)
 {
-    std::cout << "collision" << std::endl;
-    return item->handleCollision(this);
+    return false;
+}
+
+bool Fire::handleCollision(Thief* item)
+{
+    return false;
+}
+
+bool Fire::handleCollision(Mage* item)
+{
+    this->putOutFire();
+
+    return true;
 }
 
 bool Fire::handleCollision(Dwarf* item)
 {
     return false;
+}
+
+void Fire::putOutFire()
+{
 }

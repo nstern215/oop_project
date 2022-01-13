@@ -18,22 +18,12 @@ King::~King()
 
 void King::sitInThrone()
 {
-	m_throne == true;
+	m_throne = true;
 }
 
 bool King::isAtThrone()
 {
 	return m_throne;
-}
-
-bool King::gotToThrone(Location& location)
-{
-	return m_throne;
-}
-
-bool King::gotToEdge()
-{
-	return false;
 }
 
 bool King::handleCollision(Item* item)
@@ -81,7 +71,22 @@ bool King::handleCollision(Fire* item)
 	return false;
 }
 
-bool King::handleCollision(Characters* item)
+bool King::handleCollision(King* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Mage* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Thief* item)
+{
+	return false;
+}
+
+bool King::handleCollision(Warrier* item)
 {
 	return false;
 }
