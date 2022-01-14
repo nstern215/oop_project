@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "Dwarf.h"
 #include "Fire.h"
 #include "Gate.h"
 #include "King.h"
