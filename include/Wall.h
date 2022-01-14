@@ -8,7 +8,7 @@ public:
 	
 	Wall(Location location = { 0, 0 });
 
-	bool handleCollision(Characters* item) override;
+	bool handleCollision(Item* item);
 
 private:
 

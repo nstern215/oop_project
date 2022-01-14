@@ -2,19 +2,7 @@
 
 #include "Item.h"
 
-class King;
-class Thief;
-class Key;
-class Ork;
-class Throne;
-class Gate;
-class Wall;
-class Teleport;
-class Dwarf;
-class Mage;
-class Warrier;
-class Fire;
-class Gift;
+class Controller;
 
 class Characters : public Item {
 
@@ -23,7 +11,6 @@ public:
 	Characters(Location location = {0,0}, sf::Vector2f boardLocation = { 0,0 });
     virtual ~Characters();
 
-	virtual bool handleCollision(BoardItem* item) = 0;
 
 	virtual void move(sf::Vector2f destination, float deltaTime, Controller& controller);
 	void setActive(bool active);

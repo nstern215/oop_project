@@ -6,9 +6,9 @@ class Fire : public BoardItem {
 
 public:
 	Fire(Location location = { 0, 0 }, sf::Vector2f boardLocation = { 0, 0 });
-	~Fire();
 
-	bool handleCollision(Characters* item) override;
+	bool handleCollision(Item* item);
+	bool handleCollision(Mage* item) override;
 
 private:
 

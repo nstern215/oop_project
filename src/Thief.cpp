@@ -18,7 +18,16 @@ bool Thief::gotKey()
 	return m_key;
 }
 
-bool Thief::handleCollision(Characters* item)
+bool Thief::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Thief::handleCollision(Key* item)
+{
+	this->collectKey();
+	return true;
 }

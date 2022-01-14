@@ -16,11 +16,19 @@ Mage::Mage(Location location, sf::Vector2f boardLocation)
 	m_rectangle.setTexture(t, true);
 }
 
-void Mage::putOutFire()
+bool Mage::handleCollision(Item* item)
 {
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
 }
 
-bool Mage::handleCollision(Characters* item)
+bool Mage::handleCollision(Fire* item)
 {
-	return false;
+	return true;
+}
+
+void Mage::putOutFire()
+{
 }

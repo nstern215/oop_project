@@ -21,8 +21,16 @@ bool King::isAtThrone()
 	return m_throne;
 }
 
-
-bool King::handleCollision(Characters* item)
+bool King::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool King::handleCollision(Throne* item)
+{
+	this->sitInThrone();
+	return true;
 }

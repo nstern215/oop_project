@@ -12,15 +12,21 @@ Gate::Gate(Location location, sf::Vector2f boardLocation)
 	m_rectangle.setTexture(t, true);
 }
 
-Gate::~Gate()
-{
-}
-
 void Gate::openGate()
 {
+	m_active = false;
 }
 
-bool Gate::handleCollision(Characters* item)
+bool Gate::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Gate::handleCollision(Thief* item)
+{
+	this->openGate();
+	return true;
 }

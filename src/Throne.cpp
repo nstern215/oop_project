@@ -20,7 +20,15 @@ void Throne::KingIsAtThrone()
 {
 }
 
-bool Throne::handleCollision(Characters* item)
+bool Throne::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Throne::handleCollision(King* item)
+{
+	return true;
 }

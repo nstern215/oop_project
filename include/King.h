@@ -8,7 +8,8 @@ public:
 
 	King(Location location = {0,0}, sf::Vector2f boardLocation = {0,0});
 
-	bool handleCollision(Characters* item) override;
+	bool handleCollision(Item* item);
+	bool handleCollision(Throne* item)override;
 	
 private:
 

@@ -5,6 +5,7 @@ Teleport::Teleport(Location location, Location pairLocation, sf::Vector2f boardL
 	:BoardItem(location, boardLocation),
 	m_pairLocation(pairLocation)
 {
+	m_inUse = false;
 	sf::Texture* t = ResourcesService::instance()->getTexture("teleport.png");
 
 	//sf::Texture* t = new sf::Texture();
@@ -19,9 +20,38 @@ Teleport::~Teleport()
 
 void Teleport::getItemToPair()
 {
+	m_inUse = false;
 }
 
-bool Teleport::handleCollision(Characters* item)
+bool Teleport::teleportInUse()
 {
-	return false;
+	m_inUse = true;
+
+	return m_inUse;
+}
+
+bool Teleport::handleCollision(Item* item)
+{
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Teleport::handleCollision(King* item)
+{
+	this->teleportInUse();
+	return true;
+}
+
+bool Teleport::handleCollision(Thief* item)
+{
+	this->teleportInUse();
+	return true;
+}
+
+bool Teleport::handleCollision(Warrier* item)
+{
+	this->teleportInUse();
+	return true;
 }

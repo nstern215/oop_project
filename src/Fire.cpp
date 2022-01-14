@@ -15,11 +15,22 @@ Fire::Fire(Location location, sf::Vector2f boardLocation)
     m_rectangle.setTexture(t, true);
 }
 
-Fire::~Fire()
+
+void Fire::putOutFire()
 {
+    m_active = false;
 }
 
-bool Fire::handleCollision(Characters* item)
+bool Fire::handleCollision(Item* item)
 {
-    return false;
+    if (this == item)
+        return false;
+
+    return item->handleCollision(this);
+}
+
+bool Fire::handleCollision(Mage* item)
+{
+    this->putOutFire();
+    return true;
 }

@@ -4,7 +4,7 @@
 Dwarf::Dwarf(Location location, sf::Vector2f boardLocation)
 	:Characters(location, boardLocation)
 {
-	m_go = rand() % 4;
+	m_go = rand() % 4; 
 
 	setDirection(m_go);
 
@@ -51,7 +51,70 @@ sf::Vector2f Dwarf::getDirection()
 	return m_direction;
 }
 
-bool Dwarf::handleCollision(Characters* item)
+bool Dwarf::handleCollision(Item* item)
 {
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Dwarf::handleCollision(Fire* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Gate* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Ork* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Throne* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(King* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Thief* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Mage* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Warrier* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Dwarf* item)
+{
+	this->chengeDirection();
+	return false;
+}
+
+bool Dwarf::handleCollision(Wall* item)
+{
+	this->chengeDirection();
 	return false;
 }

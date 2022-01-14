@@ -18,12 +18,19 @@ Ork::~Ork()
 
 void Ork::die()
 {
-	sf::Texture* t = ResourcesService::instance()->getTexture("ork.png");
-
-	m_rectangle.setTexture(t, true);
+	m_active = false;
 }
 
-bool Ork::handleCollision(Characters* item)
+bool Ork::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Ork::handleCollision(Warrier* item)
+{
+	this->die();
+	return true;
 }

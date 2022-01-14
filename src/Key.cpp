@@ -12,16 +12,21 @@ Key::Key(Location location, sf::Vector2f boardLocation)
 	m_rectangle.setTexture(t, true);
 }
 
-Key::~Key()
-{
-}
-
 void Key::keyTaken()
 {
-
+	m_active = false;
 }
 
-bool Key::handleCollision(Characters* item)
+bool Key::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
+bool Key::handleCollision(Thief* item)
+{
+	this->keyTaken();
+	return true;
 }

@@ -17,14 +17,6 @@ Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 Item::~Item()
 {}
 
-bool Item::handleCollision(Item * item)
-{
-	if (this == item)
-		return false;
-
-	return item->handleCollision(this);
-}
-
 void Item::draw(sf::RenderWindow& window)
 {
 	window.draw(m_rectangle);
@@ -34,7 +26,7 @@ void Item::setBoardLocation(sf::Vector2f position)
 {
 	auto currentPosition = m_rectangle.getPosition();
 	currentPosition -= m_boardLocation;
-	
+
 	m_boardLocation = position;
 
 	currentPosition += m_boardLocation;
@@ -60,4 +52,64 @@ void Item::setSize(sf::Vector2f size)
 	position += m_boardLocation;
 
 	m_rectangle.setPosition(position);
+}
+
+bool Item::handleCollision(King* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Thief* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Mage* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Warrier* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Dwarf* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Wall* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Key* item)
+{
+	return true;
+}
+
+bool Item::handleCollision(Teleport* item)
+{
+	return true;
+}
+
+bool Item::handleCollision(Fire* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Gate* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Ork* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Throne* item)
+{
+	return false;
 }

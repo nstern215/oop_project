@@ -10,9 +10,8 @@ public:
 
 	bool gotKey();
 
-	bool handleCollision(Characters* item) override;
-
-
+	bool handleCollision(Item* item);
+	bool handleCollision(Key* item)override;
 
 private:
 
