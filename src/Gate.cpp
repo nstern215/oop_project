@@ -20,33 +20,7 @@ void Gate::openGate()
 {
 }
 
-bool Gate::handleCollision(Item* item)
-{
-	return item->handleCollision(this);
-}
-
-bool Gate::handleCollision(King* item)
-{
-	return false;
-}
-
-bool Gate::handleCollision(Thief* item)
-{
-	this->openGate();
-	return false;
-}
-
-bool Gate::handleCollision(Mage* item)
-{
-	return false;
-}
-
-bool Gate::handleCollision(Warrier* item)
-{
-	return false;
-}
-
-bool Gate::handleCollision(Dwarf* item)
+bool Gate::handleCollision(Characters* item)
 {
 	return false;
 }

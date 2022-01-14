@@ -9,6 +9,7 @@
 #include "King.h"
 #include "Mage.h"
 #include "Ork.h"
+#include "Dwarf.h"
 #include "Teleport.h"
 #include "Thief.h"
 #include "Throne.h"

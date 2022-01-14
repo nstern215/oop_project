@@ -16,80 +16,11 @@ Mage::Mage(Location location, sf::Vector2f boardLocation)
 	m_rectangle.setTexture(t, true);
 }
 
-Mage::~Mage()
+void Mage::putOutFire()
 {
 }
 
-bool Mage::handleCollision(Item* item)
-{
-	if(item == this)
-	return false;
-
-	return item->handleCollision(this);
-}
-
-bool Mage::handleCollision(Fire* item)
-{
-	std::cout << "collision mage with fire" << std::endl;
-	return true;
-}
-
-bool Mage::handleCollision(King* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Warrier* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Thief* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Mage* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Teleport* item)
-{
-	return true;
-}
-
-bool Mage::handleCollision(Gift* item)
-{
-	return true;
-}
-
-bool Mage::handleCollision(Key* item)
-{
-	return true;
-}
-
-bool Mage::handleCollision(Ork* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Throne* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Gate* item) 
-{
-	return false;
-}
-
-bool Mage::handleCollision(Dwarf* item)
-{
-	return false;
-}
-
-bool Mage::handleCollision(Wall* item)
+bool Mage::handleCollision(Characters* item)
 {
 	return false;
 }

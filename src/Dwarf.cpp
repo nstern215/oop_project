@@ -20,10 +20,6 @@ Dwarf::Dwarf(Location location, sf::Vector2f boardLocation)
 	m_rectangle.setTexture(t, true);
 }
 
-Dwarf::~Dwarf()
-{
-}
-
 void Dwarf::setDirection(const int& direction)
 {
 	if(direction == UP)
@@ -55,85 +51,7 @@ sf::Vector2f Dwarf::getDirection()
 	return m_direction;
 }
 
-bool Dwarf::handleCollision(Item* item)
+bool Dwarf::handleCollision(Characters* item)
 {
-	if (item == this)
-		return false;
-
-	return item->handleCollision(this);
-}
-
-bool Dwarf::handleCollision(Wall* item)
-{
-	this->chengeDirection();
-	
-	return false;
-}
-
-bool Dwarf::handleCollision(King* item)
-{
-	return false;
-}
-
-bool Dwarf::handleCollision(Warrier* item)
-{
-	return false;
-}
-
-bool Dwarf::handleCollision(Mage* item)
-{
-	return false;
-}
-
-bool Dwarf::handleCollision(Thief* item)
-{
-	return false;
-}
-
-bool Dwarf::handleCollision(Ork* item) 
-{
-	this->chengeDirection();
-
-	return false;
-}
-
-bool Dwarf::handleCollision(Throne* item) 
-{
-	this->chengeDirection();
-
-	return false;
-}
-
-bool Dwarf::handleCollision(Fire* item) 
-{
-	this->chengeDirection();
-
-	return false;
-}
-
-bool Dwarf::handleCollision(Dwarf* item)
-{
-	return false;
-}
-
-bool Dwarf::handleCollision(Gift* item)
-{
-	return true;
-}
-
-bool Dwarf::handleCollision(Teleport* item)
-{
-	return true;
-}
-
-bool Dwarf::handleCollision(Key* item)
-{
-	return true;
-}
-
-bool Dwarf::handleCollision(Gate* item)
-{
-	this->chengeDirection();
-
 	return false;
 }

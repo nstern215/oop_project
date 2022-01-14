@@ -21,35 +21,7 @@ void Teleport::getItemToPair()
 {
 }
 
-bool Teleport::handleCollision(Item* item)
+bool Teleport::handleCollision(Characters* item)
 {
-	return item->handleCollision(this);
-}
-
-bool Teleport::handleCollision(King* item)
-{
-	this->getItemToPair();
-	return true;
-}
-
-bool Teleport::handleCollision(Warrier* item)
-{
-	this->getItemToPair();
-	return true;
-}
-
-bool Teleport::handleCollision(Thief* item)
-{
-	this->getItemToPair();
-	return true;
-}
-
-bool Teleport::handleCollision(Mage* item)
-{
-	return true;
-}
-
-bool Teleport::handleCollision(Dwarf* item)
-{
-	return true;
+	return false;
 }

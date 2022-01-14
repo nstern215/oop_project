@@ -12,36 +12,7 @@ Wall::Wall(Location location)
 	m_rectangle.setTexture(t, true);
 }
 
-Wall::~Wall()
-{
-}
-
-bool Wall::handleCollision(Item* item)
-{
-	return item->handleCollision(this);
-}
-
-bool Wall::handleCollision(King* item)
-{
-	return false;
-}
-
-bool Wall::handleCollision(Warrier* item)
-{
-	return false;
-}
-
-bool Wall::handleCollision(Thief* item)
-{
-	return false;
-}
-
-bool Wall::handleCollision(Mage* item)
-{
-	return false;
-}
-
-bool Wall::handleCollision(Dwarf* item)
+bool Wall::handleCollision(Characters* item)
 {
 	return false;
 }

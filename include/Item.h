@@ -17,9 +17,8 @@ public:
     Item(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 }, float speedPerSecond = 200.f);
     virtual ~Item();
 
-    virtual bool handleCollision(Item* item) = 0;
+    bool handleCollision(Item* item);
     virtual bool handleCollision(Characters* item) = 0;
-    virtual bool handleCollision(BoardItem* item) = 0;
 
     Location getLocation() const;
     void setBoardLocation(sf::Vector2f position);

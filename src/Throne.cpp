@@ -20,33 +20,7 @@ void Throne::KingIsAtThrone()
 {
 }
 
-bool Throne::handleCollision(Item* item)
-{
-	return item->handleCollision(this);
-}
-
-bool Throne::handleCollision(King* item)
-{
-	this->KingIsAtThrone();
-	return true;
-}
-
-bool Throne::handleCollision(Thief* item)
-{
-	return false;
-}
-
-bool Throne::handleCollision(Mage* item)
-{
-	return false;
-}
-
-bool Throne::handleCollision(Warrier* item)
-{
-	return false;
-}
-
-bool Throne::handleCollision(Dwarf* item)
+bool Throne::handleCollision(Characters* item)
 {
 	return false;
 }

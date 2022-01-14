@@ -17,6 +17,14 @@ Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 Item::~Item()
 {}
 
+bool Item::handleCollision(Item * item)
+{
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
+}
+
 void Item::draw(sf::RenderWindow& window)
 {
 	window.draw(m_rectangle);

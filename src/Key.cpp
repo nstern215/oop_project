@@ -21,34 +21,7 @@ void Key::keyTaken()
 
 }
 
-bool Key::handleCollision(Item& item)
+bool Key::handleCollision(Characters* item)
 {
-	return item.handleCollision(this);
-}
-
-bool Key::handleCollision(King* item)
-{
-	return true;
-}
-
-bool Key::handleCollision(Warrier* item)
-{
-	return true;
-}
-
-bool Key::handleCollision(Thief* item)
-{
-	this->keyTaken();
-
-	return true;
-}
-
-bool Key::handleCollision(Mage* item)
-{
-	return true;
-}
-
-bool Key::handleCollision(Dwarf& item)
-{
-	return true;
+	return false;
 }
