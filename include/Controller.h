@@ -19,7 +19,7 @@ public:
 
 	void run();
 	Item* getItem(const Location l);
-	sf::Vector2u getBoardSize();
+	sf::Vector2u getBoardSize() const;
 	sf::Vector2u getLevelBoardSize() const;
 	
 	/*void takeAction(const std::string& command);
@@ -36,7 +36,7 @@ public:
 
 private:
 
-	sf::Vector2f getMovingDirection();
+	static sf::Vector2f getMovingDirection();
 	void buildBoard();
 	void initalizeLevel();
 	void initializeMenu();
@@ -47,6 +47,8 @@ private:
 	void drawTutorialView();
 	void drawLevelCompletedView();
 	void drawWinGameView();
+	void resumeGame();
+	void loadNextLevel();
 	
 	void exitGame();
 	void tutorial();
@@ -71,14 +73,13 @@ private:
 	sf::Color m_bgColor;
 	sf::Text m_statusLine;
 	
-	unsigned int m_currentLevelNum;
-	unsigned int m_activeCharacter;
-	
-	unsigned int m_windowWidth;
-	unsigned int m_windowHeight;
+	int m_currentLevelNum;
+	int m_activeCharacter;
 
 	std::unique_ptr<LevelData> m_currentLevel;
 
+	float m_currentLevelTime;
+	
 	Menu m_menu;
 	GameMode m_mode;
 	

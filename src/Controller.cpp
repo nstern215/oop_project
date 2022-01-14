@@ -14,11 +14,11 @@
 #include "ResourcesService.h"
 
 Controller::Controller() :
-	m_window(sf::VideoMode(1000, 1000), "Save the King", sf::Style::Default),
-	m_bgColor(39, 72, 245, 0.8),
-	m_currentLevelNum(0),
+	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
+	//m_bgColor(39, 72, 245, 0.8),
+	m_currentLevelNum(-1),
 	m_activeCharacter(0),
-	m_mode(GAME)
+	m_mode(WELCOME)
 {
 	initializeMenu();
 	buildBoard();
@@ -31,20 +31,17 @@ Controller::Controller() :
 
 void Controller::run()
 {
-	m_currentLevel = LevelsManager::instance()->loadLevel(2);
-	initalizeLevel();
-
-	m_window.setFramerateLimit(120);
+	auto winSize = m_window.getSize();
+	sf::RectangleShape background({static_cast<float>(winSize.x), static_cast<float>(winSize.y) });
+	background.setTexture(ResourcesService::instance()->getTexture("background.jpg"));
 	
-	sf::Vector2f boardPosition = m_boardBorder.getPosition();
+	m_window.setFramerateLimit(60);
 
-	m_gameClock.reset();
-	updateStatusLine();
-	
 	while (m_window.isOpen())
 	{
 		m_window.clear(m_bgColor);
-
+		m_window.draw(background);
+		
 		switch (m_mode)
 		{
 		case WELCOME:
@@ -56,13 +53,14 @@ void Controller::run()
 		case TUTORIAL:
 			drawTutorialView();
 			break;
-		case LEVEL_COMPLETED:
-			drawLevelCompletedView();
 		case WIN:
 			drawWinGameView();
 			break;
+		case LEVEL_COMPLETED:
+			drawLevelCompletedView();
+			break;
 		}
-		
+
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -73,7 +71,22 @@ void Controller::run()
 				m_window.close();
 				break;
 			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Key::P)
+				if (m_mode != GAME)
+				{
+					switch (m_mode)
+					{
+					case WIN:
+						m_window.close();
+						break;
+					case LEVEL_COMPLETED:
+						loadNextLevel();
+						break;
+						default:
+							resumeGame();
+							break;
+					}
+				}
+				else if (event.key.code == sf::Keyboard::Key::P)
 				{
 					m_currentLevel->m_characters[m_activeCharacter]->setActive(false);
 					m_activeCharacter = (m_activeCharacter + 1) % m_currentLevel->m_characters.size();
@@ -134,10 +147,9 @@ Item* Controller::getItem(const Location l)
 	return nullptr;
 }
 
-sf::Vector2u Controller::getBoardSize()
+sf::Vector2u Controller::getBoardSize() const
 {
-	sf::Vector2u boardSize((m_window.getSize().x) / 100, (m_window.getSize().y) / 100);
-
+	const sf::Vector2u boardSize((m_window.getSize().x) / 100, (m_window.getSize().y) / 100);
 	return boardSize;
 }
 
@@ -153,7 +165,7 @@ void Controller::buildBoard()
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
 	m_boardBorder.setOutlineThickness(8);
 	m_boardBorder.setOutlineColor(sf::Color::Black);
-	m_boardBorder.setFillColor(sf::Color::White);
+	m_boardBorder.setFillColor(sf::Color(255, 255, 255, 128));
 	m_boardBorder.setPosition(boardOrigin);
 }
 
@@ -178,6 +190,15 @@ void Controller::initalizeLevel()
 	m_activeCharacter = 0;
 
 	m_gameClock.reset();
+
+	if (m_currentLevel->m_timeLimit == 0)
+		m_gameClock.setMode(STOPWATCH);
+	else
+		m_gameClock.setMode(TIMER);
+
+	m_gameClock.reset(m_currentLevel->m_timeLimit);
+
+	m_mode = GAME;
 }
 
 sf::Vector2u Controller::getLevelBoardSize() const
@@ -187,8 +208,8 @@ sf::Vector2u Controller::getLevelBoardSize() const
 
 void Controller::initializeMenu()
 {
-	m_menu.setPosition({m_window.getSize().x / 2.f, 3});
-	
+	m_menu.setPosition({ m_window.getSize().x / 2.f, 3 });
+
 	m_menu.addMenuItem("crown.png", &Controller::exitGame);
 	m_menu.addMenuItem("crown.png", &Controller::resetLevel);
 	m_menu.addMenuItem("crown.png", &Controller::tutorial);
@@ -210,6 +231,7 @@ void Controller::resetLevel()
 void Controller::tutorial()
 {
 	m_mode = TUTORIAL;
+	m_currentLevelTime = m_gameClock.stopClock();
 	std::cout << "tutorial" << std::endl;
 }
 
@@ -220,10 +242,11 @@ void Controller::updateStatusLine()
 
 void Controller::drawLevel()
 {
+	updateStatusLine();
 	m_window.draw(m_boardBorder);
 	m_window.draw(m_statusLine);
 	m_menu.drawMenu(m_window);
-	
+
 	for (auto& item : m_currentLevel->m_boardItems)
 		item->draw(m_window);
 
@@ -239,25 +262,46 @@ void Controller::drawLevel()
 
 void Controller::drawLevelCompletedView()
 {
-	
+
 }
 
 void Controller::drawTutorialView()
 {
-	
+
 }
 
 void Controller::drawWelcomeView()
 {
-	
+
 }
 
 void Controller::drawWinGameView()
 {
-	
+
 }
 
+void Controller::resumeGame()
+{
+	if (m_mode == WELCOME)
+		loadNextLevel();
+	else
+	{
+		m_gameClock.resumeClock(m_currentLevelTime);
+		m_mode = GAME;
+	}
+}
 
+void Controller::loadNextLevel()
+{
+	if (m_currentLevelNum >= LevelsManager::instance()->getNumOfLevels())
+		m_mode = WIN;
+	else
+	{
+		m_currentLevelNum++;
+		m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
+		initalizeLevel();
+	}
+}
 
 //location operators
 bool operator==(const Location& a, const Location& b)
