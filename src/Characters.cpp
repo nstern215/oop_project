@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "Wall.h"
-
+#include "Teleport.h"
 #include "Controller.h"
 
 Characters::Characters(Location location, sf::Vector2f boardLocation) :
@@ -41,7 +41,7 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 	m_rectangle.move(step);
 }
 
-Location Characters::calcNewLocation(sf::Vector2f step)
+Location Characters::calcNewLocation(sf::Vector2f step) const
 {
 	sf::Vector2f size = m_rectangle.getSize();
 	size /= 2.f;
@@ -125,9 +125,13 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (!destItem)
 		return true;
 
-	return destItem->handleCollision(this);
+	//if (dynamic_cast<Teleport*>(destItem))
+	//{
+	//	
+	//}
 
-	//todo: handle collision
+
+	return destItem->handleCollision(this);
 
 	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
 	//	return false;

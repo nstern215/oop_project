@@ -1,17 +1,15 @@
 #pragma once
 
 #include <vector>
-
-//class Characters;
-//class BoardItem;
 #include <SFML/Graphics.hpp>
-
 
 #include "BoardItem.h"
 #include "Characters.h"
 #include "Clock.h"
 #include "Dwarf.h"
+#include "GameMode.h"
 #include "LevelData.h"
+#include "Menu.h"
 
 class Controller{
 
@@ -21,7 +19,7 @@ public:
 
 	void run();
 	Item* getItem(const Location l);
-	sf::Vector2u getBoardSize();
+	sf::Vector2u getBoardSize() const;
 	sf::Vector2u getLevelBoardSize() const;
 	
 	/*void takeAction(const std::string& command);
@@ -38,9 +36,23 @@ public:
 
 private:
 
-	sf::Vector2f getMovingDirection();
-	void buildBoard(int col, int row);
+	static sf::Vector2f getMovingDirection();
+	void buildBoard();
 	void initalizeLevel();
+	void initializeMenu();
+	void updateStatusLine();
+
+	void drawLevel();
+	void drawWelcomeView();
+	void drawTutorialView();
+	void drawLevelCompletedView();
+	void drawWinGameView();
+	void resumeGame();
+	void loadNextLevel();
+	
+	void exitGame();
+	void tutorial();
+	void resetLevel();
 	
 	//void save();
 	//std::string getInfoString() const;
@@ -59,11 +71,21 @@ private:
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
 	sf::Color m_bgColor;
-
-	unsigned int m_windowWidth;
-	unsigned int m_windowHeight;
+	sf::Text m_statusLine;
+	
+	int m_currentLevelNum;
+	int m_activeCharacter;
 
 	std::unique_ptr<LevelData> m_currentLevel;
+
+	float m_currentLevelTime;
+	
+	Menu m_menu;
+	GameMode m_mode;
+	
+	//------------------------------------------
+	std::vector<Dwarf*> dwarfs;
+
 };
 
 bool operator==(const Location& a, const Location& b);

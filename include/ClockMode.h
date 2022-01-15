@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Clock.h"
-
 enum ClockMode
 {
 	STOPWATCH = 0,

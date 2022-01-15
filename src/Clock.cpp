@@ -28,7 +28,7 @@ void Clock::resumeClock(float seconds)
 
 float Clock::stopClock()
 {
-	return updateTime();
+	return m_remainTime + updateTime();
 }
 
 float Clock::getTimeInSeconds() const
@@ -41,9 +41,9 @@ ClockMode Clock::getMode() const
 	return m_mode;
 }
 
-void Clock::reset()
+void Clock::reset(float seconds)
 {
-	resumeClock(0);
+	resumeClock(seconds);
 }
 
 void Clock::setMode(ClockMode mode)
@@ -55,7 +55,7 @@ float Clock::updateTime()
 {
 	const float elapsed = m_clock.restart().asSeconds();
 
-	if (m_mode == 0)
+	if (m_mode == STOPWATCH)
 		m_remainTime += elapsed;
 	else
 		m_remainTime -= elapsed;
@@ -68,7 +68,7 @@ float Clock::updateTime()
 
 std::string Clock::toString() const
 {
-	int current = m_remainTime;
+	int current = static_cast<int>(m_remainTime);
 
 	const int hours = current / (60 * 60);
 	current %= (60 * 60);

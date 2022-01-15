@@ -7,7 +7,6 @@ class Teleport : public BoardItem {
 public:
 
 	Teleport(Location location = { 0, 0 }, Location pairLocation = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 });
-	~Teleport();
 
 	/*Teleport(Location pairLocation);
 
@@ -18,10 +17,10 @@ public:
 	bool handleCollision(Thief* item) override;
 	bool handleCollision(Warrier* item) override;
 
+	void getItemToPair();
+
 
 private:
-
-	void getItemToPair();
 	bool teleportInUse();
 
 	bool m_inUse;

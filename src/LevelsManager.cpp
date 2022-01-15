@@ -69,6 +69,7 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 	std::vector<std::string> teleportVector;
 
 	int rowCount = 0;
+	int teleportsCount = 0;
 
 	while (!levelFile.eof())
 	{
@@ -84,7 +85,7 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 		for (int i = 0; i < line.length(); i++)
 		{
 			Location location = { rowCount, i };
-			
+
 			switch (line[i])
 			{
 			case '=':
@@ -102,10 +103,6 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 			case '@':
 				levelData->m_boardItems.push_back(std::make_unique<Throne>(location));
 				break;
-			/*case 'X':
-				levelData->m_boardItems.push_back(std::make_unique<Teleport>());
-				break;*/
-
 			case 'K':
 				levelData->m_characters.push_back(std::make_unique<King>(location));
 				break;
@@ -121,6 +118,9 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 			case '^':
 				levelData->m_characters.push_back(std::make_unique<Dwarf>(location));
 				break;
+			case 'X':
+				teleportsCount++;
+				break;
 			}
 		}
 
@@ -130,7 +130,8 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 	}
 
 	//read teleport pairs
-	while (!levelFile.eof())
+	for (int i = 0; i < teleportsCount / 2 || !levelFile.eof(); i++)
+		//while (!levelFile.eof())
 	{
 		int sourceRow;
 		int sourceCol;
@@ -141,13 +142,26 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 
 		Location source = { sourceRow, sourceCol };
 		Location pair = { pairRow, pairCol };
-		
+
 		levelData->m_boardItems.push_back(std::make_unique<Teleport>(source, pair));
 		levelData->m_boardItems.push_back(std::make_unique<Teleport>(pair, source));
 	}
 
+	if (!levelFile.eof())
+	{
+		std::string line;
+		levelFile >> line;
+
+		if (line == "TIME")
+		{
+			int seconds;
+			levelFile >> seconds;
+			levelData->m_timeLimit = seconds;
+		}
+	}
+	
 	levelData->m_rows = board.size();
 	levelData->m_cols = board[0].size();
-	
+
 	return levelData;
 }

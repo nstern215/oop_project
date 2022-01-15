@@ -14,10 +14,6 @@ Teleport::Teleport(Location location, Location pairLocation, sf::Vector2f boardL
 	m_rectangle.setTexture(t, true);
 }
 
-Teleport::~Teleport()
-{
-}
-
 void Teleport::getItemToPair()
 {
 	m_inUse = false;

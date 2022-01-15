@@ -13,7 +13,7 @@ public:
 	void addTime(float seconds);
 	void setTime(float seconds);
 	float stopClock();
-	void reset();
+	void reset(float seconds = 0);
 	void resumeClock(float seconds);
 	float getTimeInSeconds() const;
 	ClockMode getMode() const;

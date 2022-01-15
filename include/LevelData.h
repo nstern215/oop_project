@@ -21,4 +21,6 @@ struct LevelData {
 
 	unsigned int m_cols;
 	unsigned int m_rows;
+
+	float m_timeLimit = 0;
 };

@@ -16,7 +16,7 @@ public:
 	void setActive(bool active);
 	bool isActive() const;
 
-    Location calcNewLocation(sf::Vector2f step);
+    Location calcNewLocation(sf::Vector2f step) const;
 
 protected:
 
