@@ -36,7 +36,7 @@ public:
 
 private:
 
-	static sf::Vector2f getMovingDirection();
+	sf::Vector2f getMovingDirection();
 	void buildBoard();
 	void initalizeLevel();
 	void initializeMenu();
@@ -51,6 +51,8 @@ private:
 	void resumeGame();
 	void loadNextLevel();
 
+	void drawInfoText();
+
 	void exitGame();
 	void tutorial();
 	void resetLevel();
@@ -64,9 +66,11 @@ private:
 
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
-	sf::Color m_bgColor;
 	sf::Text m_statusLine;
 
+	sf::Text m_infoText;
+	sf::RectangleShape m_infoTextBg;
+	
 	int m_currentLevelNum;
 	int m_activeCharacter;
 

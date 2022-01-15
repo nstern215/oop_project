@@ -62,7 +62,8 @@ ResourcesService::ResourcesService()
 						"gift.png",
 						"background.jpg"};
 
-	m_fontNames = { "Hypeblox.ttf" };
+	m_fontNames = { "Hypeblox.ttf",
+					"PTSans-Regular.ttf"};
 
 	loadTexture();
 	loadFonts();
