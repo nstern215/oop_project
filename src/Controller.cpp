@@ -231,6 +231,16 @@ void Controller::levelComplited()
 	m_mode = LEVEL_COMPLETED;
 }
 
+bool Controller::teleportDestCheck(Location& teleportDestLocation)
+{
+	for (auto& item : m_currentLevel->m_characters)
+		if (item->getLocation() == teleportDestLocation)
+			return false;
+
+	return true;
+
+}
+
 sf::Vector2u Controller::getLevelBoardSize() const
 {
 	return { m_currentLevel->m_cols, m_currentLevel->m_rows };

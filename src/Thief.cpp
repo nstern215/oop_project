@@ -3,7 +3,10 @@
 
 #include "Key.h"
 #include "Gate.h"
+#include "Teleport.h"
 #include "ResourcesService.h"
+
+#include <iostream>
 
 Thief::Thief(Location location, sf::Vector2f boardLocation)
 	:Characters(location, boardLocation)
@@ -50,4 +53,10 @@ bool Thief::handleCollision(Gate* item)
 		return true;
 	}
 	return false;
+}
+
+bool Thief::handleCollision(Teleport* item)
+{
+	/*std::cout << "colition with teleport" << std::endl;*/
+	return true;
 }

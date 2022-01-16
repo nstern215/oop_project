@@ -25,6 +25,9 @@ public:
 	void addKey(const Location& location);
 	void levelComplited();
 	
+	bool teleportDestCheck(Location& teleportDestLocation);
+
+
 	/*void takeAction(const std::string& command);
 	void addTeleport(const int& col, const int& row);
 	void addCharacters(const std::string& character);
@@ -92,9 +95,6 @@ private:
 
 	Menu m_menu;
 	GameMode m_mode = WELCOME;
-
-	//------------------------------------------
-	std::vector<Dwarf*> dwarfs;
 
 };
 

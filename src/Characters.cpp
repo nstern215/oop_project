@@ -5,6 +5,8 @@
 #include "Teleport.h"
 #include "Controller.h"
 
+#include <iostream>
+
 Characters::Characters(Location location, sf::Vector2f boardLocation) :
 	Item(location, boardLocation),
 	m_isActive(false)
@@ -30,12 +32,11 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 
 	//todo: if m_location != destLocation - collision!
 	//if (destLocation != m_location)
+
 	if (m_location != destLocation && !validateMove(m_location, destination, controller))
 		return;
 
 	m_location = destLocation;
-
-	//std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << " Position: " << m_rectangle.getPosition().x << ":" << m_rectangle.getPosition().y << std::endl;
 
 	m_rectangle.move(step);
 }
@@ -129,8 +130,6 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (collisionResult && dynamic_cast<Ork*>(destItem))
 		controller.addKey(destLocation);
 
-	/*if (collisionResult && dynamic_cast<Teleport*>(destItem))*/
-		
 	if (collisionResult && dynamic_cast<Throne*>(destItem))
 		controller.levelComplited();
 	
