@@ -38,16 +38,16 @@ Controller::Controller() :
 void Controller::run()
 {
 	auto winSize = m_window.getSize();
-	sf::RectangleShape background({static_cast<float>(winSize.x), static_cast<float>(winSize.y) });
+	sf::RectangleShape background({ static_cast<float>(winSize.x), static_cast<float>(winSize.y) });
 	background.setTexture(ResourcesService::instance()->getTexture("background.jpg"));
-	
+
 	m_window.setFramerateLimit(60);
 
 	while (m_window.isOpen())
 	{
 		m_window.clear();
 		m_window.draw(background);
-		
+
 		switch (m_mode)
 		{
 		case WELCOME:
@@ -69,7 +69,7 @@ void Controller::run()
 			drawGameOverView();
 			break;
 		}
-		
+
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -93,15 +93,18 @@ void Controller::run()
 					case GAME_OVER:
 						initializeLevel();
 						break;
-						default:
-							resumeGame();
-							break;
+					default:
+						resumeGame();
+						break;
 					}
 				}
 				else if (event.key.code == sf::Keyboard::Key::P)
 				{
 					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(false);
 					m_isActiveCharacter = (m_isActiveCharacter + 1) % m_currentLevel->m_characters.size();
+					while (dynamic_cast<Dwarf*>(m_currentLevel->m_characters[m_isActiveCharacter].get()))
+						m_isActiveCharacter = (m_isActiveCharacter + 1) % m_currentLevel->m_characters.size();
+
 					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(true);
 				}
 				break;
@@ -118,18 +121,18 @@ void Controller::run()
 				m_mode = GAME_OVER;
 				continue;
 			}
-			
+
 			std::erase_if(m_currentLevel->m_boardItems, [](std::unique_ptr<BoardItem>& item)
 				{
 					return !item->isActive();
 				});
-			
+
 			const auto moveDirection = getMovingDirection();
 			const auto deltaTime = m_gameClock.updateTime();
 
-			if (moveDirection.x != 0 || moveDirection.y != 0)
-				for (auto& c : m_currentLevel->m_characters)
-					c->move(moveDirection, deltaTime, *this);
+
+			for (auto& c : m_currentLevel->m_characters)
+				c->move(moveDirection, deltaTime, *this);
 
 			updateStatusLine();
 		}
@@ -231,7 +234,7 @@ void Controller::levelComplited()
 	m_mode = LEVEL_COMPLETED;
 }
 
-bool Controller::teleportDestCheck(Location& teleportDestLocation)
+bool Controller::teleportDestCheck(Location& teleportDestLocation) const
 {
 	for (auto& item : m_currentLevel->m_characters)
 		if (item->getLocation() == teleportDestLocation)
@@ -282,11 +285,9 @@ void Controller::updateStatusLine()
 
 void Controller::drawLevel()
 {
-	//todo: delete
 	if (m_currentLevelNum == -1)
 		loadNextLevel();
-	//
-	
+
 	updateStatusLine();
 	m_window.draw(m_boardBorder);
 	m_window.draw(m_statusLine);
@@ -296,8 +297,7 @@ void Controller::drawLevel()
 		item->draw(m_window);
 
 	for (auto& item : m_currentLevel->m_characters)
-		if (!item->isActive())
-			item->draw(m_window);
+		item->draw(m_window);
 
 	m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);
 }
@@ -357,12 +357,6 @@ void Controller::drawInfoText()
 	m_infoText.setPosition(txtPosition);
 
 	const sf::Vector2f bgSize = { textBound.width, textBound.height * 2 };
-	
-	/*m_infoTextBg.setSize(bgSize);
-	m_infoTextBg.setPosition(txtPosition);
-	m_infoTextBg.setOrigin(bgSize.x / 2, bgSize.y / 2);*/
-	//m_infoTextBg.setOrigin(300, 300);
-	/*m_infoText.scale(1.2f, 1.2f); */
 
 	m_window.draw(m_infoTextBg);
 	m_window.draw(m_infoText);

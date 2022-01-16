@@ -25,7 +25,7 @@ public:
 	void addKey(const Location& location);
 	void levelComplited();
 	
-	bool teleportDestCheck(Location& teleportDestLocation);
+	bool teleportDestCheck(Location& teleportDestLocation) const;
 
 
 	/*void takeAction(const std::string& command);

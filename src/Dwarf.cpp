@@ -1,24 +1,22 @@
 #include "Dwarf.h"
 #include "ResourcesService.h"
 
-Dwarf::Dwarf(Location location, sf::Vector2f boardLocation)
-	:Characters(location, boardLocation)
+Dwarf::Dwarf(Location location, sf::Vector2f boardLocation):
+	Characters(location, boardLocation)
 {
 	m_go = rand() % 4; 
 
 	setDirection(m_go);
 
-	setActive(true);
-
-	m_rectangle.setFillColor(sf::Color::White);
+	m_isActive = true;
 
 	sf::Texture* t = ResourcesService::instance()->getTexture("dwarf.png");
 
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
 	m_rectangle.setTexture(t, true);
 }
+
+void Dwarf::setActive(bool active)
+{}
 
 void Dwarf::setDirection(const int& direction)
 {
@@ -40,13 +38,19 @@ void Dwarf::setDirection(const int& direction)
 	}
 }
 
-void Dwarf::chengeDirection()
+void Dwarf::move(sf::Vector2f destination, float deltaTime, Controller& controller)
+{
+	Characters::move(getDirection(), deltaTime, controller);
+}
+
+
+void Dwarf::changeDirection()
 {
 	m_direction.x = -m_direction.x;
 	m_direction.y = -m_direction.y;
 }
 
-sf::Vector2f Dwarf::getDirection()
+sf::Vector2f Dwarf::getDirection() const
 {
 	return m_direction;
 }
@@ -61,60 +65,60 @@ bool Dwarf::handleCollision(Item* item)
 
 bool Dwarf::handleCollision(Fire* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Gate* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Ork* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Throne* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(King* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Thief* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Mage* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Warrier* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Dwarf* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }
 
 bool Dwarf::handleCollision(Wall* item)
 {
-	this->chengeDirection();
+	this->changeDirection();
 	return false;
 }

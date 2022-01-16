@@ -23,7 +23,7 @@ Characters::~Characters()
 
 void Characters::move(sf::Vector2f destination, float deltaTime, Controller& controller)
 {
-	if (!m_isActive)
+	if (!m_isActive && (destination.x != 0 || destination.y != 0) )
 		return;
 
 	/*const auto destLocation = calcNewLocation(destination);*/

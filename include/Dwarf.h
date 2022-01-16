@@ -17,8 +17,11 @@ class Dwarf : public Characters {
 public:
 
 	Dwarf(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0,0 });
+
+	void move(sf::Vector2f destination, float deltaTime, Controller& controller) override;
 	
 	bool handleCollision(Item* item);
+	void setActive(bool active) override;
 
 	bool handleCollision(King* item)override;
 	bool handleCollision(Thief* item)override;
@@ -32,8 +35,8 @@ public:
 	bool handleCollision(Throne* item)override;
 
 	void setDirection(const int& direction);
-	void chengeDirection();
-	sf::Vector2f getDirection();
+	void changeDirection();
+	sf::Vector2f getDirection() const;
 
 private:
 
