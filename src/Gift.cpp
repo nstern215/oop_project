@@ -6,10 +6,7 @@ Gift::Gift(Location location, sf::Vector2f boardLocation)
 { 
 	m_available = false;
 	sf::Texture* t = ResourcesService::instance()->getTexture("gift.png");
-
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
+	
 	m_rectangle.setTexture(t, true);
 }
 

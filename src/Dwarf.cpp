@@ -48,14 +48,9 @@ void Dwarf::move(sf::Vector2f destination, float deltaTime, Controller& controll
 	Characters::move(getDirection(), deltaTime, controller);
 }
 
-
 void Dwarf::changeDirection()
 {
-	int newDirectopm = rand() % 4;
-	/*while (newDirectopm == m_go)
-		newDirectopm = rand() % 4;*/
-
-	m_go = newDirectopm;
+	m_go = rand() % 4;
 
 	setDirection(m_go);
 }

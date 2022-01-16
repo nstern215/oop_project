@@ -6,9 +6,6 @@ Wall::Wall(Location location)
 {
 	sf::Texture* t = ResourcesService::instance()->getTexture("wall.jpg");
 
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
 	m_rectangle.setTexture(t, true);
 }
 

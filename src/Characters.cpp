@@ -21,10 +21,6 @@ Characters::Characters(Location location, sf::Vector2f boardLocation) :
 
 Characters::~Characters()
 {
-	/*m_rectangle.setOutlineThickness(5);
-	m_rectangle.setOutlineColor(sf::Color::Black);*/
-
-	//m_rectangle.setFillColor(sf::Color(100, 100, 100));
 }
 
 void Characters::draw(sf::RenderWindow& window)
@@ -40,12 +36,8 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 	if (!m_isActive && (destination.x != 0 || destination.y != 0) )
 		return;
 
-	/*const auto destLocation = calcNewLocation(destination);*/
 	const sf::Vector2f step = destination * deltaTime * m_speedPerSecond;
 	const auto destLocation = calcNewLocation(step);
-
-	//todo: if m_location != destLocation - collision!
-	//if (destLocation != m_location)
 
 	if (m_location != destLocation && !validateMove(m_location, destination, controller))
 		return;
@@ -91,19 +83,9 @@ Location Characters::calcNewLocation(sf::Vector2f step) const
 	return destination;
 }
 
-//bool Characters::isActive() const
-//{
-//	return m_isActive;
-//}
 
 void Characters::setActive(bool active)
 {
-	//if (active)
-	//	m_rectangle.setFillColor(sf::Color::Black);
-	//else
-	//	//m_rectangle.setFillColor(sf::Color::White);
-	//	m_rectangle.setFillColor(sf::Color(100, 100, 100));
-
 	m_isActive = active;
 }
 

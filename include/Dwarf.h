@@ -43,8 +43,6 @@ public:
 private:
 
 	int m_go;
-	//int m_speed;
-	//int m_spaces;
 
 	sf::Vector2f m_direction;
 };

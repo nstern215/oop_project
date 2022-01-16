@@ -10,9 +10,6 @@ Teleport::Teleport(Location location, Location pairLocation, sf::Vector2f boardL
 	m_inUse = false;
 	sf::Texture* t = ResourcesService::instance()->getTexture("teleport.png");
 
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
 	m_rectangle.setTexture(t, true);
 }
 

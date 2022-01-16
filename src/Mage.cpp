@@ -12,9 +12,6 @@ Mage::Mage(Location location, sf::Vector2f boardLocation)
 
 	sf::Texture* t = ResourcesService::instance()->getTexture("mage.png");
 
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
 	m_rectangle.setTexture(t, true);
 }
 
