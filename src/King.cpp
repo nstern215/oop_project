@@ -43,6 +43,8 @@ bool King::handleCollision(Throne* item)
 bool King::handleCollision(Teleport* item)
 {
 	m_location = item->getPairLocation();
+
+	updatePosition();
 	
 	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row<< std::endl;
 	

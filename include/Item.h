@@ -49,6 +49,8 @@ public:
 	
     virtual void draw(sf::RenderWindow& window);
 
+    void updatePosition();
+	
     /*void setPosition(const sf::Vector2f& position);
     
     void setPosition(float positionOffsetX, float positionOffsetY);

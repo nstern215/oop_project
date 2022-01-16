@@ -64,6 +64,15 @@ void Item::setSize(sf::Vector2f size)
 	m_rectangle.setPosition(position);
 }
 
+void Item::updatePosition()
+{
+	const auto size = m_rectangle.getSize();
+	const sf::Vector2f newPosition = { m_location.m_col * size.x + m_boardLocation.x,
+								m_location.m_row * size.y + m_boardLocation.y };
+
+	m_rectangle.setPosition(newPosition);
+}
+
 bool Item::handleCollision(King* item)
 {
 	return false;
