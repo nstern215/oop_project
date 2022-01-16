@@ -1,12 +1,8 @@
 #include "Thief.h"
-
-
 #include "Key.h"
 #include "Gate.h"
 #include "Teleport.h"
 #include "ResourcesService.h"
-
-#include <iostream>
 
 Thief::Thief(Location location, sf::Vector2f boardLocation)
 	:Characters(location, boardLocation)
@@ -18,6 +14,7 @@ Thief::Thief(Location location, sf::Vector2f boardLocation)
 
 void Thief::collectKey() 
 {
+	m_rectangle.setTexture(ResourcesService::instance()->getTexture("thief_key.png"), true);
 	m_key = true;
 }
 
@@ -39,6 +36,7 @@ bool Thief::handleCollision(Key* item)
 	if(!m_key)
 	{
 		item->keyTaken();
+		m_rectangle.setTexture(ResourcesService::instance()->getTexture("thief_key.png"), true);
 		m_key = true;
 	}
 	return true;
@@ -50,6 +48,8 @@ bool Thief::handleCollision(Gate* item)
 	{
 		item->openGate();
 		m_key = false;
+
+		m_rectangle.setTexture(ResourcesService::instance()->getTexture("thief.png"), true);
 		return true;
 	}
 	return false;

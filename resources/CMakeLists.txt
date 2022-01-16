@@ -20,6 +20,8 @@ configure_file ("background.jpg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("help.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("restart.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("exit.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("thief_key.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 
 #font
 configure_file ("Hypeblox.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
