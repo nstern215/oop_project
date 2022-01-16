@@ -11,7 +11,7 @@
 #include "LevelData.h"
 #include "Menu.h"
 
-class Controller{
+class Controller {
 
 public:
 	Controller();
@@ -34,12 +34,12 @@ public:
 	/*sf::Texture* getTexture(std::string textureName);
 
 	char convertItemToChar(std::string item) const;
-	
+
 	std::string convertChatToItem(char c) const;*/
 
 private:
 
-	static sf::Vector2f getMovingDirection();
+	sf::Vector2f getMovingDirection();
 	void buildBoard();
 	void initializeLevel();
 	void initializeMenu();
@@ -50,9 +50,12 @@ private:
 	void drawTutorialView();
 	void drawLevelCompletedView();
 	void drawWinGameView();
+	void drawGameOverView();
 	void resumeGame();
 	void loadNextLevel();
-	
+
+	void drawInfoText();
+
 	void exitGame();
 	void tutorial();
 	void resetLevel();
@@ -72,11 +75,13 @@ private:
 	std::vector<sf::Texture*> m_textures;
 
 	Clock m_gameClock;
-  
+
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
-	sf::Color m_bgColor;
 	sf::Text m_statusLine;
+
+	sf::Text m_infoText;
+	sf::RectangleShape m_infoTextBg;
 	
 	int m_currentLevelNum;
 	int m_isActiveCharacter;
@@ -84,10 +89,10 @@ private:
 	std::unique_ptr<LevelData> m_currentLevel;
 
 	float m_currentLevelTime;
-	
+
 	Menu m_menu;
-	GameMode m_mode;
-	
+	GameMode m_mode = WELCOME;
+
 	//------------------------------------------
 	std::vector<Dwarf*> dwarfs;
 

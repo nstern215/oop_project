@@ -130,7 +130,7 @@ std::unique_ptr<LevelData> LevelsManager::loadLevel(int levelNum)
 	}
 
 	//read teleport pairs
-	for (int i = 0; i < teleportsCount / 2 || !levelFile.eof(); i++)
+	for (int i = 0; i < teleportsCount / 2 && !levelFile.eof(); i++)
 		//while (!levelFile.eof())
 	{
 		int sourceRow;

@@ -1,4 +1,5 @@
-﻿configure_file ("crown.png" ${CMAKE_BINARY_DIR} COPYONLY)
+﻿#imaes
+configure_file ("crown.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("delete.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("fire.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gate.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -17,4 +18,6 @@ configure_file ("dwarf.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gift.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("background.jpg" ${CMAKE_BINARY_DIR} COPYONLY)
 
-configure_file ("Hypeblox.ttf" ${CMAKE_BINARY_DIR} COPYONLY) #font
+#font
+configure_file ("Hypeblox.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("PTSans-Regular.ttf" ${CMAKE_BINARY_DIR} COPYONLY)

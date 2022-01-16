@@ -16,10 +16,8 @@
 
 Controller::Controller() :
 	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
-	//m_bgColor(39, 72, 245, 0.8),
 	m_currentLevelNum(-1),
-	m_isActiveCharacter(0),
-	m_mode(GAME)
+	m_activeCharacter(0)
 {
 	initializeMenu();
 	buildBoard();
@@ -28,6 +26,13 @@ Controller::Controller() :
 	m_statusLine.setFillColor(sf::Color::Black);
 	m_statusLine.setCharacterSize(50);
 	m_statusLine.setPosition({ 10,10 });
+
+	m_infoText.setFont(*(ResourcesService::instance()->getFont("PTSans-Regular.ttf")));
+	m_infoText.setFillColor(sf::Color::White);
+	m_infoText.setCharacterSize(36);
+
+	//m_infoTextBg.setFillColor(sf::Color(256, 256, 256, 128));
+	m_infoTextBg.setFillColor(sf::Color::Red);
 }
 
 void Controller::run()
@@ -40,7 +45,7 @@ void Controller::run()
 
 	while (m_window.isOpen())
 	{
-		m_window.clear(m_bgColor);
+		m_window.clear();
 		m_window.draw(background);
 		
 		switch (m_mode)
@@ -60,17 +65,11 @@ void Controller::run()
 		case LEVEL_COMPLETED:
 			drawLevelCompletedView();
 			break;
+		case GAME_OVER:
+			drawGameOverView();
+			break;
 		}
-
-		/*for (auto& item : m_currentLevel->m_boardItems)
-			item->draw(m_window);
-
-		for (auto& item : m_currentLevel->m_characters)
-			if (!item->isActive())
-				item->draw(m_window);
-
-		m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);*/
-
+		
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -90,6 +89,9 @@ void Controller::run()
 						break;
 					case LEVEL_COMPLETED:
 						loadNextLevel();
+						break;
+					case GAME_OVER:
+						initalizeLevel();
 						break;
 						default:
 							resumeGame();
@@ -111,6 +113,12 @@ void Controller::run()
 
 		if (m_mode == GAME)
 		{
+			if (m_gameClock.getMode() == TIMER && m_gameClock.getRemainTime() == 0)
+			{
+				m_mode = GAME_OVER;
+				continue;
+			}
+			
 			std::erase_if(m_currentLevel->m_boardItems, [](std::unique_ptr<BoardItem>& item)
 				{
 					return !item->isActive();
@@ -164,13 +172,12 @@ void Controller::buildBoard()
 {
 	const auto windowSize = m_window.getSize();
 
-	/*const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);*/
 	const sf::Vector2f boardSize(static_cast<float>(windowSize.y) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
 	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.09f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
-	m_boardBorder.setOutlineThickness(8);
+	m_boardBorder.setOutlineThickness(3);
 	m_boardBorder.setOutlineColor(sf::Color::Black);
 	m_boardBorder.setFillColor(sf::Color(255, 255, 255, 128));
 	m_boardBorder.setPosition(boardOrigin);
@@ -265,9 +272,11 @@ void Controller::updateStatusLine()
 
 void Controller::drawLevel()
 {
+	//todo: delete
 	if (m_currentLevelNum == -1)
 		loadNextLevel();
-
+	//
+	
 	updateStatusLine();
 	m_window.draw(m_boardBorder);
 	m_window.draw(m_statusLine);
@@ -285,23 +294,70 @@ void Controller::drawLevel()
 
 void Controller::drawLevelCompletedView()
 {
+	const std::string str = "Level Completed!\n\n\nPress any key for the next level";
+	m_infoText.setString(str);
 
+	drawInfoText();
 }
 
 void Controller::drawTutorialView()
 {
+	std::string str = "\t\tWelcome to Save The King!\n\n";
+	str += "Instructions:\n";
+	str += "Press 'P' to replace the active player\n";
+	str += "Use the arrows keys to move around the board\n\n";
+	str += "Do your best to bring the king to his throne before your time is over\n";
+	str += "If your time is over, you will get another chance to win the level\n\n";
+	str += "Be aware of the dwarfs...";
+	m_infoText.setString(str);
 
+	drawInfoText();
 }
 
 void Controller::drawWelcomeView()
 {
+	const std::string str = "\t\tSave the King\n\n\nPress any key to start";
+	m_infoText.setString(str);
 
+	drawInfoText();
 }
 
 void Controller::drawWinGameView()
 {
+	const std::string str = "Winner winner chicken dinner\n\nPress any key to exit";
+	m_infoText.setString(str);
+
+	drawInfoText();
+}
+
+void Controller::drawGameOverView()
+{
+	const std::string str = "Game Over!\n\n\nPress any key to try this level again";
+	m_infoText.setString(str);
+
+	drawInfoText();
 
 }
+
+void Controller::drawInfoText()
+{
+	const auto textBound = m_infoText.getGlobalBounds();
+	const auto winSize = m_window.getSize();
+	const sf::Vector2f txtPosition = { (winSize.x / 2) - (textBound.width / 2), (winSize.y / 2) - (textBound.height / 2) };
+	m_infoText.setPosition(txtPosition);
+
+	const sf::Vector2f bgSize = { textBound.width, textBound.height * 2 };
+	
+	/*m_infoTextBg.setSize(bgSize);
+	m_infoTextBg.setPosition(txtPosition);
+	m_infoTextBg.setOrigin(bgSize.x / 2, bgSize.y / 2);*/
+	//m_infoTextBg.setOrigin(300, 300);
+	/*m_infoText.scale(1.2f, 1.2f); */
+
+	m_window.draw(m_infoTextBg);
+	m_window.draw(m_infoText);
+}
+
 
 void Controller::resumeGame()
 {
