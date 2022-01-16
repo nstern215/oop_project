@@ -11,6 +11,7 @@
 #include "LevelsManager.h"
 #include "Mage.h"
 #include "Dwarf.h"
+#include "Key.h"
 #include "ResourcesService.h"
 
 Controller::Controller() :
@@ -143,7 +144,6 @@ sf::Vector2f Controller::getMovingDirection()
 	return { 0,0 };
 }
 
-
 Item* Controller::getItem(const Location l)
 {
 	for (auto& item : m_currentLevel->m_characters)
@@ -210,6 +210,16 @@ void Controller::initializeLevel()
 	m_gameClock.reset(m_currentLevel->m_timeLimit);
 
 	m_mode = GAME;
+}
+
+void Controller::addKey(const Location& location)
+{
+	m_currentLevel->m_boardItems.emplace_back(std::make_unique<Key>(location));
+}
+
+void Controller::levelComplited()
+{
+	m_mode = LEVEL_COMPLETED;
 }
 
 sf::Vector2u Controller::getLevelBoardSize() const

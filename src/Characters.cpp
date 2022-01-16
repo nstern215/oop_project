@@ -1,8 +1,7 @@
 #include "Characters.h"
 
-#include <iostream>
-
-#include "Wall.h"
+#include "Throne.h";
+#include "Ork.h";
 #include "Teleport.h"
 #include "Controller.h"
 
@@ -125,14 +124,13 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (!destItem)
 		return true;
 
-	//if (dynamic_cast<Teleport*>(destItem))
-	//{
-	//	
-	//}
+	const bool collisionResult = destItem->handleCollision(this);
 
+	if (collisionResult && dynamic_cast<Ork*>(destItem))
+		controller.addKey(destLocation);
 
-	return destItem->handleCollision(this);
-
-	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
-	//	return false;
+	if (collisionResult && dynamic_cast<Throne*>(destItem))
+		controller.levelComplited();
+	
+	return collisionResult;
 }
