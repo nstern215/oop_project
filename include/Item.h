@@ -65,9 +65,12 @@ public:
 
 	sf::Rect getBoundingRectangle();
 	
-	bool isActive() const;
+	
 	
 	Location getLocation() const;*/
+
+    bool isActive() const;
+    virtual void setActive(bool active);
 
 protected:
 
@@ -77,7 +80,7 @@ protected:
     sf::RectangleShape m_rectangle;
     Location m_location;
 
-	bool m_active;
+	bool m_isActive;
 
 private:
 };

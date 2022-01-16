@@ -4,7 +4,7 @@ Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 	m_location(location),
 	m_boardLocation(boardLocation),
 	m_speedPerSecond(speedPerSecond),
-	m_active(true)
+	m_isActive(false)
 {
 	m_rectangle.setSize({80.f, 80.f});
 
@@ -20,6 +20,16 @@ Item::~Item()
 void Item::draw(sf::RenderWindow& window)
 {
 	window.draw(m_rectangle);
+}
+
+void Item::setActive(bool active)
+{
+	m_isActive = active;
+}
+
+bool Item::isActive() const
+{
+	return m_isActive;
 }
 
 void Item::setBoardLocation(sf::Vector2f position)

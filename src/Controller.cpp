@@ -11,13 +11,13 @@
 #include "LevelsManager.h"
 #include "Mage.h"
 #include "Dwarf.h"
+#include "Key.h"
 #include "ResourcesService.h"
 
 Controller::Controller() :
 	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
-	//m_bgColor(39, 72, 245, 0.8),
 	m_currentLevelNum(-1),
-	m_activeCharacter(0)
+	m_isActiveCharacter(0)
 {
 	initializeMenu();
 	buildBoard();
@@ -26,6 +26,13 @@ Controller::Controller() :
 	m_statusLine.setFillColor(sf::Color::Black);
 	m_statusLine.setCharacterSize(50);
 	m_statusLine.setPosition({ 10,10 });
+
+	m_infoText.setFont(*(ResourcesService::instance()->getFont("PTSans-Regular.ttf")));
+	m_infoText.setFillColor(sf::Color::White);
+	m_infoText.setCharacterSize(36);
+
+	//m_infoTextBg.setFillColor(sf::Color(256, 256, 256, 128));
+	m_infoTextBg.setFillColor(sf::Color::Red);
 }
 
 void Controller::run()
@@ -38,7 +45,7 @@ void Controller::run()
 
 	while (m_window.isOpen())
 	{
-		m_window.clear(m_bgColor);
+		m_window.clear();
 		m_window.draw(background);
 		
 		switch (m_mode)
@@ -62,16 +69,7 @@ void Controller::run()
 			drawGameOverView();
 			break;
 		}
-
-		/*for (auto& item : m_currentLevel->m_boardItems)
-			item->draw(m_window);
-
-		for (auto& item : m_currentLevel->m_characters)
-			if (!item->isActive())
-				item->draw(m_window);
-
-		m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);*/
-
+		
 		m_window.display();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
@@ -93,7 +91,7 @@ void Controller::run()
 						loadNextLevel();
 						break;
 					case GAME_OVER:
-						initalizeLevel();
+						initializeLevel();
 						break;
 						default:
 							resumeGame();
@@ -102,9 +100,9 @@ void Controller::run()
 				}
 				else if (event.key.code == sf::Keyboard::Key::P)
 				{
-					m_currentLevel->m_characters[m_activeCharacter]->setActive(false);
-					m_activeCharacter = (m_activeCharacter + 1) % m_currentLevel->m_characters.size();
-					m_currentLevel->m_characters[m_activeCharacter]->setActive(true);
+					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(false);
+					m_isActiveCharacter = (m_isActiveCharacter + 1) % m_currentLevel->m_characters.size();
+					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(true);
 				}
 				break;
 			case sf::Event::MouseButtonReleased:
@@ -121,11 +119,13 @@ void Controller::run()
 				continue;
 			}
 			
+			std::erase_if(m_currentLevel->m_boardItems, [](std::unique_ptr<BoardItem>& item)
+				{
+					return !item->isActive();
+				});
+			
 			const auto moveDirection = getMovingDirection();
 			const auto deltaTime = m_gameClock.updateTime();
-
-		/*	for (auto& d : dwarfs)
-				d->move(d->getDirection(), deltaTime, *this);*/
 
 			if (moveDirection.x != 0 || moveDirection.y != 0)
 				for (auto& c : m_currentLevel->m_characters)
@@ -148,7 +148,6 @@ sf::Vector2f Controller::getMovingDirection()
 		return { -1, 0 };
 	return { 0,0 };
 }
-
 
 Item* Controller::getItem(const Location l)
 {
@@ -173,7 +172,6 @@ void Controller::buildBoard()
 {
 	const auto windowSize = m_window.getSize();
 
-	/*const sf::Vector2f boardSize(static_cast<float>(windowSize.x) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);*/
 	const sf::Vector2f boardSize(static_cast<float>(windowSize.y) * 0.9f, static_cast<float>(windowSize.y) * 0.9f);
 
 	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.09f);
@@ -185,25 +183,31 @@ void Controller::buildBoard()
 	m_boardBorder.setPosition(boardOrigin);
 }
 
-void Controller::initalizeLevel()
+sf::Vector2f Controller::calcItemSize() const
 {
 	const float item_width = m_boardBorder.getSize().x / static_cast<float>(m_currentLevel->m_cols);
 	const float item_height = m_boardBorder.getSize().y / static_cast<float>(m_currentLevel->m_rows);
 	const sf::Vector2f itemSize = { item_width, item_height };
 
+	return itemSize;
+}
+
+void Controller::initializeLevel()
+{
 	for (auto& item : m_currentLevel->m_boardItems)
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
-		item->setSize(itemSize);
+		item->setSize(calcItemSize());
+		item->setActive(true);
 	}
 
 	for (auto& item : m_currentLevel->m_characters)
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
-		item->setSize(itemSize);
+		item->setSize(calcItemSize());
 	}
 
-	m_activeCharacter = 0;
+	m_isActiveCharacter = 0;
 
 	m_gameClock.reset();
 
@@ -215,6 +219,16 @@ void Controller::initalizeLevel()
 	m_gameClock.reset(m_currentLevel->m_timeLimit);
 
 	m_mode = GAME;
+}
+
+void Controller::addKey(const Location& location)
+{
+	m_currentLevel->m_boardItems.emplace_back(std::make_unique<Key>(location, m_boardBorder.getPosition(), calcItemSize()));
+}
+
+void Controller::levelComplited()
+{
+	m_mode = LEVEL_COMPLETED;
 }
 
 sf::Vector2u Controller::getLevelBoardSize() const
@@ -249,7 +263,7 @@ void Controller::exitGame()
 void Controller::resetLevel()
 {
 	m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
-	initalizeLevel();
+	initializeLevel();
 	std::cout << "reset" << std::endl;
 }
 
@@ -284,49 +298,75 @@ void Controller::drawLevel()
 		if (!item->isActive())
 			item->draw(m_window);
 
-	//for (auto& item : dwarfs)
-	//	item->draw(m_window);
-
-	m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);
+	m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);
 }
 
 void Controller::drawLevelCompletedView()
 {
+	const std::string str = "Level Completed!\n\n\nPress any key for the next level";
+	m_infoText.setString(str);
 
+	drawInfoText();
 }
 
 void Controller::drawTutorialView()
 {
+	std::string str = "\t\tWelcome to Save The King!\n\n";
+	str += "Instructions:\n";
+	str += "Press 'P' to replace the active player\n";
+	str += "Use the arrows keys to move around the board\n\n";
+	str += "Do your best to bring the king to his throne before your time is over\n";
+	str += "If your time is over, you will get another chance to win the level\n\n";
+	str += "Be aware of the dwarfs...";
+	m_infoText.setString(str);
 
+	drawInfoText();
 }
 
 void Controller::drawWelcomeView()
 {
-	m_window.draw(m_boardBorder);
+	const std::string str = "\t\tSave the King\n\n\nPress any key to start";
+	m_infoText.setString(str);
 
-	const std::string str = "Game of Throne\n\n\nPress any key to start";
-
-	sf::Text txt;
-	txt.setString(str);
-	txt.setCharacterSize(32);
-	auto globalBound = txt.getGlobalBounds();
-	sf::Vector2f globalBoundSize = { globalBound.width / 2, globalBound.height /2 };
-	auto textPosition = m_boardBorder.getSize() - globalBoundSize + m_boardBorder.getPosition();
-
-	txt.setPosition(textPosition);
-
-	m_window.draw(txt);
+	drawInfoText();
 }
 
 void Controller::drawWinGameView()
 {
+	const std::string str = "Winner winner chicken dinner\n\nPress any key to exit";
+	m_infoText.setString(str);
 
+	drawInfoText();
 }
 
 void Controller::drawGameOverView()
 {
-	
+	const std::string str = "Game Over!\n\n\nPress any key to try this level again";
+	m_infoText.setString(str);
+
+	drawInfoText();
+
 }
+
+void Controller::drawInfoText()
+{
+	const auto textBound = m_infoText.getGlobalBounds();
+	const auto winSize = m_window.getSize();
+	const sf::Vector2f txtPosition = { (winSize.x / 2) - (textBound.width / 2), (winSize.y / 2) - (textBound.height / 2) };
+	m_infoText.setPosition(txtPosition);
+
+	const sf::Vector2f bgSize = { textBound.width, textBound.height * 2 };
+	
+	/*m_infoTextBg.setSize(bgSize);
+	m_infoTextBg.setPosition(txtPosition);
+	m_infoTextBg.setOrigin(bgSize.x / 2, bgSize.y / 2);*/
+	//m_infoTextBg.setOrigin(300, 300);
+	/*m_infoText.scale(1.2f, 1.2f); */
+
+	m_window.draw(m_infoTextBg);
+	m_window.draw(m_infoText);
+}
+
 
 void Controller::resumeGame()
 {
@@ -347,7 +387,7 @@ void Controller::loadNextLevel()
 	{
 		m_currentLevelNum++;
 		m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
-		initalizeLevel();
+		initializeLevel();
 	}
 }
 

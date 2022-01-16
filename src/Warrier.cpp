@@ -1,5 +1,7 @@
 #include "Warrier.h"
 
+
+#include "Ork.h"
 #include "ResourcesService.h"
 
 Warrier::Warrier(Location location, sf::Vector2f boardLocation)
@@ -18,5 +20,6 @@ bool Warrier::handleCollision(Item* item)
 
 bool Warrier::handleCollision(Ork* item)
 {
+	item->die();
 	return true;
 }

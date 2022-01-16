@@ -9,8 +9,5 @@ public:
 
 	bool handleCollision(Item* item);
 	bool handleCollision(Mage* item) override;
-
-private:
-
 	void putOutFire();
 };

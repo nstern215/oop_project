@@ -23,7 +23,9 @@ public:
 	sf::Vector2u getLevelBoardSize() const;
 	bool checkTeleportEnd(Location& teleportDest);
 
-
+	void addKey(const Location& location);
+	void levelComplited();
+	
 	/*void takeAction(const std::string& command);
 	void addTeleport(const int& col, const int& row);
 	void addCharacters(const std::string& character);
@@ -38,9 +40,9 @@ public:
 
 private:
 
-	static sf::Vector2f getMovingDirection();
+	sf::Vector2f getMovingDirection();
 	void buildBoard();
-	void initalizeLevel();
+	void initializeLevel();
 	void initializeMenu();
 	void updateStatusLine();
 
@@ -53,11 +55,21 @@ private:
 	void resumeGame();
 	void loadNextLevel();
 
+	void drawInfoText();
+
 	void exitGame();
 	void tutorial();
 	void resetLevel();
 
-	std::vector<sf::Vector2i> m_teleports;
+
+	sf::Vector2f calcItemSize() const;
+	//void save();
+	//std::string getInfoString() const;
+	//void setNewBoard();
+	//void loadTextures();
+	/*void loadBoardFile();
+	void getBoardInfo(const std::string line);*/
+	/*std::vector<sf::Vector2i> m_teleports;
 	std::vector<Characters> m_characters;
 	std::vector<Dwarf> m_dwarfs;
 	std::vector<sf::Texture*> m_textures;
@@ -66,11 +78,13 @@ private:
 
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
-	sf::Color m_bgColor;
 	sf::Text m_statusLine;
 
+	sf::Text m_infoText;
+	sf::RectangleShape m_infoTextBg;
+	
 	int m_currentLevelNum;
-	int m_activeCharacter;
+	int m_isActiveCharacter;
 
 	std::unique_ptr<LevelData> m_currentLevel;
 

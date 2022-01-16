@@ -14,7 +14,7 @@ public:
 
 	virtual void move(sf::Vector2f destination, float deltaTime, Controller& controller);
 	void setActive(bool active);
-	bool isActive() const;
+	//bool isActive() const;
 
     Location calcNewLocation(sf::Vector2f step) const;
 
