@@ -17,7 +17,7 @@ Controller::Controller() :
 	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
 	//m_bgColor(39, 72, 245, 0.8),
 	m_currentLevelNum(-1),
-	m_activeCharacter(0),
+	m_isActiveCharacter(0),
 	m_mode(GAME)
 {
 	initializeMenu();
@@ -68,7 +68,7 @@ void Controller::run()
 			if (!item->isActive())
 				item->draw(m_window);
 
-		m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);*/
+		m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);*/
 
 		m_window.display();
 
@@ -97,9 +97,9 @@ void Controller::run()
 				}
 				else if (event.key.code == sf::Keyboard::Key::P)
 				{
-					m_currentLevel->m_characters[m_activeCharacter]->setActive(false);
-					m_activeCharacter = (m_activeCharacter + 1) % m_currentLevel->m_characters.size();
-					m_currentLevel->m_characters[m_activeCharacter]->setActive(true);
+					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(false);
+					m_isActiveCharacter = (m_isActiveCharacter + 1) % m_currentLevel->m_characters.size();
+					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(true);
 				}
 				break;
 			case sf::Event::MouseButtonReleased:
@@ -110,6 +110,11 @@ void Controller::run()
 
 		if (m_mode == GAME)
 		{
+			std::erase_if(m_currentLevel->m_boardItems, [](std::unique_ptr<BoardItem>& item)
+				{
+					return !item->isActive();
+				});
+			
 			const auto moveDirection = getMovingDirection();
 			const auto deltaTime = m_gameClock.updateTime();
 
@@ -174,7 +179,7 @@ void Controller::buildBoard()
 	m_boardBorder.setPosition(boardOrigin);
 }
 
-void Controller::initalizeLevel()
+void Controller::initializeLevel()
 {
 	const float item_width = m_boardBorder.getSize().x / static_cast<float>(m_currentLevel->m_cols);
 	const float item_height = m_boardBorder.getSize().y / static_cast<float>(m_currentLevel->m_rows);
@@ -184,6 +189,7 @@ void Controller::initalizeLevel()
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
 		item->setSize(itemSize);
+		item->setActive(true);
 	}
 
 	for (auto& item : m_currentLevel->m_characters)
@@ -192,7 +198,7 @@ void Controller::initalizeLevel()
 		item->setSize(itemSize);
 	}
 
-	m_activeCharacter = 0;
+	m_isActiveCharacter = 0;
 
 	m_gameClock.reset();
 
@@ -229,7 +235,7 @@ void Controller::exitGame()
 void Controller::resetLevel()
 {
 	m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
-	initalizeLevel();
+	initializeLevel();
 	std::cout << "reset" << std::endl;
 }
 
@@ -262,10 +268,10 @@ void Controller::drawLevel()
 		if (!item->isActive())
 			item->draw(m_window);
 
-	for (auto& item : dwarfs)
-		item->draw(m_window);
+	/*for (auto& item : dwarfs)
+		item->draw(m_window);*/
 
-	m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);
+	//m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);
 }
 
 void Controller::drawLevelCompletedView()
@@ -307,7 +313,7 @@ void Controller::loadNextLevel()
 	{
 		m_currentLevelNum++;
 		m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
-		initalizeLevel();
+		initializeLevel();
 	}
 }
 

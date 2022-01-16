@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+
+#include "Fire.h"
 #include "ResourcesService.h"
 
 Mage::Mage(Location location, sf::Vector2f boardLocation)
@@ -26,9 +28,6 @@ bool Mage::handleCollision(Item* item)
 
 bool Mage::handleCollision(Fire* item)
 {
+	item->putOutFire();
 	return true;
-}
-
-void Mage::putOutFire()
-{
 }

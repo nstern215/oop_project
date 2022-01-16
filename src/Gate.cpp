@@ -14,7 +14,7 @@ Gate::Gate(Location location, sf::Vector2f boardLocation)
 
 void Gate::openGate()
 {
-	m_active = false;
+	m_isActive = false;
 }
 
 bool Gate::handleCollision(Item* item)

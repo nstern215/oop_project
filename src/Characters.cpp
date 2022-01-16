@@ -76,17 +76,17 @@ Location Characters::calcNewLocation(sf::Vector2f step) const
 	return destination;
 }
 
-bool Characters::isActive() const
-{
-	return m_isActive;
-}
+//bool Characters::isActive() const
+//{
+//	return m_isActive;
+//}
 
 void Characters::setActive(bool active)
 {
 	if (active)
 		m_rectangle.setFillColor(sf::Color::Black);
 	else
-		/*m_rectangle.setFillColor(sf::Color::White);*/
+		//m_rectangle.setFillColor(sf::Color::White);
 		m_rectangle.setFillColor(sf::Color(100, 100, 100));
 
 	m_isActive = active;

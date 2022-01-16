@@ -18,7 +18,7 @@ Fire::Fire(Location location, sf::Vector2f boardLocation)
 
 void Fire::putOutFire()
 {
-    m_active = false;
+    m_isActive = false;
 }
 
 bool Fire::handleCollision(Item* item)

@@ -14,7 +14,7 @@ Key::Key(Location location, sf::Vector2f boardLocation)
 
 void Key::keyTaken()
 {
-	m_active = false;
+	m_isActive = false;
 }
 
 bool Key::handleCollision(Item* item)

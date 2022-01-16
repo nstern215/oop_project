@@ -38,7 +38,7 @@ private:
 
 	static sf::Vector2f getMovingDirection();
 	void buildBoard();
-	void initalizeLevel();
+	void initializeLevel();
 	void initializeMenu();
 	void updateStatusLine();
 
@@ -74,7 +74,7 @@ private:
 	sf::Text m_statusLine;
 	
 	int m_currentLevelNum;
-	int m_activeCharacter;
+	int m_isActiveCharacter;
 
 	std::unique_ptr<LevelData> m_currentLevel;
 

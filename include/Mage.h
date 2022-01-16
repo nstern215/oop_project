@@ -9,9 +9,4 @@ public:
 
     bool handleCollision(Item* item);
     bool handleCollision(Fire* item) override;
-
-private:
-
-	void putOutFire();
-
 };
