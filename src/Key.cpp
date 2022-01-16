@@ -1,15 +1,15 @@
 #include "Key.h"
 #include "ResourcesService.h"
 
-Key::Key(Location location, sf::Vector2f boardLocation)
+Key::Key(Location location, sf::Vector2f boardLocation, sf::Vector2f itemSize)
 	:BoardItem(location, boardLocation)
 {
+	m_isActive = true;
+	
 	sf::Texture* t = ResourcesService::instance()->getTexture("key.png");
-
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
 	m_rectangle.setTexture(t, true);
+
+	Item::setSize(itemSize);
 }
 
 void Key::keyTaken()

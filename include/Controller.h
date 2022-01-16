@@ -56,7 +56,9 @@ private:
 	void exitGame();
 	void tutorial();
 	void resetLevel();
-	
+
+
+	sf::Vector2f calcItemSize() const;
 	//void save();
 	//std::string getInfoString() const;
 	//void setNewBoard();

@@ -16,7 +16,7 @@ Characters::~Characters()
 	/*m_rectangle.setOutlineThickness(5);
 	m_rectangle.setOutlineColor(sf::Color::Black);*/
 
-	m_rectangle.setFillColor(sf::Color(100, 100, 100));
+	//m_rectangle.setFillColor(sf::Color(100, 100, 100));
 }
 
 void Characters::move(sf::Vector2f destination, float deltaTime, Controller& controller)

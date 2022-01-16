@@ -31,6 +31,5 @@ bool Ork::handleCollision(Item* item)
 
 bool Ork::handleCollision(Warrier* item)
 {
-	this->die();
 	return true;
 }

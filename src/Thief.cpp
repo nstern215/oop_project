@@ -1,5 +1,7 @@
 #include "Thief.h"
 
+
+#include "Key.h"
 #include "ResourcesService.h"
 
 Thief::Thief(Location location, sf::Vector2f boardLocation)
@@ -28,6 +30,10 @@ bool Thief::handleCollision(Item* item)
 
 bool Thief::handleCollision(Key* item)
 {
-	this->collectKey();
+	if(!m_key)
+	{
+		item->keyTaken();
+		m_key = true;
+	}
 	return true;
 }

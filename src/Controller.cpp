@@ -119,9 +119,6 @@ void Controller::run()
 			const auto moveDirection = getMovingDirection();
 			const auto deltaTime = m_gameClock.updateTime();
 
-		/*	for (auto& d : dwarfs)
-				d->move(d->getDirection(), deltaTime, *this);*/
-
 			if (moveDirection.x != 0 || moveDirection.y != 0)
 				for (auto& c : m_currentLevel->m_characters)
 					c->move(moveDirection, deltaTime, *this);
@@ -179,23 +176,28 @@ void Controller::buildBoard()
 	m_boardBorder.setPosition(boardOrigin);
 }
 
-void Controller::initializeLevel()
+sf::Vector2f Controller::calcItemSize() const
 {
 	const float item_width = m_boardBorder.getSize().x / static_cast<float>(m_currentLevel->m_cols);
 	const float item_height = m_boardBorder.getSize().y / static_cast<float>(m_currentLevel->m_rows);
 	const sf::Vector2f itemSize = { item_width, item_height };
 
+	return itemSize;
+}
+
+void Controller::initializeLevel()
+{
 	for (auto& item : m_currentLevel->m_boardItems)
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
-		item->setSize(itemSize);
+		item->setSize(calcItemSize());
 		item->setActive(true);
 	}
 
 	for (auto& item : m_currentLevel->m_characters)
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
-		item->setSize(itemSize);
+		item->setSize(calcItemSize());
 	}
 
 	m_isActiveCharacter = 0;
@@ -214,7 +216,7 @@ void Controller::initializeLevel()
 
 void Controller::addKey(const Location& location)
 {
-	m_currentLevel->m_boardItems.emplace_back(std::make_unique<Key>(location));
+	m_currentLevel->m_boardItems.emplace_back(std::make_unique<Key>(location, m_boardBorder.getPosition(), calcItemSize()));
 }
 
 void Controller::levelComplited()
@@ -278,10 +280,7 @@ void Controller::drawLevel()
 		if (!item->isActive())
 			item->draw(m_window);
 
-	/*for (auto& item : dwarfs)
-		item->draw(m_window);*/
-
-	//m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);
+	m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);
 }
 
 void Controller::drawLevelCompletedView()
