@@ -1,4 +1,4 @@
-﻿#imaes
+﻿#images
 configure_file ("crown.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("delete.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("fire.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -11,12 +11,15 @@ configure_file ("thief.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("throne.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("warrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("add.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("wall.jpg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("key.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("mage.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("dwarf.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gift.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("background.jpg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("help.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("restart.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("exit.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 #font
 configure_file ("Hypeblox.ttf" ${CMAKE_BINARY_DIR} COPYONLY)

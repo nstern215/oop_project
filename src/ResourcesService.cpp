@@ -56,12 +56,15 @@ ResourcesService::ResourcesService()
 						"delete.png",
 						"open.png",
 						"save.png",
-						"wall.png",
+						"wall.jpg",
 						"mage.png",
 						"dwarf.png",
 						"gift.png",
 						"key.png",
-						"background.jpg"};
+						"background.jpg",
+						"help.png",
+						"restart.png",
+						"exit.png"};
 
 	m_fontNames = { "Hypeblox.ttf",
 					"PTSans-Regular.ttf"};

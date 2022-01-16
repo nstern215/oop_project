@@ -240,9 +240,9 @@ void Controller::initializeMenu()
 {
 	m_menu.setPosition({ m_window.getSize().x / 2.f, 3 });
 
-	m_menu.addMenuItem("crown.png", &Controller::exitGame);
-	m_menu.addMenuItem("crown.png", &Controller::resetLevel);
-	m_menu.addMenuItem("crown.png", &Controller::tutorial);
+	m_menu.addMenuItem("exit.png", &Controller::exitGame);
+	m_menu.addMenuItem("restart.png", &Controller::resetLevel);
+	m_menu.addMenuItem("help.png", &Controller::tutorial);
 }
 
 void Controller::exitGame()
@@ -372,7 +372,7 @@ void Controller::resumeGame()
 
 void Controller::loadNextLevel()
 {
-	if (m_currentLevelNum >= LevelsManager::instance()->getNumOfLevels())
+	if (m_currentLevelNum + 1 >= LevelsManager::instance()->getNumOfLevels())
 		m_mode = WIN;
 	else
 	{

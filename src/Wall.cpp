@@ -4,7 +4,7 @@
 Wall::Wall(Location location)
 	:BoardItem(location)
 {
-	sf::Texture* t = ResourcesService::instance()->getTexture("wall.png");
+	sf::Texture* t = ResourcesService::instance()->getTexture("wall.jpg");
 
 	//sf::Texture* t = new sf::Texture();
 	//t->loadFromFile("crown.png");

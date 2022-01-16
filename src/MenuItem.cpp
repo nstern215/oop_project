@@ -12,7 +12,7 @@ MenuItem::MenuItem(sf::Vector2f position, void (Controller::* onClick)(), std::s
 	
 	m_frame.setOutlineColor(sf::Color(77, 69, 69, 80));
 	m_frame.setOutlineThickness(5);
-	m_frame.setFillColor(sf::Color::Magenta);
+	m_frame.setFillColor(sf::Color(161, 161, 161));
 	m_textureRectangle.setTexture(ResourcesService::instance()->getTexture(textureName));
 }
 
