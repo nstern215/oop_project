@@ -1,6 +1,7 @@
 #include "Warrier.h"
 
 
+#include "Teleport.h"
 #include "Ork.h"
 #include "ResourcesService.h"
 
@@ -28,6 +29,11 @@ bool Warrier::handleCollision(Ork* item)
 
 bool Warrier::handleCollision(Teleport* item)
 {
-	//std::cout << "colition with teleport" << std::endl;
-	return true;
+	m_location = item->getPairLocation();
+
+	updatePosition();
+
+	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << std::endl;
+
+	return false;
 }

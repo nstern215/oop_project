@@ -140,6 +140,16 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (!destItem)
 		return true;
 
+	if (dynamic_cast<Teleport*>(destItem))
+	{
+		Teleport* teleportDest = dynamic_cast<Teleport*>(destItem);
+
+		Location destLocation = teleportDest->getPairLocation();
+
+		if (!controller.teleportDestCheck(destLocation))
+			return true;
+	}
+
 	const bool collisionResult = destItem->handleCollision(this);
 
 	if (collisionResult && dynamic_cast<Ork*>(destItem))

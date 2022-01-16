@@ -57,6 +57,11 @@ bool Thief::handleCollision(Gate* item)
 
 bool Thief::handleCollision(Teleport* item)
 {
-	/*std::cout << "colition with teleport" << std::endl;*/
-	return true;
+	m_location = item->getPairLocation();
+
+	updatePosition();
+
+	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << std::endl;
+
+	return false;
 }
