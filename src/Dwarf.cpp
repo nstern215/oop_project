@@ -46,8 +46,7 @@ void Dwarf::move(sf::Vector2f destination, float deltaTime, Controller& controll
 
 void Dwarf::changeDirection()
 {
-	m_direction.x = -m_direction.x;
-	m_direction.y = -m_direction.y;
+	m_go = rand() % 4;
 }
 
 sf::Vector2f Dwarf::getDirection() const
@@ -57,9 +56,6 @@ sf::Vector2f Dwarf::getDirection() const
 
 bool Dwarf::handleCollision(Item* item)
 {
-	if (this == item)
-		return false;
-
 	return item->handleCollision(this);
 }
 
