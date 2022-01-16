@@ -23,6 +23,8 @@ public:
 	bool handleCollision(Item* item);
 	void setActive(bool active) override;
 
+	void draw(sf::RenderWindow& window) override;
+
 	bool handleCollision(King* item)override;
 	bool handleCollision(Thief* item)override;
 	bool handleCollision(Mage* item)override;

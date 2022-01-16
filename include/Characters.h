@@ -18,10 +18,11 @@ public:
 
     Location calcNewLocation(sf::Vector2f step) const;
 
+	virtual void draw(sf::RenderWindow& window);
+
 protected:
 
 	bool validateMove(Location& position, sf::Vector2f destination, Controller& controller);
 
 	bool m_isActive;
-
 };

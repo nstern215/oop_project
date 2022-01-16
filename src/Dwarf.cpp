@@ -18,6 +18,11 @@ Dwarf::Dwarf(Location location, sf::Vector2f boardLocation):
 void Dwarf::setActive(bool active)
 {}
 
+void Dwarf::draw(sf::RenderWindow& window)
+{
+	Item::draw(window);
+}
+
 void Dwarf::setDirection(const int& direction)
 {
 	if(direction == UP)

@@ -280,7 +280,11 @@ void Controller::tutorial()
 
 void Controller::updateStatusLine()
 {
-	m_statusLine.setString(m_gameClock.toString());
+	std::string statusLine = m_gameClock.toString();
+	statusLine += "\tLevel: ";
+	statusLine += m_currentLevelNum + 1;
+	
+	m_statusLine.setString(statusLine);
 }
 
 void Controller::drawLevel()
