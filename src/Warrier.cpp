@@ -4,6 +4,8 @@
 #include "Ork.h"
 #include "ResourcesService.h"
 
+#include <iostream>
+
 Warrier::Warrier(Location location, sf::Vector2f boardLocation)
 	:Characters(location, boardLocation)
 {
@@ -21,5 +23,11 @@ bool Warrier::handleCollision(Item* item)
 bool Warrier::handleCollision(Ork* item)
 {
 	item->die();
+	return true;
+}
+
+bool Warrier::handleCollision(Teleport* item)
+{
+	//std::cout << "colition with teleport" << std::endl;
 	return true;
 }

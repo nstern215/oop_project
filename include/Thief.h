@@ -13,6 +13,7 @@ public:
 	bool handleCollision(Item* item);
 	bool handleCollision(Key* item)override;
 	bool handleCollision(Gate* item)override;
+	bool handleCollision(Teleport* item)override;
 
 private:
 

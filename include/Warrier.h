@@ -11,6 +11,9 @@ public:
 
 	bool handleCollision(Item* item);
 	bool handleCollision(Ork* item)override;
+	bool handleCollision(Teleport* item)override;
+
+
 
 private:
 

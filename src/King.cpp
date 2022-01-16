@@ -1,5 +1,10 @@
 #include "King.h"
+
+
+#include "Teleport.h"
 #include "ResourcesService.h"
+
+#include <iostream>
 
 King::King(Location location, sf::Vector2f boardLocation)
 	:Characters(location, boardLocation)
@@ -33,4 +38,13 @@ bool King::handleCollision(Throne* item)
 {
 	this->sitInThrone();
 	return true;
+}
+
+bool King::handleCollision(Teleport* item)
+{
+	m_location = item->getPairLocation();
+	
+	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row<< std::endl;
+	
+	return false;
 }

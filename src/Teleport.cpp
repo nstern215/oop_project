@@ -1,4 +1,6 @@
 #include "Teleport.h"
+
+#include <iostream>
 #include "ResourcesService.h"
 
 Teleport::Teleport(Location location, Location pairLocation, sf::Vector2f boardLocation)
@@ -14,40 +16,32 @@ Teleport::Teleport(Location location, Location pairLocation, sf::Vector2f boardL
 	m_rectangle.setTexture(t, true);
 }
 
-void Teleport::getItemToPair()
+Location Teleport::getPairLocation()
 {
-	m_inUse = false;
+	return m_pairLocation;
 }
 
-bool Teleport::teleportInUse()
-{
-	m_inUse = true;
-
-	return m_inUse;
-}
 
 bool Teleport::handleCollision(Item* item)
 {
-	if (this == item)
-		return false;
-
 	return item->handleCollision(this);
 }
 
 bool Teleport::handleCollision(King* item)
 {
-	this->teleportInUse();
+	std::cout << "colition with king" << std::endl;
 	return true;
 }
 
 bool Teleport::handleCollision(Thief* item)
 {
-	this->teleportInUse();
+	std::cout << "colition with thief" << std::endl;
 	return true;
 }
 
 bool Teleport::handleCollision(Warrier* item)
 {
-	this->teleportInUse();
+	std::cout << "colition with warrier" << std::endl;
+
 	return true;
 }

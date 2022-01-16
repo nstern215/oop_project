@@ -10,6 +10,7 @@ public:
 
 	bool handleCollision(Item* item);
 	bool handleCollision(Throne* item)override;
+	bool handleCollision(Teleport* item)override;
 	
 private:
 
