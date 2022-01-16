@@ -60,6 +60,7 @@ ResourcesService::ResourcesService()
 						"mage.png",
 						"dwarf.png",
 						"gift.png",
+						"key.png",
 						"background.jpg"};
 
 	m_fontNames = { "Hypeblox.ttf",

@@ -16,17 +16,19 @@ Throne::~Throne()
 {
 }
 
+void Throne::KingIsAtThrone()
+{
+}
+
 bool Throne::handleCollision(Item* item)
 {
+	if (this == item)
+		return false;
+
 	return item->handleCollision(this);
 }
 
-bool Throne::handleCollision(Characters* item)
+bool Throne::handleCollision(King* item)
 {
-	return false;
-}
-
-bool Throne::handleCollision(Dwarf* item)
-{
-	return false;
+	return true;
 }

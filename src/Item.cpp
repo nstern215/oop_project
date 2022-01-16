@@ -4,7 +4,7 @@ Item::Item(Location location, sf::Vector2f boardLocation, float speedPerSecond):
 	m_location(location),
 	m_boardLocation(boardLocation),
 	m_speedPerSecond(speedPerSecond),
-	m_active(true)
+	m_isActive(false)
 {
 	m_rectangle.setSize({80.f, 80.f});
 
@@ -22,11 +22,21 @@ void Item::draw(sf::RenderWindow& window)
 	window.draw(m_rectangle);
 }
 
+void Item::setActive(bool active)
+{
+	m_isActive = active;
+}
+
+bool Item::isActive() const
+{
+	return m_isActive;
+}
+
 void Item::setBoardLocation(sf::Vector2f position)
 {
 	auto currentPosition = m_rectangle.getPosition();
 	currentPosition -= m_boardLocation;
-	
+
 	m_boardLocation = position;
 
 	currentPosition += m_boardLocation;
@@ -52,4 +62,64 @@ void Item::setSize(sf::Vector2f size)
 	position += m_boardLocation;
 
 	m_rectangle.setPosition(position);
+}
+
+bool Item::handleCollision(King* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Thief* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Mage* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Warrier* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Dwarf* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Wall* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Key* item)
+{
+	return true;
+}
+
+bool Item::handleCollision(Teleport* item)
+{
+	return true;
+}
+
+bool Item::handleCollision(Fire* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Gate* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Ork* item)
+{
+	return false;
+}
+
+bool Item::handleCollision(Throne* item)
+{
+	return false;
 }

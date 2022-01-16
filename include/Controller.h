@@ -22,6 +22,9 @@ public:
 	sf::Vector2u getBoardSize() const;
 	sf::Vector2u getLevelBoardSize() const;
 
+	void addKey(const Location& location);
+	void levelComplited();
+	
 	/*void takeAction(const std::string& command);
 	void addTeleport(const int& col, const int& row);
 	void addCharacters(const std::string& character);
@@ -38,7 +41,7 @@ private:
 
 	sf::Vector2f getMovingDirection();
 	void buildBoard();
-	void initalizeLevel();
+	void initializeLevel();
 	void initializeMenu();
 	void updateStatusLine();
 
@@ -57,9 +60,18 @@ private:
 	void tutorial();
 	void resetLevel();
 
-	std::vector<sf::Vector2i> m_teleports;
+
+	sf::Vector2f calcItemSize() const;
+	//void save();
+	//std::string getInfoString() const;
+	//void setNewBoard();
+	//void loadTextures();
+	/*void loadBoardFile();
+	void getBoardInfo(const std::string line);*/
+	/*std::vector<sf::Vector2i> m_teleports;
 	std::vector<Characters> m_characters;
-	std::vector<Dwarf> m_dwarfs;
+	std::vector<Dwarf> m_dwarfs;*/
+
 	std::vector<sf::Texture*> m_textures;
 
 	Clock m_gameClock;
@@ -72,7 +84,7 @@ private:
 	sf::RectangleShape m_infoTextBg;
 	
 	int m_currentLevelNum;
-	int m_activeCharacter;
+	int m_isActiveCharacter;
 
 	std::unique_ptr<LevelData> m_currentLevel;
 

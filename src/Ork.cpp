@@ -16,17 +16,20 @@ Ork::~Ork()
 {
 }
 
+void Ork::die()
+{
+	m_isActive = false;
+}
+
 bool Ork::handleCollision(Item* item)
 {
+	if (this == item)
+		return false;
+
 	return item->handleCollision(this);
 }
 
-bool Ork::handleCollision(Characters* item)
+bool Ork::handleCollision(Warrier* item)
 {
 	return true;
-}
-
-bool Ork::handleCollision(Dwarf* item)
-{
-	return false;
 }

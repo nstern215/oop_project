@@ -1,32 +1,32 @@
 #include "Key.h"
 #include "ResourcesService.h"
 
-Key::Key(Location location, sf::Vector2f boardLocation)
+Key::Key(Location location, sf::Vector2f boardLocation, sf::Vector2f itemSize)
 	:BoardItem(location, boardLocation)
 {
+	m_isActive = true;
+	
 	sf::Texture* t = ResourcesService::instance()->getTexture("key.png");
-
-	//sf::Texture* t = new sf::Texture();
-	//t->loadFromFile("crown.png");
-
 	m_rectangle.setTexture(t, true);
+
+	Item::setSize(itemSize);
 }
 
-Key::~Key()
+void Key::keyTaken()
 {
+	m_isActive = false;
 }
 
-bool Key::handleCollision(Item& item)
+bool Key::handleCollision(Item* item)
 {
-	return item.handleCollision(this);
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
 }
 
-bool Key::handleCollision(Characters& item)
+bool Key::handleCollision(Thief* item)
 {
+	this->keyTaken();
 	return true;
-}
-
-bool Key::handleCollision(Dwarf& item)
-{
-	return false;
 }

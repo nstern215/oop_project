@@ -8,29 +8,25 @@ Fire::Fire(Location location, sf::Vector2f boardLocation)
     :BoardItem(location, boardLocation)
 {
     sf::Texture* t = ResourcesService::instance()->getTexture("fire.png");
-
-    //sf::Texture* t = new sf::Texture();
-    //t->loadFromFile("crown.png");
-
     m_rectangle.setTexture(t, true);
 }
 
-Fire::~Fire()
+
+void Fire::putOutFire()
 {
+    m_isActive = false;
 }
 
 bool Fire::handleCollision(Item* item)
 {
-    return false;
-}
+    if (this == item)
+        return false;
 
-bool Fire::handleCollision(Characters* item)
-{
-    std::cout << "collision" << std::endl;
     return item->handleCollision(this);
 }
 
-bool Fire::handleCollision(Dwarf* item)
+bool Fire::handleCollision(Mage* item)
 {
-    return false;
+    this->putOutFire();
+    return true;
 }

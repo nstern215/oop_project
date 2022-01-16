@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Item.h"
-#include "Characters.h"
-#include "Dwarf.h"
 
 class BoardItem : public Item {
 
@@ -12,8 +10,4 @@ public:
 	virtual ~BoardItem();
 
 protected:
-
-	/*virtual bool handleCollision(Item& item) = 0;
-	virtual bool handleCollision(Characters& item) = 0;
-	virtual bool handleCollision(Dwarf& item) = 0;*/
 };

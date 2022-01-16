@@ -5,16 +5,19 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Characters;
-class Gift;
+class King;
+class Thief;
+class Key;
+class Ork;
+class Throne;
+class Gate;
+class Wall;
 class Teleport;
 class Dwarf;
-class Wall;
+class Mage;
+class Warrier;
 class Fire;
-class Gate;
-class Throne;
-class Ork;
-class Key;
+class Gift;
 
 class Item {
 
@@ -24,12 +27,20 @@ public:
     Item(Location location = { 0,0 }, sf::Vector2f boardLocation = { 0, 0 }, float speedPerSecond = 200.f);
     virtual ~Item();
 
-    //bool checkCollision(const Item& other) const;
-
     virtual bool handleCollision(Item* item) = 0;
-    virtual bool handleCollision(Characters* item) = 0;
-    virtual bool handleCollision(Dwarf* item) = 0;
-
+    virtual bool handleCollision(King* item);
+    virtual bool handleCollision(Thief* item);
+    virtual bool handleCollision(Mage* item);
+    virtual bool handleCollision(Warrier* item);
+    virtual bool handleCollision(Dwarf* item);
+    virtual bool handleCollision(Wall* item);
+    virtual bool handleCollision(Key* item);
+    virtual bool handleCollision(Teleport* item);
+    virtual bool handleCollision(Fire* item);
+    virtual bool handleCollision(Gate* item);
+    virtual bool handleCollision(Ork* item);
+    virtual bool handleCollision(Throne* item);
+                                   
     Location getLocation() const;
     void setBoardLocation(sf::Vector2f position);
     sf::Vector2f getPosition() const;
@@ -54,9 +65,12 @@ public:
 
 	sf::Rect getBoundingRectangle();
 	
-	bool isActive() const;
+	
 	
 	Location getLocation() const;*/
+
+    bool isActive() const;
+    virtual void setActive(bool active);
 
 protected:
 
@@ -66,7 +80,7 @@ protected:
     sf::RectangleShape m_rectangle;
     Location m_location;
 
-	bool m_active;
+	bool m_isActive;
 
 private:
 };

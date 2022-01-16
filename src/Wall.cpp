@@ -12,21 +12,10 @@ Wall::Wall(Location location)
 	m_rectangle.setTexture(t, true);
 }
 
-Wall::~Wall()
-{
-}
-
 bool Wall::handleCollision(Item* item)
 {
+	if (this == item)
+		return false;
+
 	return item->handleCollision(this);
-}
-
-bool Wall::handleCollision(Characters* item)
-{
-	return false;
-}
-
-bool Wall::handleCollision(Dwarf* item)
-{
-	return false;
 }

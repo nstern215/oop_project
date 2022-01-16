@@ -11,12 +11,13 @@
 #include "LevelsManager.h"
 #include "Mage.h"
 #include "Dwarf.h"
+#include "Key.h"
 #include "ResourcesService.h"
 
 Controller::Controller() :
 	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
 	m_currentLevelNum(-1),
-	m_activeCharacter(0)
+	m_isActiveCharacter(0)
 {
 	initializeMenu();
 	buildBoard();
@@ -90,7 +91,7 @@ void Controller::run()
 						loadNextLevel();
 						break;
 					case GAME_OVER:
-						initalizeLevel();
+						initializeLevel();
 						break;
 						default:
 							resumeGame();
@@ -99,9 +100,9 @@ void Controller::run()
 				}
 				else if (event.key.code == sf::Keyboard::Key::P)
 				{
-					m_currentLevel->m_characters[m_activeCharacter]->setActive(false);
-					m_activeCharacter = (m_activeCharacter + 1) % m_currentLevel->m_characters.size();
-					m_currentLevel->m_characters[m_activeCharacter]->setActive(true);
+					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(false);
+					m_isActiveCharacter = (m_isActiveCharacter + 1) % m_currentLevel->m_characters.size();
+					m_currentLevel->m_characters[m_isActiveCharacter]->setActive(true);
 				}
 				break;
 			case sf::Event::MouseButtonReleased:
@@ -118,11 +119,13 @@ void Controller::run()
 				continue;
 			}
 			
+			std::erase_if(m_currentLevel->m_boardItems, [](std::unique_ptr<BoardItem>& item)
+				{
+					return !item->isActive();
+				});
+			
 			const auto moveDirection = getMovingDirection();
 			const auto deltaTime = m_gameClock.updateTime();
-
-			for (auto& d : dwarfs)
-				d->move(d->getDirection(), deltaTime, *this);
 
 			if (moveDirection.x != 0 || moveDirection.y != 0)
 				for (auto& c : m_currentLevel->m_characters)
@@ -146,16 +149,11 @@ sf::Vector2f Controller::getMovingDirection()
 	return { 0,0 };
 }
 
-
 Item* Controller::getItem(const Location l)
 {
 	for (auto& item : m_currentLevel->m_characters)
 		if (item->getLocation() == l)
 			return item.get();
-
-	for (auto*& item : dwarfs)
-		if (item->getLocation() == l)
-			return item;
 
 	for (auto& item : m_currentLevel->m_boardItems)
 		if (item->getLocation() == l)
@@ -185,25 +183,31 @@ void Controller::buildBoard()
 	m_boardBorder.setPosition(boardOrigin);
 }
 
-void Controller::initalizeLevel()
+sf::Vector2f Controller::calcItemSize() const
 {
 	const float item_width = m_boardBorder.getSize().x / static_cast<float>(m_currentLevel->m_cols);
 	const float item_height = m_boardBorder.getSize().y / static_cast<float>(m_currentLevel->m_rows);
 	const sf::Vector2f itemSize = { item_width, item_height };
 
+	return itemSize;
+}
+
+void Controller::initializeLevel()
+{
 	for (auto& item : m_currentLevel->m_boardItems)
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
-		item->setSize(itemSize);
+		item->setSize(calcItemSize());
+		item->setActive(true);
 	}
 
 	for (auto& item : m_currentLevel->m_characters)
 	{
 		item->setBoardLocation(m_boardBorder.getPosition());
-		item->setSize(itemSize);
+		item->setSize(calcItemSize());
 	}
 
-	m_activeCharacter = 0;
+	m_isActiveCharacter = 0;
 
 	m_gameClock.reset();
 
@@ -215,6 +219,16 @@ void Controller::initalizeLevel()
 	m_gameClock.reset(m_currentLevel->m_timeLimit);
 
 	m_mode = GAME;
+}
+
+void Controller::addKey(const Location& location)
+{
+	m_currentLevel->m_boardItems.emplace_back(std::make_unique<Key>(location, m_boardBorder.getPosition(), calcItemSize()));
+}
+
+void Controller::levelComplited()
+{
+	m_mode = LEVEL_COMPLETED;
 }
 
 sf::Vector2u Controller::getLevelBoardSize() const
@@ -240,7 +254,7 @@ void Controller::exitGame()
 void Controller::resetLevel()
 {
 	m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
-	initalizeLevel();
+	initializeLevel();
 	std::cout << "reset" << std::endl;
 }
 
@@ -275,10 +289,7 @@ void Controller::drawLevel()
 		if (!item->isActive())
 			item->draw(m_window);
 
-	for (auto& item : dwarfs)
-		item->draw(m_window);
-
-	m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);
+	m_currentLevel->m_characters[m_isActiveCharacter]->draw(m_window);
 }
 
 void Controller::drawLevelCompletedView()
@@ -367,7 +378,7 @@ void Controller::loadNextLevel()
 	{
 		m_currentLevelNum++;
 		m_currentLevel = LevelsManager::instance()->loadLevel(m_currentLevelNum);
-		initalizeLevel();
+		initializeLevel();
 	}
 }
 

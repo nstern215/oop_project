@@ -1,71 +1,25 @@
 #include "Warrier.h"
 
+
+#include "Ork.h"
 #include "ResourcesService.h"
 
-Warrier::Warrier(Location location)
-	:Characters(location)
+Warrier::Warrier(Location location, sf::Vector2f boardLocation)
+	:Characters(location, boardLocation)
 {
 	m_rectangle.setTexture(ResourcesService::instance()->getTexture("warrior.png"), true);
 }
 
-Warrier::~Warrier()
-{
-}
-
 bool Warrier::handleCollision(Item* item)
 {
-	if (item == this)
+	if (this == item)
 		return false;
 
 	return item->handleCollision(this);
 }
 
-bool Warrier::handleCollision(Gift* item)
-{
-	return true;
-}
-
-bool Warrier::handleCollision(Teleport* item)
-{
-	return true;
-}
-
 bool Warrier::handleCollision(Ork* item)
 {
+	item->die();
 	return true;
-}
-
-bool Warrier::handleCollision(Key* item)
-{
-	return true;
-}
-
-bool Warrier::handleCollision(Throne* item)
-{
-	return false;
-}
-
-bool Warrier::handleCollision(Gate* item)
-{
-	return false;
-}
-
-bool Warrier::handleCollision(Fire* item)
-{
-	return false;
-}
-
-bool Warrier::handleCollision(Characters* item)
-{
-	return false;
-}
-
-bool Warrier::handleCollision(Dwarf* item)
-{
-	return false;
-}
-
-bool Warrier::handleCollision(Wall* item)
-{
-	return false;
 }

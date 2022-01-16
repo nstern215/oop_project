@@ -4,7 +4,7 @@
 Gate::Gate(Location location, sf::Vector2f boardLocation)
 	:BoardItem(location, boardLocation)
 {
-	sf::Texture* t = ResourcesService::instance()->getTexture("fire.png");
+	sf::Texture* t = ResourcesService::instance()->getTexture("gate.png");
 
 	//sf::Texture* t = new sf::Texture();
 	//t->loadFromFile("crown.png");
@@ -12,21 +12,21 @@ Gate::Gate(Location location, sf::Vector2f boardLocation)
 	m_rectangle.setTexture(t, true);
 }
 
-Gate::~Gate()
+void Gate::openGate()
 {
+	m_isActive = false;
 }
 
 bool Gate::handleCollision(Item* item)
 {
-	return false;
+	if (this == item)
+		return false;
+
+	return item->handleCollision(this);
 }
 
-bool Gate::handleCollision(Characters* item)
+bool Gate::handleCollision(Thief* item)
 {
-	return false;
-}
-
-bool Gate::handleCollision(Dwarf* item)
-{
-	return false;
+	this->openGate();
+	return true;
 }

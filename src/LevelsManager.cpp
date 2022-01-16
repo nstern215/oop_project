@@ -4,11 +4,13 @@
 #include <fstream>
 #include <iostream>
 
+#include "Dwarf.h"
 #include "Fire.h"
 #include "Gate.h"
 #include "King.h"
 #include "Mage.h"
 #include "Ork.h"
+#include "Dwarf.h"
 #include "Teleport.h"
 #include "Thief.h"
 #include "Throne.h"

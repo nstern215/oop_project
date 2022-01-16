@@ -1,9 +1,8 @@
 #include "Characters.h"
 
-#include <iostream>
-
-#include "Wall.h"
-
+#include "Throne.h";
+#include "Ork.h";
+#include "Teleport.h"
 #include "Controller.h"
 
 Characters::Characters(Location location, sf::Vector2f boardLocation) :
@@ -17,7 +16,7 @@ Characters::~Characters()
 	/*m_rectangle.setOutlineThickness(5);
 	m_rectangle.setOutlineColor(sf::Color::Black);*/
 
-	m_rectangle.setFillColor(sf::Color(100, 100, 100));
+	//m_rectangle.setFillColor(sf::Color(100, 100, 100));
 }
 
 void Characters::move(sf::Vector2f destination, float deltaTime, Controller& controller)
@@ -76,17 +75,17 @@ Location Characters::calcNewLocation(sf::Vector2f step) const
 	return destination;
 }
 
-bool Characters::isActive() const
-{
-	return m_isActive;
-}
+//bool Characters::isActive() const
+//{
+//	return m_isActive;
+//}
 
 void Characters::setActive(bool active)
 {
 	if (active)
 		m_rectangle.setFillColor(sf::Color::Black);
 	else
-		/*m_rectangle.setFillColor(sf::Color::White);*/
+		//m_rectangle.setFillColor(sf::Color::White);
 		m_rectangle.setFillColor(sf::Color(100, 100, 100));
 
 	m_isActive = active;
@@ -125,10 +124,13 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (!destItem)
 		return true;
 
-	return destItem->handleCollision(this);
+	const bool collisionResult = destItem->handleCollision(this);
 
-	//todo: handle collision
+	if (collisionResult && dynamic_cast<Ork*>(destItem))
+		controller.addKey(destLocation);
 
-	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
-	//	return false;
+	if (collisionResult && dynamic_cast<Throne*>(destItem))
+		controller.levelComplited();
+	
+	return collisionResult;
 }
