@@ -61,7 +61,5 @@ bool Thief::handleCollision(Teleport* item)
 
 	updatePosition();
 
-	std::cout << "Location " << m_location.m_col << ":" << m_location.m_row << std::endl;
-
 	return false;
 }

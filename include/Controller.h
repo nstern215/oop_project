@@ -65,15 +65,6 @@ private:
 
 
 	sf::Vector2f calcItemSize() const;
-	//void save();
-	//std::string getInfoString() const;
-	//void setNewBoard();
-	//void loadTextures();
-	/*void loadBoardFile();
-	void getBoardInfo(const std::string line);*/
-	/*std::vector<sf::Vector2i> m_teleports;
-	std::vector<Characters> m_characters;
-	std::vector<Dwarf> m_dwarfs;*/
 
 	std::vector<sf::Texture*> m_textures;
 
@@ -92,7 +83,7 @@ private:
 	std::unique_ptr<LevelData> m_currentLevel;
 
 	float m_currentLevelTime;
-
+	
 	Menu m_menu;
 	GameMode m_mode = WELCOME;
 
