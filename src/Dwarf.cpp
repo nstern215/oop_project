@@ -46,7 +46,7 @@ void Dwarf::move(sf::Vector2f destination, float deltaTime, Controller& controll
 
 void Dwarf::changeDirection()
 {
-	m_go = rand() % 4;
+	m_go = ;
 }
 
 sf::Vector2f Dwarf::getDirection() const
