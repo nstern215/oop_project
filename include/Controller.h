@@ -11,7 +11,7 @@
 #include "LevelData.h"
 #include "Menu.h"
 
-class Controller{
+class Controller {
 
 public:
 	Controller();
@@ -21,7 +21,9 @@ public:
 	Item* getItem(const Location l);
 	sf::Vector2u getBoardSize() const;
 	sf::Vector2u getLevelBoardSize() const;
-	
+	bool checkTeleportEnd(Location& teleportDest);
+
+
 	/*void takeAction(const std::string& command);
 	void addTeleport(const int& col, const int& row);
 	void addCharacters(const std::string& character);
@@ -31,7 +33,7 @@ public:
 	/*sf::Texture* getTexture(std::string textureName);
 
 	char convertItemToChar(std::string item) const;
-	
+
 	std::string convertChatToItem(char c) const;*/
 
 private:
@@ -47,44 +49,38 @@ private:
 	void drawTutorialView();
 	void drawLevelCompletedView();
 	void drawWinGameView();
+	void drawGameOverView();
 	void resumeGame();
 	void loadNextLevel();
-	
+
 	void exitGame();
 	void tutorial();
 	void resetLevel();
-	
-	//void save();
-	//std::string getInfoString() const;
-	//void setNewBoard();
-	//void loadTextures();
-	/*void loadBoardFile();
-	void getBoardInfo(const std::string line);*/
-	/*std::vector<sf::Vector2i> m_teleports;
-	std::vector<Characters> m_characters;
-	std::vector<Dwarf> m_dwarfs;*/
 
+	std::vector<sf::Vector2i> m_teleports;
+	std::vector<Characters> m_characters;
+	std::vector<Dwarf> m_dwarfs;
 	std::vector<sf::Texture*> m_textures;
 
 	Clock m_gameClock;
-  
+
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_boardBorder;
 	sf::Color m_bgColor;
 	sf::Text m_statusLine;
-	
+
 	int m_currentLevelNum;
 	int m_activeCharacter;
 
 	std::unique_ptr<LevelData> m_currentLevel;
 
 	float m_currentLevelTime;
-	
+
 	Menu m_menu;
-	GameMode m_mode;
-	
-	//------------------------------------------
-	std::vector<Dwarf*> dwarfs;
+	GameMode m_mode = WELCOME;
+
+	////------------------------------------------
+	//std::vector<Dwarf*> dwarfs;
 
 };
 

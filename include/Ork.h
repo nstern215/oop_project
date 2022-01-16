@@ -14,6 +14,7 @@ public:
 
 	void die();
 
+
 private:
 
 };

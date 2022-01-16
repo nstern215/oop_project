@@ -5,6 +5,7 @@
 #include "Wall.h"
 #include "Teleport.h"
 #include "Controller.h"
+#include "Ork.h"
 
 Characters::Characters(Location location, sf::Vector2f boardLocation) :
 	Item(location, boardLocation),
@@ -125,14 +126,28 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (!destItem)
 		return true;
 
-	//if (dynamic_cast<Teleport*>(destItem))
-	//{
-	//	
-	//}
-
-
 	return destItem->handleCollision(this);
 
+	if (dynamic_cast<Teleport*>(destItem))
+	{
+		Teleport* telepotrtInUse = dynamic_cast<Teleport*>(destItem);
+
+		Location teleportDest = telepotrtInUse->getItemToPair();
+
+		if (controller.checkTeleportEnd(teleportDest))
+		{
+			destLocation = teleportDest;
+			return true;
+		}
+	}
+
+	if (dynamic_cast<Ork*>(destItem))
+	{
+		Ork* orkToCheck = dynamic_cast<Ork*>(destItem);
+
+		if(orkToCheck.)
+
+	}
 	//if (dynamic_cast<Characters*>(destItem) || dynamic_cast<Wall*>(destItem))
 	//	return false;
 }

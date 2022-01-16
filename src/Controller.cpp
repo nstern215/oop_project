@@ -17,8 +17,7 @@ Controller::Controller() :
 	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
 	//m_bgColor(39, 72, 245, 0.8),
 	m_currentLevelNum(-1),
-	m_activeCharacter(0),
-	m_mode(GAME)
+	m_activeCharacter(0)
 {
 	initializeMenu();
 	buildBoard();
@@ -59,6 +58,9 @@ void Controller::run()
 		case LEVEL_COMPLETED:
 			drawLevelCompletedView();
 			break;
+		case GAME_OVER:
+			drawGameOverView();
+			break;
 		}
 
 		/*for (auto& item : m_currentLevel->m_boardItems)
@@ -90,6 +92,9 @@ void Controller::run()
 					case LEVEL_COMPLETED:
 						loadNextLevel();
 						break;
+					case GAME_OVER:
+						initalizeLevel();
+						break;
 						default:
 							resumeGame();
 							break;
@@ -110,6 +115,12 @@ void Controller::run()
 
 		if (m_mode == GAME)
 		{
+			if (m_gameClock.getMode() == TIMER && m_gameClock.getRemainTime() == 0)
+			{
+				m_mode = GAME_OVER;
+				continue;
+			}
+			
 			const auto moveDirection = getMovingDirection();
 			const auto deltaTime = m_gameClock.updateTime();
 
@@ -168,7 +179,7 @@ void Controller::buildBoard()
 	const sf::Vector2f boardOrigin(static_cast<float>(windowSize.x) * 0.05f, static_cast<float>(windowSize.y) * 0.09f);
 
 	m_boardBorder.setSize(boardSize - sf::Vector2f(3.f, 3.f));
-	m_boardBorder.setOutlineThickness(8);
+	m_boardBorder.setOutlineThickness(3);
 	m_boardBorder.setOutlineColor(sf::Color::Black);
 	m_boardBorder.setFillColor(sf::Color(255, 255, 255, 128));
 	m_boardBorder.setPosition(boardOrigin);
@@ -211,6 +222,15 @@ sf::Vector2u Controller::getLevelBoardSize() const
 	return { m_currentLevel->m_cols, m_currentLevel->m_rows };
 }
 
+bool Controller::checkTeleportEnd(Location& teleportDest)
+{
+	for (auto& item : m_currentLevel->m_characters)
+		if (item->getLocation() == teleportDest)
+			return false;
+
+	return true;
+}
+
 void Controller::initializeMenu()
 {
 	m_menu.setPosition({ m_window.getSize().x / 2.f, 3 });
@@ -247,9 +267,11 @@ void Controller::updateStatusLine()
 
 void Controller::drawLevel()
 {
+	//todo: delete
 	if (m_currentLevelNum == -1)
 		loadNextLevel();
-
+	//
+	
 	updateStatusLine();
 	m_window.draw(m_boardBorder);
 	m_window.draw(m_statusLine);
@@ -262,8 +284,8 @@ void Controller::drawLevel()
 		if (!item->isActive())
 			item->draw(m_window);
 
-	for (auto& item : dwarfs)
-		item->draw(m_window);
+	//for (auto& item : dwarfs)
+	//	item->draw(m_window);
 
 	m_currentLevel->m_characters[m_activeCharacter]->draw(m_window);
 }
@@ -280,12 +302,30 @@ void Controller::drawTutorialView()
 
 void Controller::drawWelcomeView()
 {
+	m_window.draw(m_boardBorder);
 
+	const std::string str = "Game of Throne\n\n\nPress any key to start";
+
+	sf::Text txt;
+	txt.setString(str);
+	txt.setCharacterSize(32);
+	auto globalBound = txt.getGlobalBounds();
+	sf::Vector2f globalBoundSize = { globalBound.width / 2, globalBound.height /2 };
+	auto textPosition = m_boardBorder.getSize() - globalBoundSize + m_boardBorder.getPosition();
+
+	txt.setPosition(textPosition);
+
+	m_window.draw(txt);
 }
 
 void Controller::drawWinGameView()
 {
 
+}
+
+void Controller::drawGameOverView()
+{
+	
 }
 
 void Controller::resumeGame()

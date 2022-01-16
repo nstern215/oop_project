@@ -17,11 +17,11 @@ public:
 	bool handleCollision(Thief* item) override;
 	bool handleCollision(Warrier* item) override;
 
-	void getItemToPair();
+	bool teleportInUse();
+	Location getItemToPair();
 
 
 private:
-	bool teleportInUse();
 
 	bool m_inUse;
 
