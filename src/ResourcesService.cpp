@@ -20,7 +20,6 @@ ResourcesService::~ResourcesService()
 	delete m_instance;
 }
 
-//todo: merge to a single method
 sf::Texture* ResourcesService::getTexture(std::string textureName)
 {
 	for (int i = 0; i < m_textureNames.size(); ++i)
@@ -64,7 +63,8 @@ ResourcesService::ResourcesService()
 						"background.jpg",
 						"help.png",
 						"restart.png",
-						"exit.png"};
+						"exit.png",
+						"thief_key.png"};
 
 	m_fontNames = { "Hypeblox.ttf",
 					"PTSans-Regular.ttf"};
