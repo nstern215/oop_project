@@ -17,7 +17,7 @@
 Controller::Controller() :
 	m_window(sf::VideoMode(1600, 900), "Save the King", sf::Style::Default),
 	m_currentLevelNum(-1),
-	m_activeCharacter(0)
+	m_isActiveCharacter(0)
 {
 	initializeMenu();
 	buildBoard();
@@ -91,7 +91,7 @@ void Controller::run()
 						loadNextLevel();
 						break;
 					case GAME_OVER:
-						initalizeLevel();
+						initializeLevel();
 						break;
 						default:
 							resumeGame();
