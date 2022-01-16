@@ -2,11 +2,14 @@
 
 
 #include "Key.h"
+#include "Gate.h"
 #include "ResourcesService.h"
 
 Thief::Thief(Location location, sf::Vector2f boardLocation)
 	:Characters(location, boardLocation)
 {
+	m_key = false;
+
 	m_rectangle.setTexture(ResourcesService::instance()->getTexture("thief.png"), true);
 }
 
@@ -36,4 +39,15 @@ bool Thief::handleCollision(Key* item)
 		m_key = true;
 	}
 	return true;
+}
+
+bool Thief::handleCollision(Gate* item)
+{
+	if (m_key)
+	{
+		item->openGate();
+		m_key = false;
+		return true;
+	}
+	return false;
 }

@@ -1,4 +1,6 @@
 #include "Gate.h"
+
+#include "Thief.h"
 #include "ResourcesService.h"
 
 Gate::Gate(Location location, sf::Vector2f boardLocation)
@@ -27,6 +29,12 @@ bool Gate::handleCollision(Item* item)
 
 bool Gate::handleCollision(Thief* item)
 {
-	this->openGate();
-	return true;
+	if (item->gotKey())
+	{
+		return true;
+	}
+	else
+	{
+		return true;
+	}
 }

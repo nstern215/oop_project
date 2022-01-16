@@ -27,6 +27,5 @@ bool Key::handleCollision(Item* item)
 
 bool Key::handleCollision(Thief* item)
 {
-	this->keyTaken();
 	return true;
 }

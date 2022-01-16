@@ -129,6 +129,8 @@ bool Characters::validateMove(Location& position, sf::Vector2f destination, Cont
 	if (collisionResult && dynamic_cast<Ork*>(destItem))
 		controller.addKey(destLocation);
 
+	/*if (collisionResult && dynamic_cast<Teleport*>(destItem))*/
+		
 	if (collisionResult && dynamic_cast<Throne*>(destItem))
 		controller.levelComplited();
 	

@@ -10,7 +10,7 @@ public:
 	bool handleCollision(Item* item);
 	bool handleCollision(Thief* item) override;
 
-private:
-
 	void openGate();
+
+private:
 };
