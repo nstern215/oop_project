@@ -80,6 +80,7 @@ protected:
 
     sf::Vector2f m_boardLocation;
     sf::RectangleShape m_rectangle;
+    sf::RectangleShape m_frame;
     Location m_location;
 
 	bool m_isActive;

@@ -42,6 +42,7 @@ void Item::setBoardLocation(sf::Vector2f position)
 	currentPosition += m_boardLocation;
 
 	m_rectangle.setPosition(currentPosition);
+	m_frame.setPosition(currentPosition);
 }
 
 sf::Vector2f Item::getPosition() const
@@ -57,11 +58,13 @@ Location Item::getLocation() const
 void Item::setSize(sf::Vector2f size)
 {
 	m_rectangle.setSize(size);
+	m_frame.setSize(size);
 
 	sf::Vector2f position(m_location.m_col * size.x, m_location.m_row * size.y);
 	position += m_boardLocation;
 
 	m_rectangle.setPosition(position);
+	m_frame.setPosition(position);
 }
 
 void Item::updatePosition()
@@ -71,6 +74,7 @@ void Item::updatePosition()
 								m_location.m_row * size.y + m_boardLocation.y };
 
 	m_rectangle.setPosition(newPosition);
+	m_frame.setPosition(newPosition);
 }
 
 bool Item::handleCollision(King* item)

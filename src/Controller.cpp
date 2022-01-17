@@ -31,8 +31,7 @@ Controller::Controller() :
 	m_infoText.setFillColor(sf::Color::White);
 	m_infoText.setCharacterSize(36);
 
-	//m_infoTextBg.setFillColor(sf::Color(256, 256, 256, 128));
-	m_infoTextBg.setFillColor(sf::Color::Red);
+	m_infoTextBg.setFillColor(sf::Color(128,128,128, 128));
 }
 
 void Controller::run()
@@ -280,7 +279,13 @@ void Controller::tutorial()
 
 void Controller::updateStatusLine()
 {
-	m_statusLine.setString(m_gameClock.toString());
+	
+	std::string statusLine = "\tLevel: ";
+	statusLine += std::to_string(m_currentLevelNum + 1);
+	statusLine += "\t";
+	statusLine += m_gameClock.toString();
+	
+	m_statusLine.setString(statusLine);
 }
 
 void Controller::drawLevel()
@@ -356,8 +361,9 @@ void Controller::drawInfoText()
 	const sf::Vector2f txtPosition = { (winSize.x / 2) - (textBound.width / 2), (winSize.y / 2) - (textBound.height / 2) };
 	m_infoText.setPosition(txtPosition);
 
-	const sf::Vector2f bgSize = { textBound.width, textBound.height * 2 };
-
+	const sf::Vector2f bgSize = { static_cast<float>(winSize.x), static_cast<float>(winSize.y) };
+	m_infoTextBg.setSize(bgSize);
+	
 	m_window.draw(m_infoTextBg);
 	m_window.draw(m_infoText);
 }

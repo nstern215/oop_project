@@ -11,14 +11,24 @@ Characters::Characters(Location location, sf::Vector2f boardLocation) :
 	Item(location, boardLocation),
 	m_isActive(false)
 {
+	const auto rectSize = m_rectangle.getSize();
+	m_frame.setSize({ rectSize.x, rectSize.y });
+	m_frame.setOutlineThickness(5);
+	m_frame.setOutlineColor(sf::Color(128, 128, 128, 128));
+	m_frame.setFillColor(sf::Color::Transparent);
+	m_frame.setPosition(m_rectangle.getPosition());
 }
 
 Characters::~Characters()
 {
-	/*m_rectangle.setOutlineThickness(5);
-	m_rectangle.setOutlineColor(sf::Color::Black);*/
+}
 
-	//m_rectangle.setFillColor(sf::Color(100, 100, 100));
+void Characters::draw(sf::RenderWindow& window)
+{
+	if (m_isActive)
+		window.draw(m_frame);
+
+	Item::draw(window);
 }
 
 void Characters::move(sf::Vector2f destination, float deltaTime, Controller& controller)
@@ -26,12 +36,8 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 	if (!m_isActive && (destination.x != 0 || destination.y != 0) )
 		return;
 
-	/*const auto destLocation = calcNewLocation(destination);*/
 	const sf::Vector2f step = destination * deltaTime * m_speedPerSecond;
 	const auto destLocation = calcNewLocation(step);
-
-	//todo: if m_location != destLocation - collision!
-	//if (destLocation != m_location)
 
 	if (m_location != destLocation && !validateMove(m_location, destination, controller))
 		return;
@@ -39,6 +45,7 @@ void Characters::move(sf::Vector2f destination, float deltaTime, Controller& con
 	m_location = destLocation;
 
 	m_rectangle.move(step);
+	m_frame.move(step);
 }
 
 Location Characters::calcNewLocation(sf::Vector2f step) const
@@ -76,19 +83,9 @@ Location Characters::calcNewLocation(sf::Vector2f step) const
 	return destination;
 }
 
-//bool Characters::isActive() const
-//{
-//	return m_isActive;
-//}
 
 void Characters::setActive(bool active)
 {
-	if (active)
-		m_rectangle.setFillColor(sf::Color::Black);
-	else
-		//m_rectangle.setFillColor(sf::Color::White);
-		m_rectangle.setFillColor(sf::Color(100, 100, 100));
-
 	m_isActive = active;
 }
 

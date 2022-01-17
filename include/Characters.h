@@ -14,14 +14,14 @@ public:
 
 	virtual void move(sf::Vector2f destination, float deltaTime, Controller& controller);
 	virtual void setActive(bool active);
-	//bool isActive() const;
-
+	
     Location calcNewLocation(sf::Vector2f step) const;
+
+	virtual void draw(sf::RenderWindow& window);
 
 protected:
 
 	bool validateMove(Location& position, sf::Vector2f destination, Controller& controller);
 
 	bool m_isActive;
-
 };
