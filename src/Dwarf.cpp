@@ -50,8 +50,10 @@ void Dwarf::move(sf::Vector2f destination, float deltaTime, Controller& controll
 
 void Dwarf::changeDirection()
 {
-	m_go = rand() % 4;
-
+	int newDirection = rand() % 4;
+	while(newDirection == m_go)
+		newDirection = rand() % 4;
+	
 	setDirection(m_go);
 }
 
